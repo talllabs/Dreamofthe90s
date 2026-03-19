@@ -64,17 +64,6 @@
   z-index: 1;
 }
 
-/* ── Pin items (About decoration) ── */
-.pin-item {
-  font-size: 3.5rem;
-  position: absolute;
-  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.25));
-}
-
-.pin-item--1 { top: 0;    right: 80px;  transform: rotate(8deg); }
-.pin-item--2 { top: 100px; right: 20px; transform: rotate(-5deg); }
-.pin-item--3 { top: 200px; right: 90px; transform: rotate(10deg); }
-.pin-item--4 { top: 290px; right: 30px; transform: rotate(-8deg); }
 
 /* ── Activity cards ── */
 .activity-grid {

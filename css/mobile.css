@@ -58,16 +58,12 @@
 
   .about-decoration {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    height: auto;
     justify-content: center;
   }
 
-  .pin-item {
-    position: static;
-    transform: none !important;
-    font-size: 3rem;
+  .about-photo {
+    max-width: 240px;
+    transform: rotate(1deg);
   }
 
   /* Activities */

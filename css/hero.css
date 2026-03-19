@@ -139,7 +139,18 @@
 
 .about-decoration {
   position: relative;
-  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-photo {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 4px;
+  box-shadow: 4px 6px 0 rgba(0,0,0,0.2);
+  transform: rotate(2deg);
+  display: block;
 }
 
 /* ── Dates section ── */
