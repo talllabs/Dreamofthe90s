@@ -213,7 +213,7 @@
 
 .about-inner {
   display: grid;
-  grid-template-columns: 1fr 560px;
+  grid-template-columns: 1fr 448px;
   gap: 2rem;
   align-items: start;
 }
@@ -231,7 +231,7 @@
 
 .about-photo {
   width: 100%;
-  max-width: 560px;
+  max-width: 448px;
   border-radius: 4px;
   box-shadow: 4px 6px 0 rgba(0,0,0,0.2);
   transform: rotate(2deg);
