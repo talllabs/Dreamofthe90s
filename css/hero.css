@@ -8,72 +8,157 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding-top: calc(var(--nav-h) + 2rem);
+  padding-top: var(--nav-h);
   padding-bottom: 5rem;
 }
 
+/* ── Central starburst blob ── */
+.hero-starburst {
+  position: absolute;
+  width: min(78vw, 640px);
+  height: min(78vw, 640px);
+  background: #d9ff00;
+  clip-path: polygon(
+    50% 2%,  57% 16%, 65%  6%, 63% 21%,
+    76% 13%, 72% 27%, 86% 22%, 79% 35%,
+    94% 34%, 84% 45%, 97% 50%, 84% 55%,
+    93% 66%, 79% 65%, 85% 78%, 72% 73%,
+    76% 87%, 63% 79%, 65% 94%, 57% 84%,
+    50% 98%, 43% 84%, 35% 94%, 37% 79%,
+    24% 87%, 28% 73%, 15% 78%, 21% 65%,
+     7% 66%, 16% 55%,  3% 50%, 16% 45%,
+     6% 34%, 21% 35%, 15% 22%, 28% 27%,
+    24% 13%, 37% 21%, 35%  6%, 43% 16%
+  );
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* ── Hero content stack ── */
 .hero-content {
   position: relative;
   z-index: 2;
-  text-align: center;
-  padding: 0 1.5rem;
-  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 1rem;
 }
 
-/* ── Hero heading ── */
-.hero-heading {
-  font-size: clamp(3.5rem, 12vw, 8rem);
-  justify-content: center;
+/* ── 90's boxed letters ── */
+.hero-90s {
+  display: flex;
+  align-items: baseline;
   gap: 0.1em;
-  filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.5));
+  filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.45));
 }
 
-.hero-heading .r-titan   { font-size: 0.65em; }
-.hero-heading .r-marker  { font-size: 0.85em; }
-.hero-heading .r-boogaloo{ font-size: 0.7em;  }
-.hero-heading .r-fredoka { font-size: 0.9em;  }
-
-/* ── Tagline ── */
-.hero-tagline {
-  font-family: var(--font-boogaloo);
-  font-size: clamp(1.2rem, 3vw, 1.7rem);
-  margin-top: 1rem;
-  background: linear-gradient(transparent 55%, var(--yellow) 55%);
+.hero-90s span {
+  font-family: var(--font-titan);
+  font-size: clamp(2rem, 6.5vw, 4.2rem);
+  background: var(--white);
+  border: 3px solid var(--black);
+  padding: 0.05em 0.2em;
+  line-height: 1.1;
   display: inline-block;
-  padding: 0 0.3em;
 }
 
-.hero-tagline em {
+.hero-90s span:nth-child(1) { color: var(--teal);    transform: rotate(-4deg); }
+.hero-90s span:nth-child(2) { color: var(--purple);  transform: rotate(3deg);  }
+.hero-90s span.apos {
+  background: transparent;
+  border: none;
   font-family: var(--font-marker);
-  color: var(--orange);
-}
-
-/* ── Hero dates ── */
-.hero-dates {
-  font-family: var(--font-vt323);
-  font-size: 1.5rem;
-  margin-top: 0.75rem;
-  letter-spacing: 0.08em;
   color: var(--black);
-  opacity: 0.75;
+  font-size: 0.75em;
+  padding: 0;
+}
+.hero-90s span:nth-child(4) { color: var(--hot-pink); transform: rotate(-3deg); }
+
+/* ── SUMMER ransom letters ── */
+.hero-summer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.04em;
+  filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.45));
+  line-height: 1;
 }
 
-/* ── Clipart decorations ── */
-.clipart {
+.hero-summer span {
+  font-size: clamp(3.2rem, 12.5vw, 8.5rem);
+  border: 3px solid var(--black);
+  padding: 0.04em 0.09em;
+  display: inline-block;
+  line-height: 1;
+}
+
+.hs-S  { font-family: var(--font-titan);    background: var(--yellow);     color: var(--black);   transform: rotate(-3deg); }
+.hs-U  { font-family: var(--font-fredoka);  background: #b8f000;           color: var(--purple);  transform: rotate(2deg);  }
+.hs-M1 { font-family: var(--font-marker);   background: var(--white);      color: var(--black);   transform: rotate(-4deg); }
+.hs-M2 { font-family: var(--font-boogaloo); background: var(--light-blue); color: var(--black);   transform: rotate(3deg);  }
+.hs-E  { font-family: var(--font-titan);    background: var(--orange);     color: var(--white);   transform: rotate(-2deg); }
+.hs-R  { font-family: var(--font-fredoka);  background: var(--teal);       color: var(--white);   transform: rotate(4deg);  }
+
+/* ── Day Camp banner strip ── */
+.hero-daycamp {
+  font-family: var(--font-marker);
+  font-size: clamp(2rem, 6.5vw, 4.5rem);
+  background: var(--white);
+  color: var(--black);
+  padding: 0.15em 1.4em;
+  border: 3px solid var(--black);
+  transform: rotate(-1.5deg);
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+  margin-top: 0.2em;
+}
+
+/* ── Geometric confetti ── */
+.geo {
   position: absolute;
   pointer-events: none;
   user-select: none;
-  font-size: 4rem;
   z-index: 1;
-  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.2));
 }
 
-.clipart--rainbow    { top: 12%; left: 3%;   font-size: 5rem; transform: rotate(-10deg); }
-.clipart--sun        { top: 5%;  right: 5%;  font-size: 4.5rem; transform: rotate(15deg); }
-.clipart--butterfly  { top: 18%; right: 12%; font-size: 3.5rem; transform: rotate(-5deg); }
-.clipart--star1      { bottom: 25%; left: 6%; font-size: 3rem; transform: rotate(20deg); }
-.clipart--star2      { bottom: 15%; right: 4%; font-size: 2.5rem; transform: rotate(-15deg); }
-.clipart--dice       { top: 40%; left: 2%;  font-size: 3.5rem; transform: rotate(8deg); }
+.geo--tri-pink   { width:75px;  height:75px;  background:var(--hot-pink);   clip-path:polygon(50% 0%,0% 100%,100% 100%); top:7%;    left:5%;    transform:rotate(-20deg); }
+.geo--tri-teal   { width:58px;  height:58px;  background:var(--teal);       clip-path:polygon(50% 0%,0% 100%,100% 100%); top:10%;   right:17%;  transform:rotate(30deg);  }
+.geo--tri-yellow { width:85px;  height:85px;  background:var(--yellow);     clip-path:polygon(50% 0%,0% 100%,100% 100%); bottom:22%;left:10%;   transform:rotate(10deg);  }
+.geo--tri-orange { width:62px;  height:62px;  background:var(--orange);     clip-path:polygon(50% 0%,0% 100%,100% 100%); top:28%;   right:4%;   transform:rotate(-15deg); }
+.geo--tri-ltpink { width:52px;  height:52px;  background:var(--pink);       clip-path:polygon(50% 0%,0% 100%,100% 100%); bottom:28%;right:10%;  transform:rotate(25deg);  }
+.geo--tri-ltblue { width:68px;  height:68px;  background:var(--light-blue); clip-path:polygon(50% 0%,0% 100%,100% 100%); top:52%;   left:3%;    transform:rotate(-30deg); }
+.geo--tri-purple { width:55px;  height:55px;  background:var(--purple);     clip-path:polygon(50% 0%,0% 100%,100% 100%); bottom:14%;left:28%;   transform:rotate(15deg);  }
+
+.geo--para-pink  { width:55px; height:32px; background:var(--hot-pink); top:20%;   left:1%;    transform:rotate(-12deg) skewX(-15deg); }
+.geo--para-teal  { width:48px; height:28px; background:var(--teal);     top:16%;   right:5%;   transform:rotate(14deg)  skewX(15deg);  }
+
+.geo--sq-yellow  { width:32px; height:32px; background:var(--yellow); bottom:33%;left:2%;   transform:rotate(25deg);  }
+.geo--sq-orange  { width:26px; height:26px; background:var(--orange); bottom:24%;right:3%;  transform:rotate(-20deg); }
+.geo--sq-lime    { width:28px; height:28px; background:#b8f000;       top:62%;   right:15%; transform:rotate(12deg);  }
+
+/* ── Vintage clipart ── */
+.vclip {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.15));
+}
+
+.vclip--girl    { font-size:5.5rem; top:8%;    left:1%;    transform:rotate(-5deg);  }
+.vclip--books   { font-size:4rem;   top:42%;   left:0.5%;  transform:rotate(3deg);   }
+.vclip--compass { font-size:4.5rem; bottom:16%;left:2%;    transform:rotate(-8deg);  }
+.vclip--dice    { font-size:5.5rem; top:3%;    right:3%;   transform:rotate(15deg);  }
+.vclip--soccer  { font-size:3.5rem; top:4%;    right:19%;  transform:rotate(5deg);   }
+.vclip--gymnast { font-size:5rem;   top:10%;   right:1%;   transform:rotate(8deg);   }
+.vclip--bowl    { font-size:3.5rem; bottom:17%;right:1%;   transform:rotate(-10deg); }
+.vclip--paint   { font-size:3.5rem; top:58%;   right:2%;   transform:rotate(5deg);   }
+.vclip--sun     { font-size:4rem;   top:6%;    left:30%;   transform:rotate(-5deg);  }
+.vclip--kids    { font-size:5rem;   bottom:14%;left:20%;   transform:rotate(-3deg);  }
+.vclip--bike    { font-size:4rem;   bottom:14%;right:18%;  transform:rotate(5deg);   }
+.vclip--rainbow { font-size:4.5rem; top:52%;   left:8%;    transform:rotate(-8deg);  }
 
 /* Join section clipart */
 .clipart--join-star1  { top: 10%; right: 8%;  font-size: 3rem;   transform: rotate(20deg); }
