@@ -1,0 +1,136 @@
+@media (max-width: 768px) {
+  /* Nav */
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    background: var(--purple);
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    border-top: 3px solid var(--black);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.9rem 1rem;
+    font-size: 1.3rem;
+  }
+
+  .nav-cta {
+    margin: 0.5rem auto;
+    width: auto !important;
+  }
+
+  .nav-burger {
+    display: block;
+  }
+
+  /* Hero */
+  .hero-heading {
+    font-size: clamp(2.8rem, 15vw, 5rem);
+    justify-content: center;
+  }
+
+  .clipart--rainbow   { font-size: 3rem; }
+  .clipart--sun       { font-size: 3rem; }
+  .clipart--butterfly { font-size: 2.5rem; top: 8%; right: 4%; }
+  .clipart--dice      { display: none; }
+  .clipart--star1     { font-size: 2rem; }
+  .clipart--star2     { font-size: 2rem; }
+
+  /* About */
+  .about-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .about-decoration {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    height: auto;
+    justify-content: center;
+  }
+
+  .pin-item {
+    position: static;
+    transform: none !important;
+    font-size: 3rem;
+  }
+
+  /* Activities */
+  .activity-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+
+  /* Dates */
+  .dates-starburst {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .dates-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    padding: 0.4rem 0.3rem;
+    font-size: 0.85rem;
+  }
+
+  /* Pricing */
+  .pricing-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .price-tag {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* Join */
+  .btn--big {
+    font-size: 1.1rem;
+    padding: 0.7rem 1.5rem;
+  }
+
+  /* Sections */
+  .section {
+    padding: 4rem 1.2rem;
+  }
+
+  .section-heading {
+    font-size: clamp(2rem, 9vw, 3.5rem);
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-heading {
+    font-size: clamp(2.2rem, 18vw, 4rem);
+  }
+
+  .notepad-card {
+    max-width: 100%;
+    transform: rotate(-0.5deg);
+  }
+
+  .activity-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

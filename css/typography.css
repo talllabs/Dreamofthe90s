@@ -1,0 +1,56 @@
+/* ── Ransom-note heading system ── */
+.ransom-heading {
+  line-height: 1.1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15em;
+}
+
+.ransom-heading span {
+  display: inline-block;
+}
+
+/* Fonts */
+.r-titan   { font-family: var(--font-titan); }
+.r-marker  { font-family: var(--font-marker); }
+.r-boogaloo{ font-family: var(--font-boogaloo); font-weight: 900; }
+.r-fredoka { font-family: var(--font-fredoka); }
+.r-pixel   { font-family: var(--font-vt323); }
+
+/* Colors */
+.r-lime     { color: var(--lime); -webkit-text-stroke: 1.5px var(--black); }
+.r-orange   { color: var(--orange); }
+.r-teal     { color: var(--teal); }
+.r-purple   { color: var(--purple); }
+.r-yellow   { color: var(--yellow); -webkit-text-stroke: 1.5px var(--black); }
+.r-hot-pink { color: var(--hot-pink); }
+.r-white    { color: var(--white); -webkit-text-stroke: 1px var(--black); }
+.r-black    { color: var(--black); }
+
+/* Rotations */
+.r-up    { transform: rotate(-4deg); }
+.r-down  { transform: rotate(3deg); }
+.r-level { transform: rotate(-1deg); }
+
+/* ── Section headings ── */
+.section-heading {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  margin-bottom: 2.5rem;
+}
+
+/* ── Body copy ── */
+p {
+  font-family: var(--font-boogaloo);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+strong {
+  font-family: var(--font-fredoka);
+}
+
+em {
+  font-family: var(--font-marker);
+  font-style: normal;
+}

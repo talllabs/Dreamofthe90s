@@ -1,0 +1,240 @@
+/* ── Hero section ── */
+.hero {
+  min-height: 100svh;
+  background: var(--lime);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: calc(var(--nav-h) + 2rem);
+  padding-bottom: 5rem;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.5rem;
+  max-width: 900px;
+}
+
+/* ── Hero heading ── */
+.hero-heading {
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  justify-content: center;
+  gap: 0.1em;
+  filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.5));
+}
+
+.hero-heading .r-titan   { font-size: 0.65em; }
+.hero-heading .r-marker  { font-size: 0.85em; }
+.hero-heading .r-boogaloo{ font-size: 0.7em;  }
+.hero-heading .r-fredoka { font-size: 0.9em;  }
+
+/* ── Tagline ── */
+.hero-tagline {
+  font-family: var(--font-boogaloo);
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  margin-top: 1rem;
+  background: linear-gradient(transparent 55%, var(--yellow) 55%);
+  display: inline-block;
+  padding: 0 0.3em;
+}
+
+.hero-tagline em {
+  font-family: var(--font-marker);
+  color: var(--orange);
+}
+
+/* ── Hero dates ── */
+.hero-dates {
+  font-family: var(--font-vt323);
+  font-size: 1.5rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--black);
+  opacity: 0.75;
+}
+
+/* ── Clipart decorations ── */
+.clipart {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  font-size: 4rem;
+  z-index: 1;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.2));
+}
+
+.clipart--rainbow    { top: 12%; left: 3%;   font-size: 5rem; transform: rotate(-10deg); }
+.clipart--sun        { top: 5%;  right: 5%;  font-size: 4.5rem; transform: rotate(15deg); }
+.clipart--butterfly  { top: 18%; right: 12%; font-size: 3.5rem; transform: rotate(-5deg); }
+.clipart--star1      { bottom: 25%; left: 6%; font-size: 3rem; transform: rotate(20deg); }
+.clipart--star2      { bottom: 15%; right: 4%; font-size: 2.5rem; transform: rotate(-15deg); }
+.clipart--dice       { top: 40%; left: 2%;  font-size: 3.5rem; transform: rotate(8deg); }
+
+/* Join section clipart */
+.clipart--join-star1  { top: 10%; right: 8%;  font-size: 3rem;   transform: rotate(20deg); }
+.clipart--join-star2  { bottom: 20%; left: 5%; font-size: 2.5rem; transform: rotate(-12deg); }
+.clipart--join-balloon{ top: 15%; left: 7%;  font-size: 4rem;   transform: rotate(5deg); }
+
+/* ── Marquee ── */
+.marquee-wrap {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: var(--purple);
+  border-top: 3px solid var(--black);
+  border-bottom: 3px solid var(--black);
+  padding: 0.4rem 0;
+  z-index: 2;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+  gap: 0;
+}
+
+.marquee-track span {
+  font-family: var(--font-titan);
+  font-size: 1.1rem;
+  color: var(--yellow);
+  white-space: nowrap;
+  padding: 0 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Pause on reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* ── About section layout ── */
+.about {
+  background: var(--off-white);
+  padding-top: 6rem;
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.about-text .section-heading {
+  margin-bottom: 2rem;
+}
+
+.about-decoration {
+  position: relative;
+  height: 380px;
+}
+
+/* ── Dates section ── */
+.dates {
+  background: var(--teal);
+  position: relative;
+  overflow: hidden;
+}
+
+.dates::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(0,0,0,0.04) 20px,
+    rgba(0,0,0,0.04) 21px
+  );
+  pointer-events: none;
+}
+
+.dates-starburst {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 2;
+}
+
+.dates-card {
+  background: var(--white);
+  border: 3px solid var(--black);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.dates-range {
+  font-family: var(--font-titan);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  text-align: center;
+  color: var(--purple);
+  -webkit-text-stroke: 0.5px var(--black);
+}
+
+.dates-sub {
+  font-family: var(--font-fredoka);
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  color: var(--black);
+}
+
+.dates-note {
+  text-align: center;
+  font-family: var(--font-vt323);
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  color: #555;
+  margin-top: 0;
+}
+
+/* ── Pricing section ── */
+.pricing {
+  background: var(--off-white);
+}
+
+/* ── Join section ── */
+.join {
+  background: var(--lime);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.join-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.join-copy {
+  font-size: 1.3rem;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.join-sign {
+  font-family: var(--font-marker);
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  color: var(--purple);
+}
