@@ -1,7 +1,7 @@
 /* ── Hero section ── */
 .hero {
   min-height: 100svh;
-  background: var(--lime);
+  background: #f4f0e6; /* cream paper */
   position: relative;
   display: flex;
   flex-direction: column;
@@ -12,153 +12,227 @@
   padding-bottom: 5rem;
 }
 
-/* ── Central starburst blob ── */
+/* Teal construction-paper corners */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 260px; height: 200px;
+  background: var(--teal);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  z-index: 0;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 40px; right: 0;
+  width: 220px; height: 180px;
+  background: var(--teal);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  z-index: 0;
+}
+
+/* ── Central starburst blob (hand-cut irregular) ── */
 .hero-starburst {
   position: absolute;
-  width: min(78vw, 640px);
-  height: min(78vw, 640px);
-  background: #d9ff00;
+  width: min(82vw, 680px);
+  height: min(82vw, 680px);
+  background: #c8f400;
   clip-path: polygon(
-    50% 2%,  57% 16%, 65%  6%, 63% 21%,
-    76% 13%, 72% 27%, 86% 22%, 79% 35%,
-    94% 34%, 84% 45%, 97% 50%, 84% 55%,
-    93% 66%, 79% 65%, 85% 78%, 72% 73%,
-    76% 87%, 63% 79%, 65% 94%, 57% 84%,
-    50% 98%, 43% 84%, 35% 94%, 37% 79%,
-    24% 87%, 28% 73%, 15% 78%, 21% 65%,
-     7% 66%, 16% 55%,  3% 50%, 16% 45%,
-     6% 34%, 21% 35%, 15% 22%, 28% 27%,
-    24% 13%, 37% 21%, 35%  6%, 43% 16%
+    50% 2%,
+    55% 16%, 63%  5%, 60% 21%, 74% 10%, 70% 27%,
+    84% 18%, 79% 34%, 95% 30%, 87% 45%,
+    99% 50%, 87% 56%, 93% 68%, 78% 64%,
+    86% 79%, 70% 72%, 74% 89%, 61% 77%,
+    63% 95%, 53% 81%,
+    50% 99%,
+    47% 81%, 37% 95%, 39% 77%, 26% 89%,
+    30% 72%, 14% 79%, 22% 64%,
+     7% 68%, 13% 56%,  1% 50%,
+    13% 45%,  5% 30%, 21% 34%, 16% 18%,
+    30% 27%, 26% 10%, 40% 21%, 37%  5%, 45% 16%
   );
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
+  transform: translate(-50%, -53%);
+  z-index: 1;
 }
 
 /* ── Hero content stack ── */
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.2rem;
   padding: 0 1rem;
+  margin-top: -3rem;
 }
 
-/* ── 90's boxed letters ── */
+/* ── 90's cut-out letters ── */
 .hero-90s {
   display: flex;
   align-items: baseline;
-  gap: 0.1em;
-  filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.45));
+  gap: 0.08em;
 }
 
 .hero-90s span {
   font-family: var(--font-titan);
   font-size: clamp(2rem, 6.5vw, 4.2rem);
   background: var(--white);
-  border: 3px solid var(--black);
-  padding: 0.05em 0.2em;
+  border: 2.5px solid var(--black);
+  padding: 0.05em 0.18em;
   line-height: 1.1;
   display: inline-block;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
 }
 
-.hero-90s span:nth-child(1) { color: var(--teal);    transform: rotate(-4deg); }
-.hero-90s span:nth-child(2) { color: var(--purple);  transform: rotate(3deg);  }
+.hero-90s span:nth-child(1) { color: var(--teal);     transform: rotate(-5deg); }
+.hero-90s span:nth-child(2) { color: var(--purple);   transform: rotate(4deg);  }
 .hero-90s span.apos {
   background: transparent;
   border: none;
+  box-shadow: none;
   font-family: var(--font-marker);
   color: var(--black);
-  font-size: 0.75em;
+  font-size: 0.7em;
   padding: 0;
 }
-.hero-90s span:nth-child(4) { color: var(--hot-pink); transform: rotate(-3deg); }
+.hero-90s span:nth-child(4) { color: var(--hot-pink); transform: rotate(-4deg); font-family: var(--font-fredoka); }
 
 /* ── SUMMER ransom letters ── */
 .hero-summer {
   display: flex;
   align-items: flex-end;
-  gap: 0.04em;
-  filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.45));
+  gap: 0.03em;
   line-height: 1;
 }
 
 .hero-summer span {
-  font-size: clamp(3.2rem, 12.5vw, 8.5rem);
-  border: 3px solid var(--black);
-  padding: 0.04em 0.09em;
+  font-size: clamp(3rem, 12vw, 8rem);
+  padding: 0.05em 0.1em;
   display: inline-block;
   line-height: 1;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
 }
 
-.hs-S  { font-family: var(--font-titan);    background: var(--yellow);     color: var(--black);   transform: rotate(-3deg); }
-.hs-U  { font-family: var(--font-fredoka);  background: #b8f000;           color: var(--purple);  transform: rotate(2deg);  }
-.hs-M1 { font-family: var(--font-marker);   background: var(--white);      color: var(--black);   transform: rotate(-4deg); }
-.hs-M2 { font-family: var(--font-boogaloo); background: var(--light-blue); color: var(--black);   transform: rotate(3deg);  }
-.hs-E  { font-family: var(--font-titan);    background: var(--orange);     color: var(--white);   transform: rotate(-2deg); }
-.hs-R  { font-family: var(--font-fredoka);  background: var(--teal);       color: var(--white);   transform: rotate(4deg);  }
+.hs-S  { font-family: var(--font-titan);    background: var(--yellow);     color: var(--black);   transform: rotate(-4deg); border: 2px solid var(--black); }
+.hs-U  { font-family: var(--font-fredoka);  background: var(--light-blue); color: var(--purple);  transform: rotate(3deg);  border: 2px solid var(--black); }
+.hs-M1 { font-family: var(--font-marker);   background: var(--white);      color: var(--black);   transform: rotate(-5deg); border: 2px solid #555; }
+.hs-M2 { font-family: var(--font-boogaloo); background: var(--orange);     color: var(--white);   transform: rotate(4deg);  border: 2px solid var(--black); }
+.hs-E  { font-family: var(--font-titan);    background: var(--hot-pink);   color: var(--white);   transform: rotate(-3deg); border: 2px solid var(--black); }
+.hs-R  { font-family: var(--font-fredoka);  background: var(--teal);       color: var(--white);   transform: rotate(5deg);  border: 2px solid var(--black); }
 
-/* ── Day Camp banner strip ── */
+/* ── Day Camp handwritten strip ── */
 .hero-daycamp {
   font-family: var(--font-marker);
-  font-size: clamp(2rem, 6.5vw, 4.5rem);
+  font-size: clamp(2.2rem, 7vw, 5rem);
   background: var(--white);
   color: var(--black);
-  padding: 0.15em 1.4em;
-  border: 3px solid var(--black);
-  transform: rotate(-1.5deg);
-  box-shadow: var(--shadow-md);
+  padding: 0.12em 1.2em;
+  border: none;
+  outline: 2.5px solid var(--black);
+  transform: rotate(-1deg);
+  box-shadow: 3px 4px 0 rgba(0,0,0,0.25);
   white-space: nowrap;
-  margin-top: 0.2em;
+  margin-top: 0.3em;
 }
 
-/* ── Geometric confetti ── */
+/* ── Cut-paper geometric shapes ── */
 .geo {
   position: absolute;
   pointer-events: none;
   user-select: none;
-  z-index: 1;
 }
 
-.geo--tri-pink   { width:75px;  height:75px;  background:var(--hot-pink);   clip-path:polygon(50% 0%,0% 100%,100% 100%); top:7%;    left:5%;    transform:rotate(-20deg); }
-.geo--tri-teal   { width:58px;  height:58px;  background:var(--teal);       clip-path:polygon(50% 0%,0% 100%,100% 100%); top:10%;   right:17%;  transform:rotate(30deg);  }
-.geo--tri-yellow { width:85px;  height:85px;  background:var(--yellow);     clip-path:polygon(50% 0%,0% 100%,100% 100%); bottom:22%;left:10%;   transform:rotate(10deg);  }
-.geo--tri-orange { width:62px;  height:62px;  background:var(--orange);     clip-path:polygon(50% 0%,0% 100%,100% 100%); top:28%;   right:4%;   transform:rotate(-15deg); }
-.geo--tri-ltpink { width:52px;  height:52px;  background:var(--pink);       clip-path:polygon(50% 0%,0% 100%,100% 100%); bottom:28%;right:10%;  transform:rotate(25deg);  }
-.geo--tri-ltblue { width:68px;  height:68px;  background:var(--light-blue); clip-path:polygon(50% 0%,0% 100%,100% 100%); top:52%;   left:3%;    transform:rotate(-30deg); }
-.geo--tri-purple { width:55px;  height:55px;  background:var(--purple);     clip-path:polygon(50% 0%,0% 100%,100% 100%); bottom:14%;left:28%;   transform:rotate(15deg);  }
+/* Large orange triangles radiating toward starburst */
+.geo--ot1 { width:160px; height:130px; background:var(--orange); clip-path:polygon(0 100%,100% 0,100% 100%);  top:28%; left:0;      transform:rotate(-5deg);  z-index:2; }
+.geo--ot2 { width:140px; height:110px; background:var(--orange); clip-path:polygon(0 0,100% 0,100% 100%);     top:20%; right:0;     transform:rotate(8deg);   z-index:2; }
+.geo--ot3 { width:130px; height:120px; background:var(--orange); clip-path:polygon(0 0,100% 100%,0 100%);     bottom:22%;left:8%;   transform:rotate(12deg);  z-index:2; }
+.geo--ot4 { width:110px; height:100px; background:var(--orange); clip-path:polygon(50% 0,100% 100%,0 100%);   top:5%;  right:22%;  transform:rotate(-10deg); z-index:2; }
 
-.geo--para-pink  { width:55px; height:32px; background:var(--hot-pink); top:20%;   left:1%;    transform:rotate(-12deg) skewX(-15deg); }
-.geo--para-teal  { width:48px; height:28px; background:var(--teal);     top:16%;   right:5%;   transform:rotate(14deg)  skewX(15deg);  }
+/* Teal accent strips / shapes */
+.geo--ts1 { width:180px; height:22px; background:var(--teal);   top:32%; left:12%;   transform:rotate(-8deg);  z-index:3; }
+.geo--ts2 { width:140px; height:18px; background:var(--teal);   bottom:28%;right:14%; transform:rotate(6deg);   z-index:3; }
+.geo--ts3 { width:80px;  height:80px; background:var(--teal);   clip-path:polygon(0 0,100% 0,0 100%); bottom:22%;right:0; transform:rotate(-3deg); z-index:0; }
 
-.geo--sq-yellow  { width:32px; height:32px; background:var(--yellow); bottom:33%;left:2%;   transform:rotate(25deg);  }
-.geo--sq-orange  { width:26px; height:26px; background:var(--orange); bottom:24%;right:3%;  transform:rotate(-20deg); }
-.geo--sq-lime    { width:28px; height:28px; background:#b8f000;       top:62%;   right:15%; transform:rotate(12deg);  }
+/* Hot-pink strips */
+.geo--ps1 { width:90px; height:18px; background:var(--hot-pink); top:55%;    left:4%;    transform:rotate(15deg);  z-index:3; }
+.geo--ps2 { width:70px; height:16px; background:var(--hot-pink); bottom:32%; right:6%;   transform:rotate(-12deg); z-index:3; }
+.geo--ps3 { width:50px; height:14px; background:var(--hot-pink); top:18%;    right:30%;  transform:rotate(20deg);  z-index:3; }
 
-/* ── Vintage clipart ── */
+/* Yellow dots */
+.geo--yd1 { width:22px; height:22px; background:var(--yellow); border-radius:50%; top:38%;   left:22%;  z-index:3; }
+.geo--yd2 { width:18px; height:18px; background:var(--yellow); border-radius:50%; bottom:35%;right:24%; z-index:3; }
+.geo--yd3 { width:26px; height:26px; background:var(--yellow); border-radius:50%; top:65%;   right:38%; z-index:3; }
+
+/* Lime green triangle */
+.geo--lt1 { width:70px; height:70px; background:#c8f400; clip-path:polygon(50% 0,100% 100%,0 100%); top:8%; right:8%; transform:rotate(15deg); z-index:2; }
+.geo--lt2 { width:55px; height:55px; background:#c8f400; clip-path:polygon(50% 0,100% 100%,0 100%); bottom:25%;left:16%; transform:rotate(-20deg); z-index:2; }
+
+/* ── Vintage clipart — pasted-on illustration feel ── */
 .vclip {
   position: absolute;
   pointer-events: none;
   user-select: none;
-  z-index: 1;
-  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.15));
+  z-index: 3;
+  filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.22));
 }
 
-.vclip--girl    { font-size:5.5rem; top:8%;    left:1%;    transform:rotate(-5deg);  }
-.vclip--books   { font-size:4rem;   top:42%;   left:0.5%;  transform:rotate(3deg);   }
-.vclip--compass { font-size:4.5rem; bottom:16%;left:2%;    transform:rotate(-8deg);  }
-.vclip--dice    { font-size:5.5rem; top:3%;    right:3%;   transform:rotate(15deg);  }
-.vclip--soccer  { font-size:3.5rem; top:4%;    right:19%;  transform:rotate(5deg);   }
-.vclip--gymnast { font-size:5rem;   top:10%;   right:1%;   transform:rotate(8deg);   }
-.vclip--bowl    { font-size:3.5rem; bottom:17%;right:1%;   transform:rotate(-10deg); }
-.vclip--paint   { font-size:3.5rem; top:58%;   right:2%;   transform:rotate(5deg);   }
-.vclip--sun     { font-size:4rem;   top:6%;    left:30%;   transform:rotate(-5deg);  }
-.vclip--kids    { font-size:5rem;   bottom:14%;left:20%;   transform:rotate(-3deg);  }
-.vclip--bike    { font-size:4rem;   bottom:14%;right:18%;  transform:rotate(5deg);   }
-.vclip--rainbow { font-size:4.5rem; top:52%;   left:8%;    transform:rotate(-8deg);  }
+/* White paper backing = cut-out from a book/magazine */
+.vclip-bg {
+  background: var(--white);
+  padding: 6px 8px 10px;
+  box-shadow: 2px 3px 0 rgba(0,0,0,0.18);
+}
+
+.vclip--girl    { font-size:6rem;   top:28%; left:0.5%; transform:rotate(-4deg); }
+.vclip--books   { font-size:4.5rem; top:55%; left:1%;   transform:rotate(5deg);  }
+.vclip--compass { font-size:5rem;   bottom:18%;left:4%; transform:rotate(-10deg);}
+.vclip--dice    { font-size:6rem;   top:22%; right:1%;  transform:rotate(18deg); }
+.vclip--soccer  { font-size:3.5rem; top:7%;  right:22%; transform:rotate(5deg);  }
+.vclip--gymnast { font-size:5.5rem; top:52%; right:1%;  transform:rotate(6deg);  }
+.vclip--bowl    { font-size:4rem;   bottom:19%;right:3%;transform:rotate(-8deg); }
+.vclip--paint   { font-size:3.5rem; top:5%;  left:22%;  transform:rotate(-6deg); }
+.vclip--sun     { font-size:3.5rem; top:8%;  right:42%; transform:rotate(10deg); }
+.vclip--kids    { font-size:5.5rem; bottom:18%;left:22%;transform:rotate(-2deg); }
+.vclip--bike    { font-size:4.5rem; top:5%;  left:5%;   transform:rotate(-8deg); }
+.vclip--rainbow { font-size:4rem;   bottom:20%;right:20%;transform:rotate(4deg); }
+.vclip--cookie  { font-size:3.5rem; top:40%; left:4%;   transform:rotate(8deg);  }
+.vclip--laptop  { font-size:4rem;   bottom:18%;right:8%;transform:rotate(-5deg); }
+
+/* Sticker labels */
+.hero-sticker {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 4;
+  font-family: var(--font-titan);
+  font-size: 0.85rem;
+  background: var(--white);
+  color: var(--black);
+  border: 2px solid var(--black);
+  padding: 0.25em 0.6em;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.hero-sticker--liveitup {
+  top: 28%; right: 14%;
+  transform: rotate(-6deg);
+  background: var(--light-blue);
+  font-family: var(--font-fredoka);
+  font-size: 1rem;
+}
+
+.hero-sticker--play {
+  bottom: 24%; right: 10%;
+  transform: rotate(4deg);
+  background: var(--yellow);
+  letter-spacing: 0.1em;
+}
 
 /* Join section clipart */
 .clipart--join-star1  { top: 10%; right: 8%;  font-size: 3rem;   transform: rotate(20deg); }
@@ -172,11 +246,11 @@
   left: 0;
   right: 0;
   overflow: hidden;
-  background: var(--purple);
+  background: var(--teal);
   border-top: 3px solid var(--black);
   border-bottom: 3px solid var(--black);
   padding: 0.4rem 0;
-  z-index: 2;
+  z-index: 5;
 }
 
 .marquee-track {
@@ -189,7 +263,7 @@
 .marquee-track span {
   font-family: var(--font-titan);
   font-size: 1.1rem;
-  color: var(--yellow);
+  color: var(--white);
   white-space: nowrap;
   padding: 0 1.5rem;
   letter-spacing: 0.05em;
