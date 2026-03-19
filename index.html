@@ -40,45 +40,41 @@
   <!-- HERO -->
   <section class="hero" id="hero">
 
-    <!-- Cut-paper geometric shapes -->
-    <div class="geo geo--ot1" aria-hidden="true"></div>
-    <div class="geo geo--ot2" aria-hidden="true"></div>
-    <div class="geo geo--ot3" aria-hidden="true"></div>
-    <div class="geo geo--ot4" aria-hidden="true"></div>
-    <div class="geo geo--ts1" aria-hidden="true"></div>
-    <div class="geo geo--ts2" aria-hidden="true"></div>
-    <div class="geo geo--ts3" aria-hidden="true"></div>
-    <div class="geo geo--ps1" aria-hidden="true"></div>
-    <div class="geo geo--ps2" aria-hidden="true"></div>
-    <div class="geo geo--ps3" aria-hidden="true"></div>
-    <div class="geo geo--yd1" aria-hidden="true"></div>
-    <div class="geo geo--yd2" aria-hidden="true"></div>
-    <div class="geo geo--yd3" aria-hidden="true"></div>
-    <div class="geo geo--lt1" aria-hidden="true"></div>
-    <div class="geo geo--lt2" aria-hidden="true"></div>
-
-    <!-- Vintage magazine clip-art -->
-    <div class="vclip vclip--bike    vclip-bg" aria-hidden="true">🚴</div>
-    <div class="vclip vclip--girl    vclip-bg" aria-hidden="true">👧</div>
-    <div class="vclip vclip--books   vclip-bg" aria-hidden="true">📚</div>
-    <div class="vclip vclip--compass vclip-bg" aria-hidden="true">🧭</div>
-    <div class="vclip vclip--dice    vclip-bg" aria-hidden="true">🎲</div>
-    <div class="vclip vclip--soccer  vclip-bg" aria-hidden="true">⚽🏀⚾</div>
-    <div class="vclip vclip--gymnast vclip-bg" aria-hidden="true">🤸</div>
-    <div class="vclip vclip--cookie  vclip-bg" aria-hidden="true">🍪</div>
-    <div class="vclip vclip--paint"            aria-hidden="true">🎨</div>
-    <div class="vclip vclip--sun"              aria-hidden="true">☀️</div>
-    <div class="vclip vclip--kids    vclip-bg" aria-hidden="true">🏊</div>
-    <div class="vclip vclip--rainbow vclip-bg" aria-hidden="true">🦋</div>
-    <div class="vclip vclip--bowl    vclip-bg" aria-hidden="true">🎳</div>
-    <div class="vclip vclip--laptop  vclip-bg" aria-hidden="true">🖥️</div>
-
-    <!-- Sticker labels -->
-    <div class="hero-sticker hero-sticker--liveitup" aria-hidden="true">Live It Up!</div>
-    <div class="hero-sticker hero-sticker--play"     aria-hidden="true">PLAY</div>
-
-    <!-- Central starburst blob -->
-    <div class="hero-starburst" aria-hidden="true"></div>
+    <!-- Two-layer cut-paper starburst (orange behind, lime green in front) -->
+    <svg class="hero-svg" viewBox="0 0 800 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <!-- Rough scissors-cut edge + paper grain, two seeds for each layer -->
+        <filter id="cut-orange" x="-12%" y="-12%" width="124%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="4" seed="7" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="11" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.68 0.72" numOctaves="3" stitchTiles="stitch" result="grain"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.1 0" in="grain" result="grainA"/>
+          <feComposite in="grainA" in2="displaced" operator="in" result="maskedGrain"/>
+          <feBlend in="displaced" in2="maskedGrain" mode="multiply"/>
+        </filter>
+        <filter id="cut-green" x="-12%" y="-12%" width="124%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="4" seed="3" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+          <feDropShadow dx="-4" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.18)" result="shadowed"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.68 0.72" numOctaves="3" stitchTiles="stitch" result="grain"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.09 0" in="grain" result="grainA"/>
+          <feComposite in="grainA" in2="displaced" operator="in" result="maskedGrain"/>
+          <feBlend in="displaced" in2="maskedGrain" mode="multiply"/>
+        </filter>
+      </defs>
+      <!-- Orange layer — larger, spikier, sits behind -->
+      <path class="star-orange" filter="url(#cut-orange)"
+        d="M 400,25 L 445,150 L 560,55 L 528,198 L 648,168 L 588,278
+           L 728,332 L 582,378 L 670,458 L 544,448 L 592,578 L 472,514
+           L 445,628 L 382,524 L 295,622 L 298,488 L 182,532 L 226,432
+           L 88,416  L 196,340 L 106,256 L 236,242 L 170,106 L 306,180 Z"/>
+      <!-- Lime green layer — slightly smaller, offset up-left, covers most of orange -->
+      <path class="star-green" filter="url(#cut-green)"
+        d="M 400,82 L 438,178 L 522,104 L 512,210 L 616,188 L 558,278
+           L 672,306 L 563,356 L 652,420 L 548,428 L 592,528 L 488,479
+           L 480,580 L 412,502 L 356,592 L 333,492 L 248,535 L 274,438
+           L 158,450 L 238,368 L 143,320 L 249,280 L 174,192 L 292,218 Z"/>
+    </svg>
 
     <!-- Main content -->
     <div class="hero-content">

@@ -12,62 +12,30 @@
   padding-bottom: 5rem;
 }
 
-/* Teal construction-paper corners */
-.hero::before {
-  content: '';
+/* ── Two-layer SVG starburst ── */
+.hero-svg {
   position: absolute;
-  top: 0; left: 0;
-  width: 260px; height: 200px;
-  background: var(--teal);
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  z-index: 0;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 40px; right: 0;
-  width: 220px; height: 180px;
-  background: var(--teal);
-  clip-path: polygon(100% 0, 100% 100%, 0 100%);
-  z-index: 0;
-}
-
-/* ── Central starburst blob (hand-cut irregular) ── */
-.hero-starburst {
-  position: absolute;
-  width: min(82vw, 680px);
-  height: min(82vw, 680px);
-  background: #c8f400;
-  clip-path: polygon(
-    50% 2%,
-    55% 16%, 63%  5%, 60% 21%, 74% 10%, 70% 27%,
-    84% 18%, 79% 34%, 95% 30%, 87% 45%,
-    99% 50%, 87% 56%, 93% 68%, 78% 64%,
-    86% 79%, 70% 72%, 74% 89%, 61% 77%,
-    63% 95%, 53% 81%,
-    50% 99%,
-    47% 81%, 37% 95%, 39% 77%, 26% 89%,
-    30% 72%, 14% 79%, 22% 64%,
-     7% 68%, 13% 56%,  1% 50%,
-    13% 45%,  5% 30%, 21% 34%, 16% 18%,
-    30% 27%, 26% 10%, 40% 21%, 37%  5%, 45% 16%
-  );
+  width: min(92vw, 860px);
+  height: auto;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -53%);
+  transform: translate(-50%, -54%);
   z-index: 1;
 }
 
-/* ── Hero content stack ── */
+.star-orange { fill: #f5a020; }
+.star-green  { fill: #9bc83c; }
+
+/* ── Hero content (text + CTA) ── */
 .hero-content {
   position: relative;
-  z-index: 4;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.2rem;
   padding: 0 1rem;
-  margin-top: -3rem;
+  margin-top: -4rem;
 }
 
 /* ── 90's cut-out letters ── */
@@ -131,7 +99,6 @@
   background: var(--white);
   color: var(--black);
   padding: 0.12em 1.2em;
-  border: none;
   outline: 2.5px solid var(--black);
   transform: rotate(-1deg);
   box-shadow: 3px 4px 0 rgba(0,0,0,0.25);
@@ -139,105 +106,10 @@
   margin-top: 0.3em;
 }
 
-/* ── Cut-paper geometric shapes ── */
-.geo {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Large orange triangles radiating toward starburst */
-.geo--ot1 { width:160px; height:130px; background:var(--orange); clip-path:polygon(0 100%,100% 0,100% 100%);  top:28%; left:0;      transform:rotate(-5deg);  z-index:2; }
-.geo--ot2 { width:140px; height:110px; background:var(--orange); clip-path:polygon(0 0,100% 0,100% 100%);     top:20%; right:0;     transform:rotate(8deg);   z-index:2; }
-.geo--ot3 { width:130px; height:120px; background:var(--orange); clip-path:polygon(0 0,100% 100%,0 100%);     bottom:22%;left:8%;   transform:rotate(12deg);  z-index:2; }
-.geo--ot4 { width:110px; height:100px; background:var(--orange); clip-path:polygon(50% 0,100% 100%,0 100%);   top:5%;  right:22%;  transform:rotate(-10deg); z-index:2; }
-
-/* Teal accent strips / shapes */
-.geo--ts1 { width:180px; height:22px; background:var(--teal);   top:32%; left:12%;   transform:rotate(-8deg);  z-index:3; }
-.geo--ts2 { width:140px; height:18px; background:var(--teal);   bottom:28%;right:14%; transform:rotate(6deg);   z-index:3; }
-.geo--ts3 { width:80px;  height:80px; background:var(--teal);   clip-path:polygon(0 0,100% 0,0 100%); bottom:22%;right:0; transform:rotate(-3deg); z-index:0; }
-
-/* Hot-pink strips */
-.geo--ps1 { width:90px; height:18px; background:var(--hot-pink); top:55%;    left:4%;    transform:rotate(15deg);  z-index:3; }
-.geo--ps2 { width:70px; height:16px; background:var(--hot-pink); bottom:32%; right:6%;   transform:rotate(-12deg); z-index:3; }
-.geo--ps3 { width:50px; height:14px; background:var(--hot-pink); top:18%;    right:30%;  transform:rotate(20deg);  z-index:3; }
-
-/* Yellow dots */
-.geo--yd1 { width:22px; height:22px; background:var(--yellow); border-radius:50%; top:38%;   left:22%;  z-index:3; }
-.geo--yd2 { width:18px; height:18px; background:var(--yellow); border-radius:50%; bottom:35%;right:24%; z-index:3; }
-.geo--yd3 { width:26px; height:26px; background:var(--yellow); border-radius:50%; top:65%;   right:38%; z-index:3; }
-
-/* Lime green triangle */
-.geo--lt1 { width:70px; height:70px; background:#c8f400; clip-path:polygon(50% 0,100% 100%,0 100%); top:8%; right:8%; transform:rotate(15deg); z-index:2; }
-.geo--lt2 { width:55px; height:55px; background:#c8f400; clip-path:polygon(50% 0,100% 100%,0 100%); bottom:25%;left:16%; transform:rotate(-20deg); z-index:2; }
-
-/* ── Vintage clipart — pasted-on illustration feel ── */
-.vclip {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-  z-index: 3;
-  filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.22));
-}
-
-/* White paper backing = cut-out from a book/magazine */
-.vclip-bg {
-  background: var(--white);
-  padding: 6px 8px 10px;
-  box-shadow: 2px 3px 0 rgba(0,0,0,0.18);
-}
-
-.vclip--girl    { font-size:6rem;   top:28%; left:0.5%; transform:rotate(-4deg); }
-.vclip--books   { font-size:4.5rem; top:55%; left:1%;   transform:rotate(5deg);  }
-.vclip--compass { font-size:5rem;   bottom:18%;left:4%; transform:rotate(-10deg);}
-.vclip--dice    { font-size:6rem;   top:22%; right:1%;  transform:rotate(18deg); }
-.vclip--soccer  { font-size:3.5rem; top:7%;  right:22%; transform:rotate(5deg);  }
-.vclip--gymnast { font-size:5.5rem; top:52%; right:1%;  transform:rotate(6deg);  }
-.vclip--bowl    { font-size:4rem;   bottom:19%;right:3%;transform:rotate(-8deg); }
-.vclip--paint   { font-size:3.5rem; top:5%;  left:22%;  transform:rotate(-6deg); }
-.vclip--sun     { font-size:3.5rem; top:8%;  right:42%; transform:rotate(10deg); }
-.vclip--kids    { font-size:5.5rem; bottom:18%;left:22%;transform:rotate(-2deg); }
-.vclip--bike    { font-size:4.5rem; top:5%;  left:5%;   transform:rotate(-8deg); }
-.vclip--rainbow { font-size:4rem;   bottom:20%;right:20%;transform:rotate(4deg); }
-.vclip--cookie  { font-size:3.5rem; top:40%; left:4%;   transform:rotate(8deg);  }
-.vclip--laptop  { font-size:4rem;   bottom:18%;right:8%;transform:rotate(-5deg); }
-
-/* Sticker labels */
-.hero-sticker {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-  z-index: 4;
-  font-family: var(--font-titan);
-  font-size: 0.85rem;
-  background: var(--white);
-  color: var(--black);
-  border: 2px solid var(--black);
-  padding: 0.25em 0.6em;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-  line-height: 1.2;
-  text-align: center;
-}
-
-.hero-sticker--liveitup {
-  top: 28%; right: 14%;
-  transform: rotate(-6deg);
-  background: var(--light-blue);
-  font-family: var(--font-fredoka);
-  font-size: 1rem;
-}
-
-.hero-sticker--play {
-  bottom: 24%; right: 10%;
-  transform: rotate(4deg);
-  background: var(--yellow);
-  letter-spacing: 0.1em;
-}
-
 /* Join section clipart */
 .clipart--join-star1  { top: 10%; right: 8%;  font-size: 3rem;   transform: rotate(20deg); }
 .clipart--join-star2  { bottom: 20%; left: 5%; font-size: 2.5rem; transform: rotate(-12deg); }
-.clipart--join-balloon{ top: 15%; left: 7%;  font-size: 4rem;   transform: rotate(5deg); }
+.clipart--join-balloon{ top: 15%; left: 7%;   font-size: 4rem;   transform: rotate(5deg); }
 
 /* ── Marquee ── */
 .marquee-wrap {
