@@ -6,11 +6,13 @@
     top: var(--nav-h);
     left: 0;
     right: 0;
-    background: var(--purple);
+    background: var(--cream);
     flex-direction: column;
     align-items: center;
     gap: 0;
     border-top: 3px solid var(--black);
+    border-bottom: 3px solid var(--black);
+    padding: 0.5rem 0 1rem;
   }
 
   .nav-links.open {
@@ -20,13 +22,12 @@
   .nav-links li {
     width: 100%;
     text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
   .nav-links a {
     display: block;
-    padding: 0.9rem 1rem;
-    font-size: 1.3rem;
+    padding: 0.75rem 1rem;
+    font-size: 1.2rem;
   }
 
   .nav-cta {
@@ -38,18 +39,11 @@
     display: block;
   }
 
-  /* Hero */
-  .hero-heading {
-    font-size: clamp(2.8rem, 15vw, 5rem);
-    justify-content: center;
+  /* Hero title */
+  .hero-title-pill {
+    font-size: clamp(2rem, 12vw, 4rem);
+    padding: 0.6rem 1.5rem;
   }
-
-  .clipart--rainbow   { font-size: 3rem; }
-  .clipart--sun       { font-size: 3rem; }
-  .clipart--butterfly { font-size: 2.5rem; top: 8%; right: 4%; }
-  .clipart--dice      { display: none; }
-  .clipart--star1     { font-size: 2rem; }
-  .clipart--star2     { font-size: 2rem; }
 
   /* About */
   .about-inner {
@@ -62,14 +56,24 @@
   }
 
   .about-photo {
-    max-width: 240px;
-    transform: rotate(1deg);
+    max-width: 280px;
+  }
+
+  /* Instructors */
+  .instructors-grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
   }
 
   /* Activities */
   .activity-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 1rem;
+  }
+
+  /* Field trips */
+  .film-strip {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   /* Dates */
@@ -110,23 +114,28 @@
     padding: 4rem 1.2rem;
   }
 
-  .section-heading {
-    font-size: clamp(2rem, 9vw, 3.5rem);
-    margin-bottom: 1.5rem;
+  /* Section banner */
+  .section-banner .banner-text {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  }
+
+  .section-banner .banner-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-heading {
-    font-size: clamp(2.2rem, 18vw, 4rem);
-  }
-
   .notepad-card {
     max-width: 100%;
-    transform: rotate(-0.5deg);
   }
 
   .activity-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .film-strip {
     grid-template-columns: repeat(3, 1fr);
   }
 }
