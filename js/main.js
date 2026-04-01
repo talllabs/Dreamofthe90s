@@ -41,7 +41,7 @@
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.activity-card, .price-tag, .notepad-card, .dates-card').forEach(function (el) {
+    document.querySelectorAll('.activity-card, .price-tag, .notepad-card, .dates-card, .instructor-card').forEach(function (el) {
       el.classList.add('fade-in');
       observer.observe(el);
     });
