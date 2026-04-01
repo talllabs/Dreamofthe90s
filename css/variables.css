@@ -1,34 +1,47 @@
 :root {
   /* Colors */
-  --lime:       #C8F400;
-  --orange:     #FF6B00;
-  --teal:       #00B8A9;
-  --purple:     #7B2FBE;
-  --yellow:     #FFE533;
-  --hot-pink:   #FF1F7D;
+  --cream:      #FEF9EC;
+  --yellow:     #F5C842;
+  --orange:     #E8694A;
+  --blue:       #7BBFE8;
+  --green:      #6BBF6A;
+  --purple:     #7B5EA7;
+  --lavender:   #C5A8E8;
+  --pink:       #E8A0C8;
+  --teal:       #4ABBB0;
+  --hot-pink:   #E84080;
+  --lime:       #A8D840;
+  --coral:      #FF9B7A;
   --black:      #111111;
-  --off-white:  #F5F0E8;
   --white:      #ffffff;
+  --off-white:  #F5F0E8;
   --light-blue: #AAE4FF;
-  --pink:       #FF9ECD;
 
   /* Fonts */
+  --font-heading: 'Fredoka One', cursive;
+  --font-nunito:  'Nunito', sans-serif;
+  --font-body:    'Nunito', sans-serif;
   --font-titan:   'Titan One', sans-serif;
   --font-marker:  'Permanent Marker', cursive;
   --font-boogaloo:'Boogaloo', sans-serif;
   --font-fredoka: 'Fredoka One', cursive;
   --font-vt323:   'VT323', monospace;
-  --font-body:    'Boogaloo', sans-serif;
 
   /* Shadows */
   --shadow-sm:  3px 3px 0 var(--black);
   --shadow-md:  5px 5px 0 var(--black);
   --shadow-lg:  7px 7px 0 var(--black);
 
+  /* Border radius */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   24px;
+  --radius-pill: 100px;
+
   /* Spacing */
   --section-pad: 5rem 1.5rem;
   --max-width: 1100px;
 
   /* Nav height */
-  --nav-h: 56px;
+  --nav-h: 62px;
 }

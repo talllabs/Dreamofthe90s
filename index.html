@@ -9,7 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Boogaloo&family=Titan+One&family=Permanent+Marker&family=Fredoka+One&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Boogaloo&family=Titan+One&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/reset.css" />
@@ -25,7 +25,7 @@
   <!-- NAV -->
   <nav class="site-nav" id="site-nav">
     <div class="nav-inner">
-      <span class="nav-logo">90's&#9733;</span>
+      <span class="nav-logo">90's&#9733; Day Camp</span>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#activities">Activities</a></li>
@@ -40,10 +40,8 @@
   <!-- HERO -->
   <section class="hero" id="hero">
 
-    <!-- Two-layer cut-paper starburst (orange behind, lime green in front) -->
     <svg class="hero-svg" viewBox="0 0 800 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
-        <!-- Rough scissors-cut edge + paper grain, two seeds for each layer -->
         <filter id="cut-orange" x="-12%" y="-12%" width="124%" height="124%">
           <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="4" seed="7" result="noise"/>
           <feDisplacementMap in="SourceGraphic" in2="noise" scale="11" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
@@ -62,13 +60,11 @@
           <feBlend in="displaced" in2="maskedGrain" mode="multiply"/>
         </filter>
       </defs>
-      <!-- Orange layer — larger, spikier, sits behind -->
       <path class="star-orange" filter="url(#cut-orange)"
         d="M 400,25 L 445,150 L 560,55 L 528,198 L 648,168 L 588,278
            L 728,332 L 582,378 L 670,458 L 544,448 L 592,578 L 472,514
            L 445,628 L 382,524 L 295,622 L 298,488 L 182,532 L 226,432
            L 88,416  L 196,340 L 106,256 L 236,242 L 170,106 L 306,180 Z"/>
-      <!-- Lime green layer — slightly smaller, offset up-left, covers most of orange -->
       <path class="star-green" filter="url(#cut-green)"
         d="M 400,82 L 438,178 L 522,104 L 512,210 L 616,188 L 558,278
            L 672,306 L 563,356 L 652,420 L 548,428 L 592,528 L 488,479
@@ -76,19 +72,16 @@
            L 158,450 L 238,368 L 143,320 L 249,280 L 174,192 L 292,218 Z"/>
     </svg>
 
-    <!-- Main content -->
     <div class="hero-content">
-      <div class="hero-90s" aria-label="90's">
-        <span>9</span><span>0</span><span class="apos">'</span><span>s</span>
+      <div class="hero-title-pill">
+        <span class="title-line-1">90's Summer</span>
+        <span class="title-line-2">Day Camp</span>
+        <span class="title-line-3">Victory Park, Pasadena</span>
       </div>
-      <div class="hero-summer" aria-label="Summer">
-        <span class="hs-S">S</span><span class="hs-U">U</span><span class="hs-M1">M</span><span class="hs-M2">M</span><span class="hs-E">E</span><span class="hs-R">R</span>
-      </div>
-      <div class="hero-daycamp">Day Camp</div>
-      <a href="#join" class="btn btn--hero" style="margin-top:1.5rem;">Grab a Spot!</a>
+      <p class="hero-tagline">Hosted by Mia &amp; Ashleigh &nbsp;&#8226;&nbsp; 8 kids max &nbsp;&#8226;&nbsp; June&ndash;July</p>
+      <a href="#join" class="btn btn--hero">Grab a Spot!</a>
     </div>
 
-    <!-- Marquee -->
     <div class="marquee-wrap" aria-hidden="true">
       <div class="marquee-track">
         <span>swim &#10022;</span>
@@ -103,7 +96,6 @@
         <span>bowling &#10022;</span>
         <span>beach trip &#10022;</span>
         <span>park adventures &#10022;</span>
-        <!-- duplicate for seamless loop -->
         <span>swim &#10022;</span>
         <span>bike ride &#10022;</span>
         <span>craft time &#10022;</span>
@@ -126,9 +118,9 @@
   <section class="about section" id="about">
     <div class="section-inner about-inner">
       <div class="about-text">
-        <h2 class="ransom-heading section-heading">
-          <span class="r-titan r-purple r-up">The</span>
-          <span class="r-fredoka r-orange r-down">Vibe</span>
+        <h2 class="section-banner">
+          <span class="banner-icon" style="background: var(--light-blue);">📝</span>
+          <span class="banner-text">What to Expect</span>
         </h2>
         <div class="notepad-card">
           <p>
@@ -148,49 +140,78 @@
     </div>
   </section>
 
+  <!-- INSTRUCTORS -->
+  <section class="instructors section" id="instructors">
+    <div class="section-inner">
+      <h2 class="section-banner section-banner--centered" style="justify-content:center;">
+        <span class="banner-icon" style="background: var(--pink);">👩‍🎤</span>
+        <span class="banner-text">Meet the Team</span>
+      </h2>
+      <div class="instructors-grid">
+        <div class="instructor-card fade-in">
+          <div class="instructor-photo-wrap bg-coral">
+            <img src="images/mia.png" alt="Mia" class="instructor-photo" />
+          </div>
+          <div class="instructor-info">
+            <div class="instructor-name">Mia</div>
+            <div class="instructor-role">Camp Co-Host &amp; Music Lead</div>
+          </div>
+        </div>
+        <div class="instructor-card fade-in">
+          <div class="instructor-photo-wrap bg-yellow">
+            <img src="images/ashleigh.png" alt="Ashleigh" class="instructor-photo" />
+          </div>
+          <div class="instructor-info">
+            <div class="instructor-name">Ashleigh</div>
+            <div class="instructor-role">Camp Co-Host &amp; Adventure Lead</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ACTIVITIES -->
   <section class="activities section section--tinted" id="activities">
     <div class="section-inner">
-      <h2 class="ransom-heading section-heading centered">
-        <span class="r-marker r-teal r-up">What</span>
-        <span class="r-titan r-purple r-down">We</span>
-        <span class="r-fredoka r-orange r-up">Do</span>
+      <h2 class="section-banner">
+        <span class="banner-icon" style="background: var(--yellow);">🎉</span>
+        <span class="banner-text">What We Do</span>
       </h2>
 
       <div class="activity-grid">
-        <div class="activity-card" style="--rot: -3deg; --card-bg: #FFE533;">
+        <div class="activity-card fade-in" style="--card-bg: #FFE57A;">
           <div class="activity-icon">🏊</div>
           <div class="activity-name">Swim</div>
         </div>
-        <div class="activity-card" style="--rot: 2deg; --card-bg: #C8F400;">
+        <div class="activity-card fade-in" style="--card-bg: #A8E878;">
           <div class="activity-icon">🚲</div>
           <div class="activity-name">Bike Ride</div>
         </div>
-        <div class="activity-card" style="--rot: -4deg; --card-bg: #FF9ECD;">
+        <div class="activity-card fade-in" style="--card-bg: #FFB8D8;">
           <div class="activity-icon">🎨</div>
           <div class="activity-name">Arts &amp; Crafts</div>
         </div>
-        <div class="activity-card" style="--rot: 3deg; --card-bg: #AAE4FF;">
+        <div class="activity-card fade-in" style="--card-bg: #AAE4FF;">
           <div class="activity-icon">🌳</div>
           <div class="activity-name">Climb Trees</div>
         </div>
-        <div class="activity-card" style="--rot: -2deg; --card-bg: #FF6B00; color: white;">
+        <div class="activity-card fade-in" style="--card-bg: #FFB08A; color: #111;">
           <div class="activity-icon">🎤</div>
           <div class="activity-name">Talent Show</div>
         </div>
-        <div class="activity-card" style="--rot: 4deg; --card-bg: #FFE533;">
+        <div class="activity-card fade-in" style="--card-bg: #FFE57A;">
           <div class="activity-icon">🍳</div>
           <div class="activity-name">Kitchen Mess</div>
         </div>
-        <div class="activity-card" style="--rot: -1deg; --card-bg: #C8F400;">
+        <div class="activity-card fade-in" style="--card-bg: #A8E878;">
           <div class="activity-icon">🤲</div>
           <div class="activity-name">Cat's Cradle</div>
         </div>
-        <div class="activity-card" style="--rot: 2deg; --card-bg: #FF9ECD;">
+        <div class="activity-card fade-in" style="--card-bg: #D4B8F0;">
           <div class="activity-icon">🎭</div>
           <div class="activity-name">Dress-Up &amp; Play</div>
         </div>
-        <div class="activity-card" style="--rot: -3deg; --card-bg: #AAE4FF;">
+        <div class="activity-card fade-in" style="--card-bg: #AAE4FF;">
           <div class="activity-icon">🥏</div>
           <div class="activity-name">Yard Games</div>
         </div>
@@ -199,13 +220,13 @@
     </div>
     <div class="film-strip-wrap">
       <div class="film-strip-label">Field Trips &#127916;</div>
-      <div class="film-strip">
-        <div class="film-frame">📚<br>Library</div>
-        <div class="film-frame">🏖️<br>Beach</div>
-        <div class="film-frame">🎳<br>Bowling</div>
-        <div class="film-frame">🥾<br>Hike</div>
-        <div class="film-frame">🌲<br>Park</div>
-        <div class="film-frame">🏞️<br>Nature</div>
+      <div class="film-strip" style="max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem;">
+        <div class="film-frame"><span class="frame-emoji">📚</span>Library</div>
+        <div class="film-frame"><span class="frame-emoji">🏖️</span>Beach</div>
+        <div class="film-frame"><span class="frame-emoji">🎳</span>Bowling</div>
+        <div class="film-frame"><span class="frame-emoji">🥾</span>Hike</div>
+        <div class="film-frame"><span class="frame-emoji">🌲</span>Park</div>
+        <div class="film-frame"><span class="frame-emoji">🏞️</span>Nature</div>
       </div>
     </div>
   </section>
@@ -217,9 +238,9 @@
         <div class="starburst">7<br>WEEKS!</div>
       </div>
 
-      <h2 class="ransom-heading section-heading centered">
-        <span class="r-titan r-yellow r-up">When</span>
-        <span class="r-fredoka r-white r-down">Is It?</span>
+      <h2 class="section-banner">
+        <span class="banner-icon" style="background: var(--lavender);">📅</span>
+        <span class="banner-text" style="color: var(--white);">When Is It?</span>
       </h2>
 
       <div class="dates-card">
@@ -251,23 +272,22 @@
   </section>
 
   <!-- PRICING -->
-  <section class="pricing section section--paper" id="pricing">
+  <section class="pricing section" id="pricing">
     <div class="section-inner">
-      <h2 class="ransom-heading section-heading centered">
-        <span class="r-titan r-purple r-down">What's</span>
-        <span class="r-boogaloo r-orange r-up">the</span>
-        <span class="r-marker r-teal r-down">Cost?</span>
+      <h2 class="section-banner section-banner--centered" style="justify-content:center;">
+        <span class="banner-icon" style="background: var(--coral);">🏷️</span>
+        <span class="banner-text">What's the Cost?</span>
       </h2>
 
       <div class="pricing-cards">
-        <div class="price-tag price-tag--weekly">
+        <div class="price-tag price-tag--weekly fade-in">
           <div class="price-tag-hole"></div>
           <div class="price-amount">$500</div>
           <div class="price-unit">per week</div>
           <div class="price-detail">pay as you go</div>
         </div>
 
-        <div class="price-tag price-tag--full">
+        <div class="price-tag price-tag--full fade-in">
           <div class="price-tag-hole"></div>
           <div class="price-save-sticker">SAVE<br>$500!</div>
           <div class="price-amount">$3,000</div>
@@ -287,9 +307,9 @@
     <div class="clipart clipart--join-balloon" aria-hidden="true">🎈</div>
 
     <div class="section-inner join-inner">
-      <h2 class="ransom-heading section-heading centered">
-        <span class="r-titan r-purple r-up">Want</span>
-        <span class="r-fredoka r-orange r-down">In?</span>
+      <h2 class="section-banner" style="background: var(--white);">
+        <span class="banner-icon" style="background: var(--yellow);">✉️</span>
+        <span class="banner-text">Sign Up!</span>
       </h2>
 
       <p class="join-copy">
