@@ -1,56 +1,78 @@
-/* ── Ransom-note heading system ── */
-.ransom-heading {
-  line-height: 1.1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.15em;
-}
-
-.ransom-heading span {
-  display: inline-block;
-}
-
-/* Fonts */
-.r-titan   { font-family: var(--font-titan); }
-.r-marker  { font-family: var(--font-marker); }
-.r-boogaloo{ font-family: var(--font-boogaloo); font-weight: 900; }
-.r-fredoka { font-family: var(--font-fredoka); }
-.r-pixel   { font-family: var(--font-vt323); }
-
-/* Colors */
-.r-lime     { color: var(--lime); -webkit-text-stroke: 1.5px var(--black); }
-.r-orange   { color: var(--orange); }
-.r-teal     { color: var(--teal); }
-.r-purple   { color: var(--purple); }
-.r-yellow   { color: var(--yellow); -webkit-text-stroke: 1.5px var(--black); }
-.r-hot-pink { color: var(--hot-pink); }
-.r-white    { color: var(--white); -webkit-text-stroke: 1px var(--black); }
-.r-black    { color: var(--black); }
-
-/* Rotations */
-.r-up    { transform: rotate(-4deg); }
-.r-down  { transform: rotate(3deg); }
-.r-level { transform: rotate(-1deg); }
-
-/* ── Section headings ── */
-.section-heading {
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
+/* ── Section Banner (pill heading style) ── */
+.section-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--yellow);
+  border: 3px solid var(--black);
+  border-radius: var(--radius-lg);
+  padding: 0.4rem 1.8rem 0.4rem 0.5rem;
+  box-shadow: var(--shadow-md);
   margin-bottom: 2.5rem;
+}
+
+.section-banner .banner-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius-sm);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.section-banner .banner-text {
+  font-family: var(--font-fredoka);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  line-height: 1;
+}
+
+.section-banner--centered {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.section-banner--alt {
+  background: var(--orange);
+}
+
+.section-banner--alt .banner-text {
+  color: var(--white);
 }
 
 /* ── Body copy ── */
 p {
-  font-family: var(--font-boogaloo);
-  font-size: 1.2rem;
-  line-height: 1.6;
+  font-family: var(--font-nunito);
+  font-size: 1.15rem;
+  line-height: 1.7;
 }
 
 strong {
-  font-family: var(--font-fredoka);
+  font-weight: 800;
 }
 
-em {
-  font-family: var(--font-marker);
-  font-style: normal;
-}
+/* ── Legacy ransom-note stubs (unused but kept for safety) ── */
+.ransom-heading { display: inline-flex; flex-wrap: wrap; gap: 0.15em; }
+.section-heading { margin-bottom: 2.5rem; }
+.r-titan   { font-family: var(--font-titan); }
+.r-marker  { font-family: var(--font-marker); }
+.r-boogaloo{ font-family: var(--font-boogaloo); }
+.r-fredoka { font-family: var(--font-fredoka); }
+.r-pixel   { font-family: var(--font-vt323); }
+.r-lime    { color: var(--lime); }
+.r-orange  { color: var(--orange); }
+.r-teal    { color: var(--teal); }
+.r-purple  { color: var(--purple); }
+.r-yellow  { color: var(--yellow); }
+.r-hot-pink{ color: var(--hot-pink); }
+.r-white   { color: var(--white); }
+.r-black   { color: var(--black); }
+.r-up      { transform: rotate(-4deg); }
+.r-down    { transform: rotate(3deg); }
+.r-level   { transform: rotate(-1deg); }

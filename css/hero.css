@@ -1,7 +1,7 @@
 /* ── Hero section ── */
 .hero {
   min-height: 100svh;
-  background: #f4f0e6; /* cream paper */
+  background: var(--cream);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -23,93 +23,66 @@
   z-index: 1;
 }
 
-.star-orange { fill: #f5a020; }
-.star-green  { fill: #9bc83c; }
+.star-orange { fill: var(--coral); }
+.star-green  { fill: var(--yellow); }
 
-/* ── Hero content (text + CTA) ── */
+/* ── Hero content ── */
 .hero-content {
   position: relative;
   z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
+  gap: 1rem;
   padding: 0 1rem;
   margin-top: -4rem;
 }
 
-/* ── 90's cut-out letters ── */
-.hero-90s {
-  display: flex;
-  align-items: baseline;
-  gap: 0.08em;
+/* ── Main pill title ── */
+.hero-title-pill {
+  background: var(--white);
+  border: 4px solid var(--black);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 0.6rem 2.8rem;
+  font-family: var(--font-fredoka);
+  font-size: clamp(2.2rem, 8vw, 5.5rem);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: var(--black);
 }
 
-.hero-90s span {
-  font-family: var(--font-titan);
-  font-size: clamp(2rem, 6.5vw, 4.2rem);
-  background: var(--white);
+.hero-title-pill .title-line-1 {
+  display: block;
+  color: var(--orange);
+}
+
+.hero-title-pill .title-line-2 {
+  display: block;
+  color: var(--purple);
+}
+
+.hero-title-pill .title-line-3 {
+  display: block;
+  color: var(--black);
+  font-size: 0.55em;
+  letter-spacing: 0.08em;
+}
+
+/* ── Hero tagline ── */
+.hero-tagline {
+  background: var(--purple);
+  color: var(--white);
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  padding: 0.4rem 1.4rem;
   border: 2.5px solid var(--black);
-  padding: 0.05em 0.18em;
-  line-height: 1.1;
-  display: inline-block;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
 }
-
-.hero-90s span:nth-child(1) { color: var(--teal);     transform: rotate(-5deg); }
-.hero-90s span:nth-child(2) { color: var(--purple);   transform: rotate(4deg);  }
-.hero-90s span.apos {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  font-family: var(--font-marker);
-  color: var(--black);
-  font-size: 0.7em;
-  padding: 0;
-}
-.hero-90s span:nth-child(4) { color: var(--hot-pink); transform: rotate(-4deg); font-family: var(--font-fredoka); }
-
-/* ── SUMMER ransom letters ── */
-.hero-summer {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.03em;
-  line-height: 1;
-}
-
-.hero-summer span {
-  font-size: clamp(3rem, 12vw, 8rem);
-  padding: 0.05em 0.1em;
-  display: inline-block;
-  line-height: 1;
-  box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
-}
-
-.hs-S  { font-family: var(--font-titan);    background: var(--yellow);     color: var(--black);   transform: rotate(-4deg); border: 2px solid var(--black); }
-.hs-U  { font-family: var(--font-fredoka);  background: var(--light-blue); color: var(--purple);  transform: rotate(3deg);  border: 2px solid var(--black); }
-.hs-M1 { font-family: var(--font-marker);   background: var(--white);      color: var(--black);   transform: rotate(-5deg); border: 2px solid #555; }
-.hs-M2 { font-family: var(--font-boogaloo); background: var(--orange);     color: var(--white);   transform: rotate(4deg);  border: 2px solid var(--black); }
-.hs-E  { font-family: var(--font-titan);    background: var(--hot-pink);   color: var(--white);   transform: rotate(-3deg); border: 2px solid var(--black); }
-.hs-R  { font-family: var(--font-fredoka);  background: var(--teal);       color: var(--white);   transform: rotate(5deg);  border: 2px solid var(--black); }
-
-/* ── Day Camp handwritten strip ── */
-.hero-daycamp {
-  font-family: var(--font-marker);
-  font-size: clamp(2.2rem, 7vw, 5rem);
-  background: var(--white);
-  color: var(--black);
-  padding: 0.12em 1.2em;
-  outline: 2.5px solid var(--black);
-  transform: rotate(-1deg);
-  box-shadow: 3px 4px 0 rgba(0,0,0,0.25);
-  white-space: nowrap;
-  margin-top: 0.3em;
-}
-
-/* Join section clipart */
-.clipart--join-star1  { top: 10%; right: 8%;  font-size: 3rem;   transform: rotate(20deg); }
-.clipart--join-star2  { bottom: 20%; left: 5%; font-size: 2.5rem; transform: rotate(-12deg); }
-.clipart--join-balloon{ top: 15%; left: 7%;   font-size: 4rem;   transform: rotate(5deg); }
 
 /* ── Marquee ── */
 .marquee-wrap {
@@ -118,10 +91,10 @@
   left: 0;
   right: 0;
   overflow: hidden;
-  background: var(--teal);
+  background: var(--orange);
   border-top: 3px solid var(--black);
   border-bottom: 3px solid var(--black);
-  padding: 0.4rem 0;
+  padding: 0.45rem 0;
   z-index: 5;
 }
 
@@ -133,12 +106,12 @@
 }
 
 .marquee-track span {
-  font-family: var(--font-titan);
-  font-size: 1.1rem;
+  font-family: var(--font-fredoka);
+  font-size: 1.15rem;
   color: var(--white);
   white-space: nowrap;
   padding: 0 1.5rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 @keyframes marquee {
@@ -146,25 +119,47 @@
   to   { transform: translateX(-50%); }
 }
 
-/* Pause on reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
 
+/* ── Torn edge ── */
+.torn-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  pointer-events: none;
+}
+
+.torn-edge--below {
+  bottom: -1px;
+  background: var(--cream);
+  clip-path: polygon(
+    0% 100%, 2% 20%, 5% 80%, 8% 10%, 11% 70%,
+    14% 0%, 17% 65%, 20% 15%, 23% 75%, 26% 5%,
+    29% 60%, 32% 20%, 35% 80%, 38% 0%, 41% 70%,
+    44% 20%, 47% 90%, 50% 10%, 53% 75%, 56% 5%,
+    59% 65%, 62% 25%, 65% 85%, 68% 10%, 71% 70%,
+    74% 0%, 77% 60%, 80% 20%, 83% 80%, 86% 15%,
+    89% 65%, 92% 5%, 95% 75%, 98% 15%, 100% 50%, 100% 100%
+  );
+}
+
 /* ── About section layout ── */
 .about {
-  background: var(--off-white);
+  background: var(--cream);
   padding-top: 6rem;
 }
 
 .about-inner {
   display: grid;
-  grid-template-columns: 1fr 448px;
-  gap: 2rem;
+  grid-template-columns: 1fr 420px;
+  gap: 3rem;
   align-items: start;
 }
 
-.about-text .section-heading {
+.about-text .section-banner {
   margin-bottom: 2rem;
 }
 
@@ -177,16 +172,81 @@
 
 .about-photo {
   width: 100%;
-  max-width: 448px;
-  border-radius: 4px;
-  box-shadow: 4px 6px 0 rgba(0,0,0,0.2);
-  transform: rotate(2deg);
+  max-width: 420px;
+  border-radius: var(--radius-md);
+  border: 3px solid var(--black);
+  box-shadow: var(--shadow-lg);
   display: block;
+}
+
+/* ── Instructors section ── */
+.instructors {
+  background: var(--off-white);
+  padding: var(--section-pad);
+}
+
+.instructors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.instructor-card {
+  border: 3px solid var(--black);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--white);
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.instructor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 var(--black);
+}
+
+.instructor-photo-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.instructor-photo-wrap.bg-coral  { background: var(--coral); }
+.instructor-photo-wrap.bg-yellow { background: var(--yellow); }
+
+.instructor-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.instructor-info {
+  padding: 1.25rem 1.5rem;
+  border-top: 3px solid var(--black);
+}
+
+.instructor-name {
+  font-family: var(--font-fredoka);
+  font-size: 1.7rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.instructor-role {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--purple);
 }
 
 /* ── Dates section ── */
 .dates {
-  background: var(--teal);
+  background: var(--purple);
+  color: var(--white);
   position: relative;
   overflow: hidden;
 }
@@ -199,8 +259,8 @@
     45deg,
     transparent,
     transparent 20px,
-    rgba(0,0,0,0.04) 20px,
-    rgba(0,0,0,0.04) 21px
+    rgba(0,0,0,0.05) 20px,
+    rgba(0,0,0,0.05) 21px
   );
   pointer-events: none;
 }
@@ -216,6 +276,7 @@
   background: var(--white);
   border: 3px solid var(--black);
   box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
   padding: 2.5rem;
   max-width: 700px;
   margin: 0 auto;
@@ -224,16 +285,17 @@
 }
 
 .dates-range {
-  font-family: var(--font-titan);
+  font-family: var(--font-fredoka);
   font-size: clamp(2rem, 6vw, 3.5rem);
   text-align: center;
   color: var(--purple);
-  -webkit-text-stroke: 0.5px var(--black);
+  letter-spacing: 0.02em;
 }
 
 .dates-sub {
-  font-family: var(--font-fredoka);
-  font-size: 1.3rem;
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 1.2rem;
   text-align: center;
   margin: 0.5rem 0;
   color: var(--black);
@@ -241,21 +303,21 @@
 
 .dates-note {
   text-align: center;
-  font-family: var(--font-vt323);
-  font-size: 1.2rem;
-  letter-spacing: 0.05em;
-  color: #555;
+  font-family: var(--font-nunito);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
   margin-top: 0;
 }
 
 /* ── Pricing section ── */
 .pricing {
-  background: var(--off-white);
+  background: var(--cream);
 }
 
 /* ── Join section ── */
 .join {
-  background: var(--lime);
+  background: var(--green);
   text-align: center;
   overflow: hidden;
   position: relative;
@@ -269,14 +331,25 @@
 }
 
 .join-copy {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   max-width: 500px;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-weight: 600;
 }
 
 .join-sign {
   font-family: var(--font-marker);
   font-size: 1.5rem;
   margin-top: 1rem;
-  color: var(--purple);
+  color: var(--white);
 }
+
+/* Join section clipart */
+.clipart {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.clipart--join-star1  { top: 10%; right: 8%;  font-size: 3rem;   transform: rotate(20deg); }
+.clipart--join-star2  { bottom: 20%; left: 5%; font-size: 2.5rem; transform: rotate(-12deg); }
+.clipart--join-balloon{ top: 15%; left: 7%;   font-size: 4rem;   transform: rotate(5deg); }
