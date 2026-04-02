@@ -163,7 +163,7 @@
   letter-spacing: 0.05em;
 }
 
-/* ── Week Selector ── */
+/* ── Week Selector (dates section) ── */
 .week-selector {
   margin-top: 2rem;
   border-top: 2px dashed #ccc;
@@ -202,7 +202,6 @@
 .week-label {
   font-family: var(--font-fredoka);
   font-size: 1.1rem;
-  font-weight: 700;
   min-width: 68px;
   letter-spacing: 0.02em;
 }
@@ -213,22 +212,6 @@
   font-size: 1rem;
   flex: 1;
   color: #333;
-}
-
-.week-reserve {
-  font-family: var(--font-fredoka);
-  font-size: 1rem;
-  background: var(--black);
-  color: var(--white);
-  padding: 0.3rem 1.1rem;
-  border-radius: var(--radius-pill);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: opacity 0.15s;
-}
-
-.week-reserve:hover {
-  opacity: 0.75;
 }
 
 /* ── Price tags ── */
@@ -323,15 +306,6 @@
   transform: rotate(12deg);
 }
 
-.pricing-note {
-  text-align: center;
-  font-size: 1.1rem;
-  color: var(--purple);
-  font-family: var(--font-nunito);
-  font-weight: 700;
-  margin-top: 1rem;
-}
-
 /* ── Payment methods ── */
 .payment-section {
   margin-top: 2rem;
@@ -381,6 +355,190 @@
 .payment-pill--card {
   background: var(--yellow);
   color: var(--black);
+}
+
+/* ── Signup Form ── */
+.signup-form {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-family: var(--font-fredoka);
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+}
+
+.form-input {
+  font-family: var(--font-nunito);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--black);
+  transition: box-shadow 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--yellow);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* ── Week checkboxes in form ── */
+.form-weeks-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-weeks-title {
+  font-family: var(--font-fredoka);
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+  text-transform: uppercase;
+}
+
+.form-weeks-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.week-check {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: box-shadow 0.12s, transform 0.12s;
+  box-shadow: var(--shadow-sm);
+}
+
+.week-check input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--black);
+}
+
+.week-check-body {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  pointer-events: none;
+}
+
+.week-check-num {
+  font-family: var(--font-fredoka);
+  font-size: 1rem;
+  min-width: 62px;
+  letter-spacing: 0.02em;
+}
+
+.week-check-date {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.week-check--1 { background: #AAE4FF; }
+.week-check--2 { background: #FFB08A; }
+.week-check--3 { background: #FFB8D8; }
+.week-check--4 { background: #D4B8F0; }
+.week-check--5 { background: #A8E878; }
+.week-check--6 { background: #FFE57A; }
+.week-check--7 { background: #AAE4FF; }
+
+.week-check:has(input:checked) {
+  box-shadow: 4px 4px 0 var(--black);
+  transform: translateY(-2px);
+}
+
+/* ── Price calculator ── */
+.price-calc {
+  background: var(--white);
+  border: 3px solid var(--black);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.price-calc-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.price-calc-label {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.price-calc-amount {
+  font-family: var(--font-fredoka);
+  font-size: 2rem;
+  color: var(--purple);
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.price-calc-savings {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--green);
+  display: none;
+}
+
+.price-calc-savings.visible {
+  display: block;
+}
+
+.form-submit {
+  align-self: center;
+  margin-top: 0.5rem;
 }
 
 /* ── Entrance animations ── */
