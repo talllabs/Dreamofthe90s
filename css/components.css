@@ -53,6 +53,7 @@
 
 .notepad-card p {
   color: var(--white);
+  font-size: 1.44rem;
 }
 
 /* ── Activity cards ── */
@@ -162,25 +163,72 @@
   letter-spacing: 0.05em;
 }
 
-/* ── CSS Starburst ── */
-.starburst {
-  width: 270px;
-  height: 270px;
-  background: var(--coral);
-  color: var(--white);
+/* ── Week Selector ── */
+.week-selector {
+  margin-top: 2rem;
+  border-top: 2px dashed #ccc;
+  padding-top: 1.5rem;
+}
+
+.week-selector-title {
   font-family: var(--font-fredoka);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--purple);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.week-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  line-height: 1.1;
-  clip-path: polygon(
-    50% 0%, 61% 35%, 98% 35%, 68% 57%,
-    79% 91%, 50% 70%, 21% 91%, 32% 57%,
-    2% 35%, 39% 35%
-  );
-  border: 3px solid var(--black);
+  gap: 1rem;
+  padding: 0.65rem 1rem;
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.6rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.week-row--1 { background: #AAE4FF; }
+.week-row--2 { background: #FFB08A; }
+.week-row--3 { background: #FFB8D8; }
+.week-row--4 { background: #D4B8F0; }
+.week-row--5 { background: #A8E878; }
+.week-row--6 { background: #FFE57A; }
+.week-row--7 { background: #AAE4FF; }
+
+.week-label {
+  font-family: var(--font-fredoka);
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-width: 68px;
+  letter-spacing: 0.02em;
+}
+
+.week-dates {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 1rem;
+  flex: 1;
+  color: #333;
+}
+
+.week-reserve {
+  font-family: var(--font-fredoka);
+  font-size: 1rem;
+  background: var(--black);
+  color: var(--white);
+  padding: 0.3rem 1.1rem;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: opacity 0.15s;
+}
+
+.week-reserve:hover {
+  opacity: 0.75;
 }
 
 /* ── Price tags ── */
@@ -194,7 +242,7 @@
 
 .price-tag {
   position: relative;
-  width: 260px;
+  width: 280px;
   padding: 3.5rem 1.5rem 2rem;
   border: 3px solid var(--black);
   border-radius: var(--radius-md);
@@ -239,7 +287,7 @@
 .price-unit {
   font-family: var(--font-nunito);
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-top: 0.25rem;
   opacity: 0.9;
   text-transform: uppercase;
@@ -248,9 +296,10 @@
 
 .price-detail {
   font-family: var(--font-nunito);
-  font-size: 0.95rem;
-  opacity: 0.75;
-  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-top: 0.5rem;
+  line-height: 1.4;
 }
 
 .price-save-sticker {
@@ -281,6 +330,57 @@
   font-family: var(--font-nunito);
   font-weight: 700;
   margin-top: 1rem;
+}
+
+/* ── Payment methods ── */
+.payment-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.payment-title {
+  font-family: var(--font-fredoka);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 0.75rem;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.payment-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-fredoka);
+  font-size: 1.15rem;
+  padding: 0.5rem 1.6rem;
+  border: 3px solid var(--black);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.1s, box-shadow 0.1s;
+  letter-spacing: 0.02em;
+}
+
+.payment-pill:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--black);
+}
+
+.payment-pill--venmo {
+  background: #3D95CE;
+  color: var(--white);
+}
+
+.payment-pill--card {
+  background: var(--yellow);
+  color: var(--black);
 }
 
 /* ── Entrance animations ── */
