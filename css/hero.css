@@ -12,26 +12,26 @@
   padding-bottom: 5rem;
 }
 
-/* ── Hero inner layout ── */
+/* ── Hero inner: centered column ── */
 .hero-inner {
   position: relative;
   z-index: 3;
   display: flex;
-  align-items: flex-end;
-  gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
   width: 100%;
   max-width: var(--max-width);
   padding: 0 1.5rem;
 }
 
-/* ── Hero content (text side) ── */
+/* ── Hero content (text) ── */
 .hero-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 1rem;
-  padding-bottom: 1rem;
 }
 
 /* ── Main pill title ── */
@@ -80,20 +80,51 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* ── Instructor photos in hero ── */
+/* ── Hero photos row ── */
 .hero-photos {
   display: flex;
   align-items: flex-end;
-  gap: 1rem;
-  flex-shrink: 0;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* ── Polaroid cards ── */
+.polaroid {
+  background: var(--white);
+  padding: 10px 10px 48px;
+  border: 1.5px solid #d4d0c8;
+  box-shadow: 6px 6px 20px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.1);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.polaroid--left  { transform: rotate(-3deg); }
+.polaroid--right { transform: rotate(2.5deg); }
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.04);
+  box-shadow: 8px 10px 28px rgba(0,0,0,0.28);
+  z-index: 2;
+  position: relative;
 }
 
 .hero-photo {
-  width: 200px;
-  height: 300px;
+  width: 190px;
+  height: 270px;
   object-fit: contain;
   object-position: bottom center;
   display: block;
+}
+
+.polaroid-name {
+  font-family: var(--font-marker);
+  font-size: 1.35rem;
+  color: #333;
+  margin-top: 10px;
+  text-align: center;
+  line-height: 1;
 }
 
 /* ── Marquee ── */
@@ -276,13 +307,6 @@
   max-width: 500px;
   line-height: 1.7;
   font-weight: 600;
-}
-
-.join-sign {
-  font-family: var(--font-marker);
-  font-size: 1.5rem;
-  margin-top: 1rem;
-  color: var(--white);
 }
 
 /* Join section clipart */
