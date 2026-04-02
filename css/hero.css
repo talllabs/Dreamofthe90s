@@ -112,9 +112,7 @@
 
 .hero-photo {
   width: 190px;
-  height: 270px;
-  object-fit: contain;
-  object-position: top center;
+  height: auto;
   display: block;
 }
 
