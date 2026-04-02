@@ -1,7 +1,7 @@
 /* ── Hero section ── */
 .hero {
   min-height: 100svh;
-  background: var(--cream);
+  background: #C5E8FF;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -12,30 +12,26 @@
   padding-bottom: 5rem;
 }
 
-/* ── Two-layer SVG starburst ── */
-.hero-svg {
-  position: absolute;
-  width: min(92vw, 860px);
-  height: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -54%);
-  z-index: 1;
-}
-
-.star-orange { fill: var(--coral); }
-.star-green  { fill: var(--yellow); }
-
-/* ── Hero content ── */
-.hero-content {
+/* ── Hero inner layout ── */
+.hero-inner {
   position: relative;
   z-index: 3;
   display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 0 1.5rem;
+}
+
+/* ── Hero content (text side) ── */
+.hero-content {
+  flex: 1;
+  display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
-  padding: 0 1rem;
-  margin-top: -4rem;
+  padding-bottom: 1rem;
 }
 
 /* ── Main pill title ── */
@@ -46,7 +42,7 @@
   box-shadow: var(--shadow-lg);
   padding: 0.6rem 2.8rem;
   font-family: var(--font-fredoka);
-  font-size: clamp(2.2rem, 8vw, 5.5rem);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
   text-transform: uppercase;
   text-align: center;
   line-height: 1.05;
@@ -67,21 +63,37 @@
 .hero-title-pill .title-line-3 {
   display: block;
   color: var(--black);
-  font-size: 0.55em;
+  font-size: 0.42em;
   letter-spacing: 0.08em;
 }
 
 /* ── Hero tagline ── */
 .hero-tagline {
-  background: var(--purple);
+  background: var(--orange);
   color: var(--white);
   font-family: var(--font-nunito);
   font-weight: 700;
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-size: clamp(1rem, 2vw, 1.2rem);
   padding: 0.4rem 1.4rem;
   border: 2.5px solid var(--black);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-sm);
+}
+
+/* ── Instructor photos in hero ── */
+.hero-photos {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.hero-photo {
+  width: 200px;
+  height: 300px;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
 }
 
 /* ── Marquee ── */
@@ -91,7 +103,7 @@
   left: 0;
   right: 0;
   overflow: hidden;
-  background: var(--orange);
+  background: var(--yellow);
   border-top: 3px solid var(--black);
   border-bottom: 3px solid var(--black);
   padding: 0.45rem 0;
@@ -108,7 +120,7 @@
 .marquee-track span {
   font-family: var(--font-fredoka);
   font-size: 1.15rem;
-  color: var(--white);
+  color: var(--black);
   white-space: nowrap;
   padding: 0 1.5rem;
   letter-spacing: 0.04em;
@@ -179,70 +191,6 @@
   display: block;
 }
 
-/* ── Instructors section ── */
-.instructors {
-  background: var(--off-white);
-  padding: var(--section-pad);
-}
-
-.instructors-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.instructor-card {
-  border: 3px solid var(--black);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  background: var(--white);
-  text-align: center;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.instructor-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 8px 8px 0 var(--black);
-}
-
-.instructor-photo-wrap {
-  position: relative;
-  overflow: hidden;
-}
-
-.instructor-photo-wrap.bg-coral  { background: var(--coral); }
-.instructor-photo-wrap.bg-yellow { background: var(--yellow); }
-
-.instructor-photo {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.instructor-info {
-  padding: 1.25rem 1.5rem;
-  border-top: 3px solid var(--black);
-}
-
-.instructor-name {
-  font-family: var(--font-fredoka);
-  font-size: 1.7rem;
-  letter-spacing: 0.02em;
-  margin-bottom: 0.25rem;
-}
-
-.instructor-role {
-  font-family: var(--font-nunito);
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--purple);
-}
-
 /* ── Dates section ── */
 .dates {
   background: var(--purple);
@@ -263,13 +211,6 @@
     rgba(0,0,0,0.05) 21px
   );
   pointer-events: none;
-}
-
-.dates-starburst {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  z-index: 2;
 }
 
 .dates-card {

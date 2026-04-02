@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>90's Summer Day Camp</title>
-  <meta name="description" content="A slow, playful 90s-kid summer. June 1–July 17. Hosted by Mia & Ashleigh." />
+  <meta name="description" content="A slow, playful 90s-kid summer. June–July. Hosted by Mia & Ashleigh." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,7 +25,7 @@
   <!-- NAV -->
   <nav class="site-nav" id="site-nav">
     <div class="nav-inner">
-      <span class="nav-logo">90's&#9733; Day Camp</span>
+      <span class="nav-logo">90's Summer &#9733; Day Camp</span>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#activities">Activities</a></li>
@@ -39,47 +39,20 @@
 
   <!-- HERO -->
   <section class="hero" id="hero">
-
-    <svg class="hero-svg" viewBox="0 0 800 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <filter id="cut-orange" x="-12%" y="-12%" width="124%" height="124%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="4" seed="7" result="noise"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="11" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
-          <feTurbulence type="fractalNoise" baseFrequency="0.68 0.72" numOctaves="3" stitchTiles="stitch" result="grain"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.1 0" in="grain" result="grainA"/>
-          <feComposite in="grainA" in2="displaced" operator="in" result="maskedGrain"/>
-          <feBlend in="displaced" in2="maskedGrain" mode="multiply"/>
-        </filter>
-        <filter id="cut-green" x="-12%" y="-12%" width="124%" height="124%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="4" seed="3" result="noise"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
-          <feDropShadow dx="-4" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.18)" result="shadowed"/>
-          <feTurbulence type="fractalNoise" baseFrequency="0.68 0.72" numOctaves="3" stitchTiles="stitch" result="grain"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.09 0" in="grain" result="grainA"/>
-          <feComposite in="grainA" in2="displaced" operator="in" result="maskedGrain"/>
-          <feBlend in="displaced" in2="maskedGrain" mode="multiply"/>
-        </filter>
-      </defs>
-      <path class="star-orange" filter="url(#cut-orange)"
-        d="M 400,25 L 445,150 L 560,55 L 528,198 L 648,168 L 588,278
-           L 728,332 L 582,378 L 670,458 L 544,448 L 592,578 L 472,514
-           L 445,628 L 382,524 L 295,622 L 298,488 L 182,532 L 226,432
-           L 88,416  L 196,340 L 106,256 L 236,242 L 170,106 L 306,180 Z"/>
-      <path class="star-green" filter="url(#cut-green)"
-        d="M 400,82 L 438,178 L 522,104 L 512,210 L 616,188 L 558,278
-           L 672,306 L 563,356 L 652,420 L 548,428 L 592,528 L 488,479
-           L 480,580 L 412,502 L 356,592 L 333,492 L 248,535 L 274,438
-           L 158,450 L 238,368 L 143,320 L 249,280 L 174,192 L 292,218 Z"/>
-    </svg>
-
-    <div class="hero-content">
-      <div class="hero-title-pill">
-        <span class="title-line-1">90's Summer</span>
-        <span class="title-line-2">Day Camp</span>
-        <span class="title-line-3">Victory Park, Pasadena</span>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-title-pill">
+          <span class="title-line-1">90's Summer</span>
+          <span class="title-line-2">Day Camp</span>
+          <span class="title-line-3">With Mia &amp; Ashleigh</span>
+        </div>
+        <p class="hero-tagline">8 kids max &nbsp;&#8226;&nbsp; June&ndash;July &nbsp;&#8226;&nbsp; Pasadena</p>
+        <a href="#join" class="btn btn--hero">Grab a Spot!</a>
       </div>
-      <p class="hero-tagline">Hosted by Mia &amp; Ashleigh &nbsp;&#8226;&nbsp; 8 kids max &nbsp;&#8226;&nbsp; June&ndash;July</p>
-      <a href="#join" class="btn btn--hero">Grab a Spot!</a>
+      <div class="hero-photos">
+        <img src="images/mia.png" alt="Mia" class="hero-photo" />
+        <img src="images/ashleigh.png" alt="Ashleigh" class="hero-photo" />
+      </div>
     </div>
 
     <div class="marquee-wrap" aria-hidden="true">
@@ -135,37 +108,7 @@
         </div>
       </div>
       <div class="about-decoration">
-        <img src="images/about.png" alt="Mia &amp; Ashleigh" class="about-photo">
-      </div>
-    </div>
-  </section>
-
-  <!-- INSTRUCTORS -->
-  <section class="instructors section" id="instructors">
-    <div class="section-inner">
-      <h2 class="section-banner section-banner--centered" style="justify-content:center;">
-        <span class="banner-icon" style="background: var(--pink);">👩‍🎤</span>
-        <span class="banner-text">Meet Mia &amp; Ashleigh</span>
-      </h2>
-      <div class="instructors-grid">
-        <div class="instructor-card">
-          <div class="instructor-photo-wrap bg-yellow">
-            <img src="images/mia.png" alt="Mia" class="instructor-photo" />
-          </div>
-          <div class="instructor-info">
-            <div class="instructor-name">Mia</div>
-            <div class="instructor-role">Camp Co-Host &amp; Music Lead</div>
-          </div>
-        </div>
-        <div class="instructor-card">
-          <div class="instructor-photo-wrap bg-coral">
-            <img src="images/ashleigh.png" alt="Ashleigh" class="instructor-photo" />
-          </div>
-          <div class="instructor-info">
-            <div class="instructor-name">Ashleigh</div>
-            <div class="instructor-role">Camp Co-Host &amp; Adventure Lead</div>
-          </div>
-        </div>
+        <img src="images/about.png" alt="About Camp" class="about-photo">
       </div>
     </div>
   </section>
@@ -179,39 +122,39 @@
       </h2>
 
       <div class="activity-grid">
-        <div class="activity-card fade-in" style="--card-bg: #FFE57A;">
+        <div class="activity-card" style="--card-bg: #FFE57A;">
           <div class="activity-icon">🏊</div>
           <div class="activity-name">Swim</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #A8E878;">
+        <div class="activity-card" style="--card-bg: #A8E878;">
           <div class="activity-icon">🚲</div>
           <div class="activity-name">Bike Ride</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #FFB8D8;">
+        <div class="activity-card" style="--card-bg: #FFB8D8;">
           <div class="activity-icon">🎨</div>
           <div class="activity-name">Arts &amp; Crafts</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #AAE4FF;">
+        <div class="activity-card" style="--card-bg: #AAE4FF;">
           <div class="activity-icon">🌳</div>
           <div class="activity-name">Climb Trees</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #FFB08A; color: #111;">
+        <div class="activity-card" style="--card-bg: #FFB08A; color: #111;">
           <div class="activity-icon">🎤</div>
           <div class="activity-name">Talent Show</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #FFE57A;">
+        <div class="activity-card" style="--card-bg: #FFE57A;">
           <div class="activity-icon">🍳</div>
           <div class="activity-name">Kitchen Mess</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #A8E878;">
+        <div class="activity-card" style="--card-bg: #A8E878;">
           <div class="activity-icon">🤲</div>
           <div class="activity-name">Cat's Cradle</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #D4B8F0;">
+        <div class="activity-card" style="--card-bg: #D4B8F0;">
           <div class="activity-icon">🎭</div>
           <div class="activity-name">Dress-Up &amp; Play</div>
         </div>
-        <div class="activity-card fade-in" style="--card-bg: #AAE4FF;">
+        <div class="activity-card" style="--card-bg: #AAE4FF;">
           <div class="activity-icon">🥏</div>
           <div class="activity-name">Yard Games</div>
         </div>
@@ -234,10 +177,6 @@
   <!-- DATES -->
   <section class="dates section" id="dates">
     <div class="section-inner">
-      <div class="dates-starburst" aria-hidden="true">
-        <div class="starburst">7<br>WEEKS!</div>
-      </div>
-
       <h2 class="section-banner">
         <span class="banner-icon" style="background: var(--lavender);">📅</span>
         <span class="banner-text" style="color: var(--white);">When Is It?</span>
@@ -245,7 +184,7 @@
 
       <div class="dates-card">
         <div class="dates-range">June 1 – July 17</div>
-        <div class="dates-sub">Monday – Friday &nbsp;&#8226;&nbsp; 8 Hours / Day</div>
+        <div class="dates-sub">Monday – Friday &#9733; 8 Hours / Day &#9733; 7 Weeks!</div>
         <table class="schedule-table">
           <thead>
             <tr>
@@ -266,7 +205,46 @@
             </tr>
           </tbody>
         </table>
-        <p class="dates-note">Drop-off 8am &nbsp;&#8226;&nbsp; Pick-up 4pm &nbsp;&#8226;&nbsp; Small group adventures daily</p>
+        <p class="dates-note">Drop-off 8am &#9733; Pick-up 4pm &#9733; Small group adventures daily</p>
+
+        <div class="week-selector">
+          <div class="week-selector-title">Select Your Week</div>
+          <div class="week-row week-row--1">
+            <span class="week-label">Week 1</span>
+            <span class="week-dates">June 8–12</span>
+            <a href="mailto:hello@90sdaycamp.com?subject=Reserve Week 1 (June 8–12)" class="week-reserve">Reserve</a>
+          </div>
+          <div class="week-row week-row--2">
+            <span class="week-label">Week 2</span>
+            <span class="week-dates">June 15–19</span>
+            <a href="mailto:hello@90sdaycamp.com?subject=Reserve Week 2 (June 15–19)" class="week-reserve">Reserve</a>
+          </div>
+          <div class="week-row week-row--3">
+            <span class="week-label">Week 3</span>
+            <span class="week-dates">June 22–26</span>
+            <a href="mailto:hello@90sdaycamp.com?subject=Reserve Week 3 (June 22–26)" class="week-reserve">Reserve</a>
+          </div>
+          <div class="week-row week-row--4">
+            <span class="week-label">Week 4</span>
+            <span class="week-dates">June 29–July 3</span>
+            <a href="mailto:hello@90sdaycamp.com?subject=Reserve Week 4 (June 29–July 3)" class="week-reserve">Reserve</a>
+          </div>
+          <div class="week-row week-row--5">
+            <span class="week-label">Week 5</span>
+            <span class="week-dates">July 6–10</span>
+            <a href="mailto:hello@90sdaycamp.com?subject=Reserve Week 5 (July 6–10)" class="week-reserve">Reserve</a>
+          </div>
+          <div class="week-row week-row--6">
+            <span class="week-label">Week 6</span>
+            <span class="week-dates">July 13–17</span>
+            <a href="mailto:hello@90sdaycamp.com?subject=Reserve Week 6 (July 13–17)" class="week-reserve">Reserve</a>
+          </div>
+          <div class="week-row week-row--7">
+            <span class="week-label">Week 7</span>
+            <span class="week-dates">July 20–24</span>
+            <a href="mailto:hello@90sdaycamp.com?subject=Reserve Week 7 (July 20–24)" class="week-reserve">Reserve</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -280,23 +258,31 @@
       </h2>
 
       <div class="pricing-cards">
-        <div class="price-tag price-tag--weekly fade-in">
+        <div class="price-tag price-tag--weekly">
           <div class="price-tag-hole"></div>
           <div class="price-amount">$500</div>
           <div class="price-unit">per week</div>
-          <div class="price-detail">pay as you go</div>
+          <div class="price-detail">Pay as you go — perfect for flexible schedules or trying it out first.</div>
         </div>
 
-        <div class="price-tag price-tag--full fade-in">
+        <div class="price-tag price-tag--full">
           <div class="price-tag-hole"></div>
           <div class="price-save-sticker">SAVE<br>$500!</div>
           <div class="price-amount">$3,000</div>
-          <div class="price-unit">full summer</div>
-          <div class="price-detail">all 7 weeks</div>
+          <div class="price-unit">full summer — all 7 weeks</div>
+          <div class="price-detail">Lock in the whole summer. Best value for maximum memories.</div>
         </div>
       </div>
 
-      <p class="pricing-note">Sibling discounts &amp; payment plans — just ask! We want this to work for your family.</p>
+      <p class="pricing-note">&#x1F49B; Sibling discounts &amp; payment plans available — just ask! We want this to work for your family.</p>
+
+      <div class="payment-section">
+        <div class="payment-title">PAY SECURELY VIA:</div>
+        <div class="payment-methods">
+          <a href="https://venmo.com" class="payment-pill payment-pill--venmo" target="_blank" rel="noopener">&#x1F499; Venmo</a>
+          <a href="mailto:hello@90sdaycamp.com?subject=Pay by Card" class="payment-pill payment-pill--card">&#x1F4B3; Pay by Card</a>
+        </div>
+      </div>
     </div>
   </section>
 
