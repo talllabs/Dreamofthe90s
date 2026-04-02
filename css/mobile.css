@@ -55,8 +55,8 @@
 
   .hero-photo {
     width: 140px;
-    height: 265px;
-    object-fit: contain;
+    height: 210px;
+    object-fit: cover;
     object-position: top center;
   }
 
@@ -165,8 +165,8 @@
 @media (max-width: 480px) {
   .hero-photo {
     width: 120px;
-    height: 225px;
-    object-fit: contain;
+    height: 180px;
+    object-fit: cover;
     object-position: top center;
   }
 
