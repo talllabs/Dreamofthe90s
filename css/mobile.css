@@ -55,7 +55,9 @@
 
   .hero-photo {
     width: 140px;
-    height: auto;
+    height: 265px;
+    object-fit: contain;
+    object-position: top center;
   }
 
   /* About */
@@ -163,7 +165,9 @@
 @media (max-width: 480px) {
   .hero-photo {
     width: 120px;
-    height: auto;
+    height: 225px;
+    object-fit: contain;
+    object-position: top center;
   }
 
   .polaroid {
