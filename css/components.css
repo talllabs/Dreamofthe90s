@@ -541,6 +541,96 @@
   margin-top: 0.5rem;
 }
 
+/* ── Weekly Schedule (dates section) ── */
+.week-schedule {
+  margin-top: 2rem;
+  border-top: 2px dashed #ccc;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.week-schedule-title {
+  font-family: var(--font-fredoka);
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--purple);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.week-schedule-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  transition: opacity 0.2s;
+}
+
+.week-schedule-row.week-full {
+  opacity: 0.55;
+}
+
+.week-schedule-row .week-label {
+  font-family: var(--font-fredoka);
+  font-size: 1rem;
+  min-width: 62px;
+}
+
+.week-schedule-row .week-dates {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #333;
+  flex: 1;
+}
+
+.week-spots {
+  font-family: var(--font-nunito);
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--black);
+  white-space: nowrap;
+}
+
+.spots-open { background: #A8E878; color: #222; }
+.spots-some { background: #FFE57A; color: #222; }
+.spots-low  { background: var(--coral); color: var(--white); }
+.spots-full { background: #ccc; color: #555; text-decoration: line-through; }
+
+.week-emojis {
+  font-size: 1.15rem;
+  letter-spacing: 0.1em;
+  min-width: 2rem;
+}
+
+/* Disabled week checkbox when full */
+.week-check--full {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.week-check-spots {
+  font-family: var(--font-nunito);
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--black);
+  margin-left: auto;
+}
+
 /* ── Emoji picker ── */
 .emoji-picker {
   display: flex;
