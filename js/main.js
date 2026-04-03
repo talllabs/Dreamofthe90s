@@ -159,12 +159,22 @@
   var submitBtn = document.getElementById('form-submit-btn');
   var formError = document.getElementById('form-error');
 
+  // Populated after sheet loads — used to block duplicate emoji at submit time
+  var takenEmojisGlobal = {};
+
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
       if (!emojiInput.value) {
         formError.textContent = 'Please pick an emoji for your kid before submitting!';
+        formError.style.display = 'block';
+        document.getElementById('emoji-picker').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      if (takenEmojisGlobal[emojiInput.value]) {
+        formError.textContent = 'That emoji is already taken by another kid — please pick a different one!';
         formError.style.display = 'block';
         document.getElementById('emoji-picker').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
@@ -310,7 +320,8 @@
       }
     }
 
-    // Grey out taken emojis in the picker
+    // Grey out taken emojis in the picker and store for submit-time check
+    takenEmojisGlobal = takenEmojis;
     markTakenEmojis(takenEmojis);
   }
 
