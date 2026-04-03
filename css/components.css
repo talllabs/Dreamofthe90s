@@ -631,7 +631,58 @@
   margin-left: auto;
 }
 
+/* ── Emoji kid display on schedule ── */
+.week-emojis {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.emoji-kid {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.emoji-pending {
+  opacity: 0.4;
+  filter: grayscale(0.3);
+}
+
 /* ── Emoji picker ── */
+.form-label-hint {
+  display: block;
+  font-family: var(--font-nunito);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  margin-top: 0.15rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.emoji-own-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.emoji-own-input {
+  width: 140px !important;
+  font-size: 1.4rem !important;
+  text-align: center;
+  padding: 0.45rem 0.75rem !important;
+}
+
+.emoji-own-or {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+}
+
 .emoji-picker {
   display: flex;
   flex-wrap: wrap;
@@ -667,6 +718,13 @@
   border-color: var(--black);
   box-shadow: var(--shadow-sm);
   transform: scale(1.15);
+}
+
+.emoji-btn.emoji-taken {
+  opacity: 0.25;
+  cursor: not-allowed;
+  filter: grayscale(1);
+  transform: none !important;
 }
 
 .emoji-selected-display {

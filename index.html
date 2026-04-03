@@ -399,31 +399,22 @@
         <!-- Emoji picker -->
         <div class="form-field">
           <label class="form-label">Pick an emoji for your kid &#9733;</label>
+          <span class="form-label-hint">Once you've submitted &amp; paid, your kid's emoji will appear on the weekly schedule above so you can see who else is joining that week!</span>
+          <div class="emoji-own-wrap">
+            <input class="form-input emoji-own-input" type="text" id="emoji-own" placeholder="Type or paste your own emoji… 🐉" maxlength="4" autocomplete="off" />
+            <span class="emoji-own-or">or choose one:</span>
+          </div>
           <div class="emoji-picker" id="emoji-picker">
             <button type="button" class="emoji-btn" data-emoji="🦄">🦄</button>
             <button type="button" class="emoji-btn" data-emoji="🐶">🐶</button>
             <button type="button" class="emoji-btn" data-emoji="🐱">🐱</button>
-            <button type="button" class="emoji-btn" data-emoji="🐻">🐻</button>
-            <button type="button" class="emoji-btn" data-emoji="🦊">🦊</button>
             <button type="button" class="emoji-btn" data-emoji="🐸">🐸</button>
+            <button type="button" class="emoji-btn" data-emoji="🦊">🦊</button>
             <button type="button" class="emoji-btn" data-emoji="🐰">🐰</button>
-            <button type="button" class="emoji-btn" data-emoji="🐧">🐧</button>
-            <button type="button" class="emoji-btn" data-emoji="🦁">🦁</button>
-            <button type="button" class="emoji-btn" data-emoji="🐯">🐯</button>
             <button type="button" class="emoji-btn" data-emoji="🦋">🦋</button>
+            <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
             <button type="button" class="emoji-btn" data-emoji="🌈">🌈</button>
             <button type="button" class="emoji-btn" data-emoji="⭐">⭐</button>
-            <button type="button" class="emoji-btn" data-emoji="🎈">🎈</button>
-            <button type="button" class="emoji-btn" data-emoji="🎨">🎨</button>
-            <button type="button" class="emoji-btn" data-emoji="🎸">🎸</button>
-            <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
-            <button type="button" class="emoji-btn" data-emoji="🌟">🌟</button>
-            <button type="button" class="emoji-btn" data-emoji="🍕">🍕</button>
-            <button type="button" class="emoji-btn" data-emoji="🦕">🦕</button>
-            <button type="button" class="emoji-btn" data-emoji="🎭">🎭</button>
-            <button type="button" class="emoji-btn" data-emoji="⚡">⚡</button>
-            <button type="button" class="emoji-btn" data-emoji="🌊">🌊</button>
-            <button type="button" class="emoji-btn" data-emoji="🎪">🎪</button>
           </div>
           <input type="hidden" name="kid_emoji" id="kid-emoji" />
           <div class="emoji-selected-display" id="emoji-selected-display"></div>
