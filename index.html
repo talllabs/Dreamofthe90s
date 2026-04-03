@@ -356,16 +356,73 @@
         </div>
         <input type="hidden" name="estimated_total" id="calc-hidden" value="$0" />
 
+        <!-- Emoji picker -->
+        <div class="form-field">
+          <label class="form-label">Pick an emoji for your kid &#9733;</label>
+          <div class="emoji-picker" id="emoji-picker">
+            <button type="button" class="emoji-btn" data-emoji="🦄">🦄</button>
+            <button type="button" class="emoji-btn" data-emoji="🐶">🐶</button>
+            <button type="button" class="emoji-btn" data-emoji="🐱">🐱</button>
+            <button type="button" class="emoji-btn" data-emoji="🐻">🐻</button>
+            <button type="button" class="emoji-btn" data-emoji="🦊">🦊</button>
+            <button type="button" class="emoji-btn" data-emoji="🐸">🐸</button>
+            <button type="button" class="emoji-btn" data-emoji="🐰">🐰</button>
+            <button type="button" class="emoji-btn" data-emoji="🐧">🐧</button>
+            <button type="button" class="emoji-btn" data-emoji="🦁">🦁</button>
+            <button type="button" class="emoji-btn" data-emoji="🐯">🐯</button>
+            <button type="button" class="emoji-btn" data-emoji="🦋">🦋</button>
+            <button type="button" class="emoji-btn" data-emoji="🌈">🌈</button>
+            <button type="button" class="emoji-btn" data-emoji="⭐">⭐</button>
+            <button type="button" class="emoji-btn" data-emoji="🎈">🎈</button>
+            <button type="button" class="emoji-btn" data-emoji="🎨">🎨</button>
+            <button type="button" class="emoji-btn" data-emoji="🎸">🎸</button>
+            <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
+            <button type="button" class="emoji-btn" data-emoji="🌟">🌟</button>
+            <button type="button" class="emoji-btn" data-emoji="🍕">🍕</button>
+            <button type="button" class="emoji-btn" data-emoji="🦕">🦕</button>
+            <button type="button" class="emoji-btn" data-emoji="🎭">🎭</button>
+            <button type="button" class="emoji-btn" data-emoji="⚡">⚡</button>
+            <button type="button" class="emoji-btn" data-emoji="🌊">🌊</button>
+            <button type="button" class="emoji-btn" data-emoji="🎪">🎪</button>
+          </div>
+          <input type="hidden" name="kid_emoji" id="kid-emoji" />
+          <div class="emoji-selected-display" id="emoji-selected-display"></div>
+        </div>
+
         <div class="form-field">
           <label class="form-label" for="form-message">Anything else we should know?</label>
           <textarea class="form-input form-textarea" id="form-message" name="message" placeholder="Questions, allergies, siblings, special requests..." rows="3"></textarea>
         </div>
 
-        <button type="submit" class="btn btn--big btn--press form-submit">
+        <div class="form-error" id="form-error"></div>
+
+        <button type="submit" class="btn btn--big btn--press form-submit" id="form-submit-btn">
           ✉&#xFE0E;&nbsp; Send to Mia &amp; Ashleigh
         </button>
 
       </form>
+
+      <!-- Payment panel — shown after form submit -->
+      <div class="payment-panel" id="payment-panel">
+        <div class="payment-panel-emoji">🎉</div>
+        <h3 class="payment-panel-title">Your dates have been requested!</h3>
+        <p class="payment-panel-sub">To confirm your spot, pay via Venmo now:</p>
+
+        <div class="venmo-card">
+          <div class="venmo-handle">@Mia-Cowell</div>
+          <div class="venmo-verify">Last 4 digits for verification: <strong>6286</strong></div>
+          <a href="https://account.venmo.com/u/Mia-Cowell" class="venmo-link btn btn--press" target="_blank" rel="noopener">
+            Pay on Venmo &#x2192;
+          </a>
+          <div class="venmo-qr-wrap">
+            <div class="venmo-qr-label">Or scan to pay on your phone:</div>
+            <canvas id="venmo-qr"></canvas>
+          </div>
+        </div>
+
+        <p class="payment-panel-note">Once your Venmo payment goes through, you'll receive an email confirmation from Mia &amp; Ashleigh &#x2600;&#xFE0F;</p>
+      </div>
+
     </div>
   </section>
 
@@ -373,6 +430,7 @@
   <footer class="site-footer">
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

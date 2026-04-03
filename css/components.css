@@ -541,6 +541,173 @@
   margin-top: 0.5rem;
 }
 
+/* ── Emoji picker ── */
+.emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  background: var(--white);
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+}
+
+.emoji-btn {
+  font-size: 1.6rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, transform 0.1s;
+  line-height: 1;
+}
+
+.emoji-btn:hover {
+  background: var(--yellow);
+  transform: scale(1.15);
+}
+
+.emoji-btn.selected {
+  background: var(--yellow);
+  border-color: var(--black);
+  box-shadow: var(--shadow-sm);
+  transform: scale(1.15);
+}
+
+.emoji-selected-display {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--white);
+  margin-top: 0.4rem;
+  min-height: 1.4rem;
+  opacity: 0.85;
+}
+
+/* ── Form error ── */
+.form-error {
+  display: none;
+  background: #fff0f0;
+  border: 2px solid #e84040;
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #c00;
+}
+
+/* ── Payment panel ── */
+.payment-panel {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 520px;
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.payment-panel.visible {
+  display: flex;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.payment-panel-emoji {
+  font-size: 3.5rem;
+}
+
+.payment-panel-title {
+  font-family: var(--font-fredoka);
+  font-size: 2rem;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.payment-panel-sub {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--white);
+  margin: 0;
+}
+
+.venmo-card {
+  background: var(--white);
+  border: 3px solid var(--black);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.venmo-handle {
+  font-family: var(--font-fredoka);
+  font-size: 2.4rem;
+  color: #3D95CE;
+  letter-spacing: 0.02em;
+}
+
+.venmo-verify {
+  font-family: var(--font-nunito);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #555;
+}
+
+.venmo-link {
+  font-size: 1.2rem;
+  padding: 0.65rem 2rem;
+}
+
+.venmo-qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.venmo-qr-label {
+  font-family: var(--font-nunito);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+#venmo-qr {
+  border: 3px solid var(--black);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.payment-panel-note {
+  font-family: var(--font-nunito);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--white);
+  max-width: 420px;
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* ── Entrance animations ── */
 .fade-in {
   opacity: 0;
