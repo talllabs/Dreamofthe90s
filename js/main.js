@@ -194,30 +194,40 @@
               });
             }
 
-            // Also log the registration to JSONBin collection
-            if (JSONBIN_KEY) {
+            // Append registration to the main camp data bin so it shows in the admin page
+            if (JSONBIN_KEY && JSONBIN_BIN_ID) {
               var fd = new FormData(form);
-              var registration = {
-                submittedAt: new Date().toISOString(),
-                parentName:  fd.get('parent_name') || '',
-                email:       fd.get('email') || '',
+              var newKid = {
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
                 childName:   fd.get('child_name') || '',
                 childAge:    fd.get('child_age') || '',
-                weeks:       fd.getAll('weeks'),
-                estimatedTotal: fd.get('estimated_total') || '',
-                kidEmoji:    fd.get('kid_emoji') || '',
-                message:     fd.get('message') || ''
+                parentName:  fd.get('parent_name') || '',
+                email:       fd.get('email') || '',
+                notes:       fd.get('message') || '',
+                status:      'pending',
+                weeks:       fd.getAll('weeks').map(Number),
+                emoji:       fd.get('kid_emoji') || '',
+                registeredAt: new Date().toISOString().slice(0, 10)
               };
-              fetch('https://api.jsonbin.io/v3/b', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-Access-Key': JSONBIN_KEY,
-                  'X-Collection-Id': JSONBIN_COLLECTION_ID,
-                  'X-Bin-Name': 'registration-' + (registration.childName || 'unknown').replace(/\s+/g, '-').toLowerCase()
-                },
-                body: JSON.stringify(registration)
-              }).catch(function () { /* silently fail — Formspree is the primary store */ });
+              // Read current bin, append kid, write back
+              fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest', {
+                headers: { 'X-Access-Key': JSONBIN_KEY }
+              })
+                .then(function (r) { return r.json(); })
+                .then(function (json) {
+                  var data = json.record || {};
+                  if (!Array.isArray(data.kids)) data.kids = [];
+                  data.kids.push(newKid);
+                  return fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID, {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'X-Access-Key': JSONBIN_KEY
+                    },
+                    body: JSON.stringify(data)
+                  });
+                })
+                .catch(function () { /* silently fail — Formspree is the primary store */ });
             }
           } else {
             submitBtn.disabled = false;
