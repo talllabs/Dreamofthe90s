@@ -209,10 +209,8 @@
                 emoji:       fd.get('kid_emoji') || '',
                 registeredAt: new Date().toISOString().slice(0, 10)
               };
-              // Read current bin, append kid, write back
-              fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest', {
-                headers: { 'X-Access-Key': JSONBIN_KEY }
-              })
+              // Read current bin (must be Public on JSONBin), append kid, write back
+              fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
                 .then(function (r) {
                   if (!r.ok) throw new Error('Read failed: ' + r.status);
                   return r.json();
