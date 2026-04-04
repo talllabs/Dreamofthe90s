@@ -9,6 +9,10 @@
   // ─────────────────────────────────────────────────────────────────────────
   var binIdMeta = document.querySelector('meta[name="camp-bin-id"]');
   var JSONBIN_BIN_ID = binIdMeta ? binIdMeta.getAttribute('content') : '';
+
+  var jsonbinKeyMeta = document.querySelector('meta[name="camp-jsonbin-key"]');
+  var JSONBIN_KEY = jsonbinKeyMeta ? jsonbinKeyMeta.getAttribute('content') : '';
+  var JSONBIN_COLLECTION_ID = '69d094fbaaba882197c28576';
   // ─────────────────────────────────────────────────────────────────────────
 
   // ── Sticky nav shadow on scroll ──
@@ -188,6 +192,32 @@
                 margin: 2,
                 color: { dark: '#111111', light: '#ffffff' }
               });
+            }
+
+            // Also log the registration to JSONBin collection
+            if (JSONBIN_KEY) {
+              var fd = new FormData(form);
+              var registration = {
+                submittedAt: new Date().toISOString(),
+                parentName:  fd.get('parent_name') || '',
+                email:       fd.get('email') || '',
+                childName:   fd.get('child_name') || '',
+                childAge:    fd.get('child_age') || '',
+                weeks:       fd.getAll('weeks'),
+                estimatedTotal: fd.get('estimated_total') || '',
+                kidEmoji:    fd.get('kid_emoji') || '',
+                message:     fd.get('message') || ''
+              };
+              fetch('https://api.jsonbin.io/v3/b', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-Master-Key': JSONBIN_KEY,
+                  'X-Collection-Id': JSONBIN_COLLECTION_ID,
+                  'X-Bin-Name': 'registration-' + (registration.childName || 'unknown').replace(/\s+/g, '-').toLowerCase()
+                },
+                body: JSON.stringify(registration)
+              }).catch(function () { /* silently fail — Formspree is the primary store */ });
             }
           } else {
             submitBtn.disabled = false;

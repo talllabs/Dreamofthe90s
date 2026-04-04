@@ -540,7 +540,10 @@
   function updateSnippet() {
     var binId = getBinId();
     if (binId) {
-      $('s-snippet').textContent = '<meta name="camp-bin-id" content="' + binId + '" />';
+      var key = getApiKey();
+      var snippet = '<meta name="camp-bin-id" content="' + binId + '" />';
+      if (key) snippet += '\n  <meta name="camp-jsonbin-key" content="' + key + '" />';
+      $('s-snippet').textContent = snippet;
       $('s-snippet-section').style.display = '';
     } else {
       $('s-snippet-section').style.display = 'none';
