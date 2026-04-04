@@ -260,7 +260,8 @@
   <div class="settings-section">
     <div class="settings-section-title">Data</div>
     <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-      <button class="a-btn a-btn--sm" id="s-export">⬇ Export JSON</button>
+      <button class="a-btn a-btn--sm" id="s-export-excel">⬇ Export Excel</button>
+      <button class="a-btn a-btn--sm" id="s-export-pdf">🖨 Export PDF</button>
       <button class="a-btn a-btn--sm a-btn--red" id="s-clear" style="margin-left:auto;">🗑 Reset All Data</button>
     </div>
   </div>
@@ -281,6 +282,7 @@
   </div>
 </div>
 
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="js/admin.js"></script>
 </body>
 </html>
