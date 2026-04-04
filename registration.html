@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — 90's Summer Day Camp</title>
+  <meta name="description" content="Sign up for 90s Summer Day Camp — June through July." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Boogaloo&family=Titan+One&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/typography.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+
+  <style>
+    body { background: var(--cream); }
+
+    .reg-page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    .reg-back {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--purple);
+      text-decoration: none;
+    }
+    .reg-back:hover { text-decoration: underline; }
+
+    .reg-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3rem);
+      color: var(--purple);
+      margin-bottom: 0.25rem;
+    }
+
+    .reg-subtitle {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Form ── */
+    .reg-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .reg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 520px) { .reg-row { grid-template-columns: 1fr; } }
+
+    .reg-field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+    .reg-label {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .reg-label-hint {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 0.15rem;
+    }
+
+    .reg-input, .reg-textarea {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 0.65rem 0.85rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      background: #fff;
+      transition: border-color 0.15s;
+    }
+    .reg-input:focus, .reg-textarea:focus {
+      outline: none;
+      border-color: var(--purple);
+    }
+    .reg-textarea { resize: vertical; min-height: 80px; }
+
+    /* ── Weeks ── */
+    .weeks-title {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    .weeks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.6rem;
+    }
+    .week-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+    }
+    .week-label:has(input:checked) {
+      border-color: var(--purple);
+      background: #f0ebff;
+    }
+    .week-label input { accent-color: var(--purple); }
+    .week-num { font-weight: 700; }
+    .week-date { font-size: 0.78rem; color: #666; }
+
+    /* ── Price calc ── */
+    .price-calc {
+      background: var(--yellow);
+      border-radius: 12px;
+      padding: 0.85rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .price-calc-label { font-family: var(--font-body); font-weight: 700; font-size: 0.95rem; }
+    .price-calc-amount { font-family: var(--font-display); font-size: 1.6rem; color: var(--purple); }
+    .price-savings { font-size: 0.82rem; font-family: var(--font-body); color: #555; width: 100%; margin-top: -0.5rem; }
+
+    /* ── Emoji picker ── */
+    .emoji-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .emoji-btn {
+      font-size: 1.6rem;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.1s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .emoji-btn:hover:not(:disabled) { border-color: var(--purple); transform: scale(1.1); }
+    .emoji-btn.selected { border-color: var(--purple); background: #f0ebff; }
+    .emoji-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .emoji-selected { margin-top: 0.4rem; font-family: var(--font-body); font-size: 0.9rem; color: var(--purple); font-weight: 700; min-height: 1.2em; }
+
+    /* ── Error / Submit ── */
+    .reg-error {
+      background: #fff0f0;
+      border: 2px solid #f5a0a0;
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: #c00;
+      display: none;
+    }
+
+    .reg-submit {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 0.85rem 2rem;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .reg-submit:hover:not(:disabled) { opacity: 0.9; transform: scale(1.02); }
+    .reg-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Payment panel ── */
+    .payment-panel { display: none; }
+    .payment-panel.visible { display: block; }
+
+    .payment-box {
+      background: var(--green);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      color: #fff;
+    }
+    .payment-emoji { font-size: 3rem; margin-bottom: 0.5rem; }
+    .payment-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .payment-sub { font-family: var(--font-body); font-size: 1rem; margin-bottom: 1.5rem; opacity: 0.9; }
+
+    .venmo-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: inline-block;
+      min-width: 260px;
+      color: #222;
+    }
+    .venmo-handle {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--purple);
+      margin-bottom: 0.25rem;
+    }
+    .venmo-verify { font-family: var(--font-body); font-size: 0.9rem; color: #555; margin-bottom: 1rem; }
+    .venmo-pay-btn {
+      display: inline-block;
+      background: var(--purple);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-bottom: 1rem;
+    }
+    .venmo-qr-label { font-family: var(--font-body); font-size: 0.8rem; color: #777; margin-bottom: 0.4rem; }
+    .payment-note { font-family: var(--font-body); font-size: 0.85rem; margin-top: 1.5rem; opacity: 0.85; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">90's Summer &#9733; Day Camp</a>
+    </div>
+  </nav>
+
+  <main class="reg-page">
+    <a href="/" class="reg-back">&#8592; Back to main site</a>
+
+    <h1 class="reg-title">Sign Up!</h1>
+    <p class="reg-subtitle">Spots fill up fast — capped at <strong>8 kids per week</strong>. Fill in the form and we'll be in touch!</p>
+
+    <!-- FORM -->
+    <form class="reg-form" id="reg-form" novalidate>
+
+      <div class="reg-row">
+        <div class="reg-field">
+          <label class="reg-label" for="parent-name">Parent Name</label>
+          <input class="reg-input" type="text" id="parent-name" name="parent_name" required placeholder="Your name" />
+        </div>
+        <div class="reg-field">
+          <label class="reg-label" for="parent-email">Email</label>
+          <input class="reg-input" type="email" id="parent-email" name="email" required placeholder="your@email.com" />
+        </div>
+      </div>
+
+      <div class="reg-row">
+        <div class="reg-field">
+          <label class="reg-label" for="child-name">Child's Name</label>
+          <input class="reg-input" type="text" id="child-name" name="child_name" required placeholder="Their name" />
+        </div>
+        <div class="reg-field">
+          <label class="reg-label" for="child-age">Child's Age</label>
+          <input class="reg-input" type="number" id="child-age" name="child_age" min="4" max="14" required placeholder="Age" />
+        </div>
+      </div>
+
+      <!-- Weeks -->
+      <div class="reg-field">
+        <div class="weeks-title">Pick Your Week(s) &#9733; $500 / week</div>
+        <div class="weeks-grid">
+          <label class="week-label"><input type="checkbox" name="weeks" value="1" /><span><div class="week-num">Week 1</div><div class="week-date">June 8–12</div></span></label>
+          <label class="week-label"><input type="checkbox" name="weeks" value="2" /><span><div class="week-num">Week 2</div><div class="week-date">June 15–19</div></span></label>
+          <label class="week-label"><input type="checkbox" name="weeks" value="3" /><span><div class="week-num">Week 3</div><div class="week-date">June 22–26</div></span></label>
+          <label class="week-label"><input type="checkbox" name="weeks" value="4" /><span><div class="week-num">Week 4</div><div class="week-date">June 29–July 3</div></span></label>
+          <label class="week-label"><input type="checkbox" name="weeks" value="5" /><span><div class="week-num">Week 5</div><div class="week-date">July 6–10</div></span></label>
+          <label class="week-label"><input type="checkbox" name="weeks" value="6" /><span><div class="week-num">Week 6</div><div class="week-date">July 13–17</div></span></label>
+          <label class="week-label"><input type="checkbox" name="weeks" value="7" /><span><div class="week-num">Week 7</div><div class="week-date">July 20–24</div></span></label>
+        </div>
+      </div>
+
+      <!-- Price calculator -->
+      <div class="price-calc" id="price-calc" style="display:none;">
+        <span class="price-calc-label">Estimated Total:</span>
+        <span class="price-calc-amount" id="calc-amount">$0</span>
+        <span class="price-savings" id="calc-savings"></span>
+      </div>
+
+      <!-- Emoji picker -->
+      <div class="reg-field">
+        <label class="reg-label">Pick an emoji for your kid &#9733;
+          <span class="reg-label-hint">Your kid's unique camp identity — shows on the schedule once registered &amp; paid.</span>
+        </label>
+        <div class="emoji-grid" id="emoji-grid">
+          <button type="button" class="emoji-btn" data-emoji="🦄">🦄</button>
+          <button type="button" class="emoji-btn" data-emoji="🐶">🐶</button>
+          <button type="button" class="emoji-btn" data-emoji="🐱">🐱</button>
+          <button type="button" class="emoji-btn" data-emoji="🐸">🐸</button>
+          <button type="button" class="emoji-btn" data-emoji="🦊">🦊</button>
+          <button type="button" class="emoji-btn" data-emoji="🐰">🐰</button>
+          <button type="button" class="emoji-btn" data-emoji="🦋">🦋</button>
+          <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
+          <button type="button" class="emoji-btn" data-emoji="🌈">🌈</button>
+          <button type="button" class="emoji-btn" data-emoji="⭐">⭐</button>
+          <button type="button" class="emoji-btn" data-emoji="🎸">🎸</button>
+          <button type="button" class="emoji-btn" data-emoji="🦕">🦕</button>
+          <button type="button" class="emoji-btn" data-emoji="🐙">🐙</button>
+          <button type="button" class="emoji-btn" data-emoji="🎯">🎯</button>
+          <button type="button" class="emoji-btn" data-emoji="🍦">🍦</button>
+          <button type="button" class="emoji-btn" data-emoji="🌻">🌻</button>
+        </div>
+        <div class="emoji-selected" id="emoji-selected"></div>
+        <input type="hidden" id="emoji-value" name="kid_emoji" />
+      </div>
+
+      <div class="reg-field">
+        <label class="reg-label" for="reg-message">Anything else we should know?</label>
+        <textarea class="reg-textarea" id="reg-message" name="message" placeholder="Questions, allergies, siblings, special requests..." rows="3"></textarea>
+      </div>
+
+      <div class="reg-error" id="reg-error"></div>
+
+      <button type="submit" class="reg-submit" id="reg-submit">✉&#xFE0E;&nbsp; Send to Mia &amp; Ashleigh</button>
+
+    </form>
+
+    <!-- PAYMENT PANEL -->
+    <div class="payment-panel" id="payment-panel">
+      <div class="payment-box">
+        <div class="payment-emoji">🎉</div>
+        <h2 class="payment-title">Your dates have been requested!</h2>
+        <p class="payment-sub">To confirm your spot, pay via Venmo now:</p>
+        <div class="venmo-card">
+          <div class="venmo-handle">@Mia-Cowell</div>
+          <div class="venmo-verify">Last 4 digits for verification: <strong>6286</strong></div>
+          <a href="https://account.venmo.com/u/Mia-Cowell" class="venmo-pay-btn" target="_blank" rel="noopener">Pay on Venmo &#x2192;</a>
+          <div class="venmo-qr-label">Or scan to pay on your phone:</div>
+          <canvas id="venmo-qr"></canvas>
+        </div>
+        <p class="payment-note">Once your Venmo payment goes through, you'll receive an email confirmation from Mia &amp; Ashleigh and you'll see your kid's emoji on the Weekly Schedule.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    // ── Config ──────────────────────────────────────────
+    var FORMSPREE      = 'https://formspree.io/f/mwvwnenj';
+    var JSONBIN_BIN_ID = '69d0a3d6856a682189fa7ef5';
+    var JSONBIN_KEY    = '$2a$10$X6s.Q4j9Kp0GneoQ5o5ya.vvOw.jIzRJ5BoRgBD1ADGvx.qs7HqnG';
+    var PRICE_PER_WEEK = 500;
+    var FULL_SUMMER_DISCOUNT = 500;
+    var FULL_SUMMER_WEEKS = 7;
+    // ────────────────────────────────────────────────────
+
+    var form         = document.getElementById('reg-form');
+    var submitBtn    = document.getElementById('reg-submit');
+    var errorBox     = document.getElementById('reg-error');
+    var paymentPanel = document.getElementById('payment-panel');
+    var emojiGrid    = document.getElementById('emoji-grid');
+    var emojiValue   = document.getElementById('emoji-value');
+    var emojiDisplay = document.getElementById('emoji-selected');
+    var calcBox      = document.getElementById('price-calc');
+    var calcAmount   = document.getElementById('calc-amount');
+    var calcSavings  = document.getElementById('calc-savings');
+
+    // ── Price calculator ──
+    var weekCheckboxes = form.querySelectorAll('input[name="weeks"]');
+    weekCheckboxes.forEach(function (cb) { cb.addEventListener('change', updatePrice); });
+
+    function updatePrice() {
+      var count = Array.from(weekCheckboxes).filter(function (cb) { return cb.checked; }).length;
+      if (count === 0) { calcBox.style.display = 'none'; return; }
+      calcBox.style.display = 'flex';
+      var total = count * PRICE_PER_WEEK;
+      var savings = '';
+      if (count === FULL_SUMMER_WEEKS) {
+        total -= FULL_SUMMER_DISCOUNT;
+        savings = '🎉 Full summer — $' + FULL_SUMMER_DISCOUNT + ' discount applied!';
+      }
+      calcAmount.textContent = '$' + total.toLocaleString();
+      calcSavings.textContent = savings;
+    }
+
+    // ── Emoji picker ──
+    var selectedEmoji = '';
+    emojiGrid.querySelectorAll('.emoji-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        selectedEmoji = btn.getAttribute('data-emoji');
+        emojiValue.value = selectedEmoji;
+        emojiDisplay.textContent = 'Your kid\'s emoji: ' + selectedEmoji;
+        emojiGrid.querySelectorAll('.emoji-btn').forEach(function (b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+      });
+    });
+
+    // ── Show error ──
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function hideError() { errorBox.style.display = 'none'; }
+
+    // ── Generate a simple unique ID ──
+    function uid() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    }
+
+    // ── Write registration to JSONBin ──
+    function saveToJsonBin(kid) {
+      return fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
+        .then(function (r) {
+          if (!r.ok) throw new Error('Read failed ' + r.status);
+          return r.json();
+        })
+        .then(function (json) {
+          var data = json.record || {};
+          if (!Array.isArray(data.kids)) data.kids = [];
+          data.kids.push(kid);
+          return fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Access-Key': JSONBIN_KEY
+            },
+            body: JSON.stringify(data)
+          });
+        })
+        .then(function (r) {
+          if (!r.ok) throw new Error('Write failed ' + r.status);
+          return r.json();
+        });
+    }
+
+    // ── Form submit ──
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      hideError();
+
+      // Validate
+      var parentName = form.querySelector('[name="parent_name"]').value.trim();
+      var email      = form.querySelector('[name="email"]').value.trim();
+      var childName  = form.querySelector('[name="child_name"]').value.trim();
+      var childAge   = form.querySelector('[name="child_age"]').value.trim();
+      var weeks      = Array.from(weekCheckboxes).filter(function (cb) { return cb.checked; }).map(function (cb) { return parseInt(cb.value, 10); });
+      var emoji      = emojiValue.value;
+      var notes      = form.querySelector('[name="message"]').value.trim();
+
+      if (!parentName) { showError('Please enter your name.'); return; }
+      if (!email)      { showError('Please enter your email.'); return; }
+      if (!childName)  { showError('Please enter your child\'s name.'); return; }
+      if (!childAge)   { showError('Please enter your child\'s age.'); return; }
+      if (!weeks.length) { showError('Please select at least one week.'); return; }
+      if (!emoji)      { showError('Please pick an emoji for your kid.'); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      // Build the registration object matching the admin data model
+      var kid = {
+        id:           uid(),
+        childName:    childName,
+        childAge:     childAge,
+        parentName:   parentName,
+        email:        email,
+        notes:        notes,
+        status:       'pending',
+        weeks:        weeks,
+        emoji:        emoji,
+        registeredAt: new Date().toISOString().slice(0, 10)
+      };
+
+      // Build FormData for Formspree
+      var fd = new FormData();
+      fd.append('parent_name', parentName);
+      fd.append('email', email);
+      fd.append('child_name', childName);
+      fd.append('child_age', childAge);
+      weeks.forEach(function (w) { fd.append('weeks', 'Week ' + w); });
+      fd.append('kid_emoji', emoji);
+      fd.append('message', notes);
+      fd.append('estimated_total', calcAmount.textContent);
+
+      // Step 1: send to Formspree
+      fetch(FORMSPREE, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Formspree error ' + res.status);
+          return res.json();
+        })
+        .then(function () {
+          // Step 2: save to JSONBin (fire and forget — don't block payment panel)
+          saveToJsonBin(kid).catch(function (err) {
+            console.error('[Camp] JSONBin save failed:', err);
+          });
+
+          // Step 3: show payment panel
+          form.style.display = 'none';
+          paymentPanel.classList.add('visible');
+          paymentPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          if (typeof QRCode !== 'undefined') {
+            QRCode.toCanvas(document.getElementById('venmo-qr'), 'https://account.venmo.com/u/Mia-Cowell', {
+              width: 160, margin: 2, color: { dark: '#111', light: '#fff' }
+            });
+          }
+        })
+        .catch(function (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '✉\uFE0E\u00A0 Send to Mia & Ashleigh';
+          showError('Something went wrong — please try again. (' + err.message + ')');
+        });
+    });
+
+    // ── Sticky nav ──
+    var nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+  }());
+  </script>
+</body>
+</html>
