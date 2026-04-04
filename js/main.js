@@ -213,7 +213,10 @@
               fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest', {
                 headers: { 'X-Access-Key': JSONBIN_KEY }
               })
-                .then(function (r) { return r.json(); })
+                .then(function (r) {
+                  if (!r.ok) throw new Error('Read failed: ' + r.status);
+                  return r.json();
+                })
                 .then(function (json) {
                   var data = json.record || {};
                   if (!Array.isArray(data.kids)) data.kids = [];
@@ -225,9 +228,11 @@
                       'X-Access-Key': JSONBIN_KEY
                     },
                     body: JSON.stringify(data)
+                  }).then(function (r2) {
+                    if (!r2.ok) throw new Error('Update failed: ' + r2.status);
                   });
                 })
-                .catch(function () { /* silently fail — Formspree is the primary store */ });
+                .catch(function (err) { console.error('[Camp] JSONBin registration error:', err); });
             }
           } else {
             submitBtn.disabled = false;
