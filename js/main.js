@@ -212,7 +212,7 @@
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'X-Master-Key': JSONBIN_KEY,
+                  'X-Access-Key': JSONBIN_KEY,
                   'X-Collection-Id': JSONBIN_COLLECTION_ID,
                   'X-Bin-Name': 'registration-' + (registration.childName || 'unknown').replace(/\s+/g, '-').toLowerCase()
                 },
