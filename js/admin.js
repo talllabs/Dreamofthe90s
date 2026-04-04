@@ -574,7 +574,7 @@
 
       var initData = JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
       var collId = getCollectionId();
-      var headers = { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp' };
+      var headers = { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp', 'X-Bin-Private': 'false' };
       if (collId) headers['X-Collection-Id'] = collId;
       fetch('https://api.jsonbin.io/v3/b', {
         method: 'POST',
@@ -734,7 +734,7 @@
       localStorage.setItem(KEYS.APIKEY, key);
       var data = state.campData || JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
       var collId2 = $('s-collection-id') ? $('s-collection-id').value.trim() || getCollectionId() : getCollectionId();
-      var createHeaders = { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp' };
+      var createHeaders = { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp', 'X-Bin-Private': 'false' };
       if (collId2) createHeaders['X-Collection-Id'] = collId2;
       fetch('https://api.jsonbin.io/v3/b', {
         method: 'POST',
