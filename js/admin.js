@@ -5,11 +5,15 @@
   // CONSTANTS
   // ─────────────────────────────────────────────────────
   var KEYS = {
-    PW:     'camp_admin_pw',
-    APIKEY: 'camp_jsonbin_key',
-    BIN:    'camp_jsonbin_bin',
-    DATA:   'camp_admin_data'
+    PW:        'camp_admin_pw',
+    APIKEY:    'camp_jsonbin_key',
+    BIN:       'camp_jsonbin_bin',
+    COLLECTION:'camp_jsonbin_collection',
+    DATA:      'camp_admin_data'
   };
+
+  // Default collection — pre-configured for the "90s" collection
+  var DEFAULT_COLLECTION_ID = '69d094fbaaba882197c28576';
 
   var WEEK_DEFS = [
     { num: 1, dates: 'June 8\u201312' },
@@ -85,8 +89,9 @@
   // ─────────────────────────────────────────────────────
   // JSONBIN API
   // ─────────────────────────────────────────────────────
-  function getApiKey() { return localStorage.getItem(KEYS.APIKEY) || ''; }
-  function getBinId()  { return localStorage.getItem(KEYS.BIN) || ''; }
+  function getApiKey()      { return localStorage.getItem(KEYS.APIKEY) || ''; }
+  function getBinId()       { return localStorage.getItem(KEYS.BIN) || ''; }
+  function getCollectionId(){ return localStorage.getItem(KEYS.COLLECTION) || DEFAULT_COLLECTION_ID; }
 
   function jsonbinFetch(method, path, body) {
     var opts = {
@@ -521,6 +526,7 @@
   function openSettings() {
     $('s-api-key').value = getApiKey();
     $('s-bin-id').value = getBinId();
+    if ($('s-collection-id')) $('s-collection-id').value = getCollectionId();
     updateSnippet();
     $('settings-overlay').classList.add('open');
     $('settings-drawer').classList.add('open');
@@ -564,7 +570,9 @@
       $('setup-submit').textContent = 'Creating your data bin…';
 
       var initData = JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
+      var collId = getCollectionId();
       var headers = { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp' };
+      if (collId) headers['X-Collection-Id'] = collId;
       fetch('https://api.jsonbin.io/v3/b', {
         method: 'POST',
         headers: headers,
@@ -703,10 +711,12 @@
     // Save config
     var sSaveConfig = $('s-save-config');
     if (sSaveConfig) sSaveConfig.addEventListener('click', function () {
-      var key = $('s-api-key').value.trim();
-      var binId = $('s-bin-id').value.trim();
-      if (key) localStorage.setItem(KEYS.APIKEY, key);
-      if (binId) localStorage.setItem(KEYS.BIN, binId);
+      var key    = $('s-api-key').value.trim();
+      var binId  = $('s-bin-id').value.trim();
+      var collId = $('s-collection-id') ? $('s-collection-id').value.trim() : '';
+      if (key)    localStorage.setItem(KEYS.APIKEY, key);
+      if (binId)  localStorage.setItem(KEYS.BIN, binId);
+      if (collId) localStorage.setItem(KEYS.COLLECTION, collId);
       updateSnippet();
       showToast('✅ Config saved!');
     });
@@ -720,9 +730,12 @@
       sCreateBin.textContent = 'Creating…';
       localStorage.setItem(KEYS.APIKEY, key);
       var data = state.campData || JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
+      var collId2 = $('s-collection-id') ? $('s-collection-id').value.trim() || getCollectionId() : getCollectionId();
+      var createHeaders = { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp' };
+      if (collId2) createHeaders['X-Collection-Id'] = collId2;
       fetch('https://api.jsonbin.io/v3/b', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp' },
+        headers: createHeaders,
         body: JSON.stringify(data)
       })
         .then(function (r) { return r.json(); })

@@ -48,14 +48,14 @@
       <div class="setup-step-num">2</div>
       <div class="setup-step-body">
         <strong>Connect JSONBin for live data sync</strong>
-        <p>JSONBin is a free service that stores your camp data so it syncs across all devices and shows live availability on your website.</p>
+        <p>JSONBin stores your camp data so it syncs across all devices and shows live availability on your website. Your <strong>"90s" collection</strong> is already configured.</p>
         <ol>
-          <li>Go to <a href="https://jsonbin.io" target="_blank" rel="noopener">jsonbin.io</a> and sign up free</li>
+          <li>Go to <a href="https://jsonbin.io" target="_blank" rel="noopener">jsonbin.io</a> and log in</li>
           <li>Click your profile → <strong>API Keys</strong></li>
           <li>Copy your <strong>Master Key</strong> and paste it below</li>
         </ol>
         <input class="a-input" type="password" id="setup-apikey" placeholder="$2a$10$… (your JSONBin master key)" autocomplete="off" />
-        <p style="font-size:0.8rem;color:#999;margin-top:-0.4rem;">Your key stays private on your device — it's never sent anywhere except JSONBin.</p>
+        <p style="font-size:0.8rem;color:#999;margin-top:-0.4rem;">Your key stays private on your device — it's never sent anywhere except JSONBin. A new bin will be created in your "90s" collection automatically.</p>
       </div>
     </div>
 
@@ -231,6 +231,11 @@
     <div class="a-field">
       <label class="a-label">Master Key</label>
       <input class="a-input" type="password" id="s-api-key" placeholder="$2a$10$…" autocomplete="off" />
+    </div>
+    <div class="a-field">
+      <label class="a-label">Collection ID</label>
+      <input class="a-input" type="text" id="s-collection-id" placeholder="69d094fbaaba882197c28576" style="font-family:monospace;font-size:0.875rem;" />
+      <p style="font-size:0.8rem;color:#999;margin-top:0.25rem;">Bins created here will be stored in the "90s" collection.</p>
     </div>
     <div class="a-field">
       <label class="a-label">Bin ID (auto-generated)</label>
