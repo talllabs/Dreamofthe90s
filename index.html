@@ -211,6 +211,53 @@
         </table>
         <p class="dates-note">Drop-off 8am &#9733; Pick-up 4pm &#9733; Small group adventures daily</p>
 
+        <!-- Weekly schedule with live spot counts from Google Sheet -->
+        <div class="week-schedule" id="week-schedule">
+          <div class="week-schedule-title">Weekly Schedule</div>
+          <div class="week-schedule-row week-row--1" data-week="1">
+            <span class="week-label">Week 1</span>
+            <span class="week-dates">June 8–12</span>
+            <span class="week-spots"></span>
+            <span class="week-emojis"></span>
+          </div>
+          <div class="week-schedule-row week-row--2" data-week="2">
+            <span class="week-label">Week 2</span>
+            <span class="week-dates">June 15–19</span>
+            <span class="week-spots"></span>
+            <span class="week-emojis"></span>
+          </div>
+          <div class="week-schedule-row week-row--3" data-week="3">
+            <span class="week-label">Week 3</span>
+            <span class="week-dates">June 22–26</span>
+            <span class="week-spots"></span>
+            <span class="week-emojis"></span>
+          </div>
+          <div class="week-schedule-row week-row--4" data-week="4">
+            <span class="week-label">Week 4</span>
+            <span class="week-dates">June 29–July 3</span>
+            <span class="week-spots"></span>
+            <span class="week-emojis"></span>
+          </div>
+          <div class="week-schedule-row week-row--5" data-week="5">
+            <span class="week-label">Week 5</span>
+            <span class="week-dates">July 6–10</span>
+            <span class="week-spots"></span>
+            <span class="week-emojis"></span>
+          </div>
+          <div class="week-schedule-row week-row--6" data-week="6">
+            <span class="week-label">Week 6</span>
+            <span class="week-dates">July 13–17</span>
+            <span class="week-spots"></span>
+            <span class="week-emojis"></span>
+          </div>
+          <div class="week-schedule-row week-row--7" data-week="7">
+            <span class="week-label">Week 7</span>
+            <span class="week-dates">July 20–24</span>
+            <span class="week-spots"></span>
+            <span class="week-emojis"></span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -352,31 +399,22 @@
         <!-- Emoji picker -->
         <div class="form-field">
           <label class="form-label">Pick an emoji for your kid &#9733;</label>
+          <span class="form-label-hint">This is your kid's unique camp identity — it shows up on the weekly schedule once you've signed up &amp; paid. No two kids share the same emoji.</span>
+          <div class="emoji-own-wrap">
+            <input class="form-input emoji-own-input" type="text" id="emoji-own" placeholder="Type or paste your own emoji… 🐉" maxlength="4" autocomplete="off" />
+            <span class="emoji-own-or">or choose one:</span>
+          </div>
           <div class="emoji-picker" id="emoji-picker">
             <button type="button" class="emoji-btn" data-emoji="🦄">🦄</button>
             <button type="button" class="emoji-btn" data-emoji="🐶">🐶</button>
             <button type="button" class="emoji-btn" data-emoji="🐱">🐱</button>
-            <button type="button" class="emoji-btn" data-emoji="🐻">🐻</button>
-            <button type="button" class="emoji-btn" data-emoji="🦊">🦊</button>
             <button type="button" class="emoji-btn" data-emoji="🐸">🐸</button>
+            <button type="button" class="emoji-btn" data-emoji="🦊">🦊</button>
             <button type="button" class="emoji-btn" data-emoji="🐰">🐰</button>
-            <button type="button" class="emoji-btn" data-emoji="🐧">🐧</button>
-            <button type="button" class="emoji-btn" data-emoji="🦁">🦁</button>
-            <button type="button" class="emoji-btn" data-emoji="🐯">🐯</button>
             <button type="button" class="emoji-btn" data-emoji="🦋">🦋</button>
+            <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
             <button type="button" class="emoji-btn" data-emoji="🌈">🌈</button>
             <button type="button" class="emoji-btn" data-emoji="⭐">⭐</button>
-            <button type="button" class="emoji-btn" data-emoji="🎈">🎈</button>
-            <button type="button" class="emoji-btn" data-emoji="🎨">🎨</button>
-            <button type="button" class="emoji-btn" data-emoji="🎸">🎸</button>
-            <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
-            <button type="button" class="emoji-btn" data-emoji="🌟">🌟</button>
-            <button type="button" class="emoji-btn" data-emoji="🍕">🍕</button>
-            <button type="button" class="emoji-btn" data-emoji="🦕">🦕</button>
-            <button type="button" class="emoji-btn" data-emoji="🎭">🎭</button>
-            <button type="button" class="emoji-btn" data-emoji="⚡">⚡</button>
-            <button type="button" class="emoji-btn" data-emoji="🌊">🌊</button>
-            <button type="button" class="emoji-btn" data-emoji="🎪">🎪</button>
           </div>
           <input type="hidden" name="kid_emoji" id="kid-emoji" />
           <div class="emoji-selected-display" id="emoji-selected-display"></div>
