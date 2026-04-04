@@ -195,6 +195,7 @@
             }
 
             // Append registration to the main camp data bin so it shows in the admin page
+            console.log('[Camp] BIN_ID:', JSONBIN_BIN_ID, 'KEY set:', !!JSONBIN_KEY);
             if (JSONBIN_KEY && JSONBIN_BIN_ID) {
               var fd = new FormData(form);
               var newKid = {
