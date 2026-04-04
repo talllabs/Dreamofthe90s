@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — 90's Day Camp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<!-- ── TOAST ── -->
+<div class="toast-wrap"><div class="toast" id="toast"></div></div>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="screen-login" class="screen login-wrap">
+  <div class="login-card">
+    <div class="login-logo">☀️ Camp Admin</div>
+    <p class="login-sub">Mia &amp; Ashleigh only!</p>
+    <form id="login-form">
+      <label class="a-label" for="login-password">Password</label>
+      <input class="a-input" type="password" id="login-password" placeholder="Enter password"
+             autocomplete="current-password" />
+      <div class="a-error" id="login-error"></div>
+      <button class="a-btn a-btn--primary" type="submit">Log In</button>
+    </form>
+  </div>
+</div>
+
+<!-- ── SETUP SCREEN ── -->
+<div id="screen-setup" class="screen" style="display:none;">
+  <div class="setup-wrap">
+    <h1 class="setup-heading">👋 Welcome!</h1>
+    <p class="setup-sub">Let's set up your camp admin panel. This only takes a minute.</p>
+
+    <div class="setup-step">
+      <div class="setup-step-num">1</div>
+      <div class="setup-step-body">
+        <strong>Set your admin password</strong>
+        <input class="a-input" type="password" id="setup-password" placeholder="Choose a password" autocomplete="new-password" />
+        <input class="a-input" type="password" id="setup-password2" placeholder="Confirm password" autocomplete="new-password" />
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-num">2</div>
+      <div class="setup-step-body">
+        <strong>Connect JSONBin for live data sync</strong>
+        <p>JSONBin is a free service that stores your camp data so it syncs across all devices and shows live availability on your website.</p>
+        <ol>
+          <li>Go to <a href="https://jsonbin.io" target="_blank" rel="noopener">jsonbin.io</a> and sign up free</li>
+          <li>Click your profile → <strong>API Keys</strong></li>
+          <li>Copy your <strong>Master Key</strong> and paste it below</li>
+        </ol>
+        <input class="a-input" type="password" id="setup-apikey" placeholder="$2a$10$… (your JSONBin master key)" autocomplete="off" />
+        <p style="font-size:0.8rem;color:#999;margin-top:-0.4rem;">Your key stays private on your device — it's never sent anywhere except JSONBin.</p>
+      </div>
+    </div>
+
+    <div class="a-error" id="setup-error"></div>
+    <button class="a-btn a-btn--primary" id="setup-submit">✨ Set Up Admin Panel</button>
+  </div>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="screen-app" style="display:none;">
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <div class="admin-logo">☀️ Camp Admin</div>
+      <div class="admin-header-actions">
+        <button class="a-btn a-btn--sm a-btn--ghost" id="btn-settings" title="Settings">⚙️</button>
+        <button class="a-btn a-btn--sm a-btn--ghost" id="btn-logout" title="Log out">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="registrations">Registrations</button>
+    <button class="tab-btn" data-tab="weeks">Weeks</button>
+    <button class="tab-btn" data-tab="add">+ Add</button>
+  </div>
+
+  <!-- ── REGISTRATIONS TAB ── -->
+  <div id="tab-registrations" class="tab-panel">
+    <div class="panel-header">
+      <h2 class="panel-title">All Registrations</h2>
+      <span class="a-badge" id="reg-count">0 kids</span>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="booked">Booked ✓</button>
+      <button class="filter-btn" data-filter="pending">Pending ⏳</button>
+    </div>
+
+    <div id="registrations-list"></div>
+  </div>
+
+  <!-- ── WEEKS TAB ── -->
+  <div id="tab-weeks" class="tab-panel" style="display:none;">
+    <div class="panel-header">
+      <h2 class="panel-title">Weekly Spots</h2>
+    </div>
+    <p style="font-size:0.875rem;color:#777;margin-bottom:1rem;">
+      Adjust total spots per week. Changes save automatically.
+    </p>
+    <div id="weeks-list"></div>
+  </div>
+
+  <!-- ── ADD TAB ── -->
+  <div id="tab-add" class="tab-panel" style="display:none;">
+    <div class="add-form" id="add-form-wrap">
+      <div class="add-form-title">✏️ <span id="add-form-title-text">Add Registration</span></div>
+
+      <div class="form-row-2">
+        <div class="a-field">
+          <label class="a-label" for="f-child-name">Child's Name *</label>
+          <input class="a-input" type="text" id="f-child-name" placeholder="First name" />
+        </div>
+        <div class="a-field">
+          <label class="a-label" for="f-child-age">Age</label>
+          <input class="a-input" type="number" id="f-child-age" placeholder="Age" min="4" max="18" />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="a-field">
+          <label class="a-label" for="f-parent-name">Parent Name</label>
+          <input class="a-input" type="text" id="f-parent-name" placeholder="Parent / guardian" />
+        </div>
+        <div class="a-field">
+          <label class="a-label" for="f-parent-phone">Phone</label>
+          <input class="a-input" type="tel" id="f-parent-phone" placeholder="555-555-5555" />
+        </div>
+      </div>
+
+      <div class="a-field">
+        <label class="a-label" for="f-parent-email">Email</label>
+        <input class="a-input" type="email" id="f-parent-email" placeholder="parent@email.com" />
+      </div>
+
+      <div class="a-field">
+        <label class="a-label">Weeks Attending *</label>
+        <div class="weeks-check-grid">
+          <label class="week-chk-label"><input type="checkbox" name="f-weeks" value="1" /> <span>Week 1 · June 8–12</span></label>
+          <label class="week-chk-label"><input type="checkbox" name="f-weeks" value="2" /> <span>Week 2 · June 15–19</span></label>
+          <label class="week-chk-label"><input type="checkbox" name="f-weeks" value="3" /> <span>Week 3 · June 22–26</span></label>
+          <label class="week-chk-label"><input type="checkbox" name="f-weeks" value="4" /> <span>Week 4 · June 29–July 3</span></label>
+          <label class="week-chk-label"><input type="checkbox" name="f-weeks" value="5" /> <span>Week 5 · July 6–10</span></label>
+          <label class="week-chk-label"><input type="checkbox" name="f-weeks" value="6" /> <span>Week 6 · July 13–17</span></label>
+          <label class="week-chk-label"><input type="checkbox" name="f-weeks" value="7" /> <span>Week 7 · July 20–24</span></label>
+        </div>
+      </div>
+
+      <div class="a-field">
+        <label class="a-label" for="f-status">Status *</label>
+        <select class="a-input" id="f-status">
+          <option value="pending">Pending — awaiting Venmo payment</option>
+          <option value="booked">Booked — paid &amp; confirmed</option>
+        </select>
+      </div>
+
+      <div class="a-field">
+        <label class="a-label">Kid's Emoji *</label>
+        <p class="a-hint">Each kid gets a unique emoji that shows on the public schedule.</p>
+        <div class="emoji-pick-row" id="add-emoji-picker">
+          <button type="button" class="emoji-opt-btn" data-emoji="🦄">🦄</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🐶">🐶</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🐱">🐱</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🐸">🐸</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🦊">🦊</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🐰">🐰</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🦋">🦋</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🚀">🚀</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🌈">🌈</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="⭐">⭐</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🎸">🎸</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🦖">🦖</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🐙">🐙</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🎯">🎯</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🍦">🍦</button>
+          <button type="button" class="emoji-opt-btn" data-emoji="🌻">🌻</button>
+          <input class="custom-emoji-input" type="text" id="add-custom-emoji" placeholder="🐉" maxlength="4" title="Or type your own" />
+        </div>
+        <input type="hidden" id="f-emoji" />
+        <div id="f-emoji-display" style="margin-top:0.4rem;font-size:0.875rem;color:#555;"></div>
+      </div>
+
+      <div class="a-field">
+        <label class="a-label" for="f-notes">Notes</label>
+        <textarea class="a-input" id="f-notes" placeholder="Allergies, special needs, friends attending…" rows="2"></textarea>
+      </div>
+
+      <div class="a-error" id="add-error"></div>
+      <div class="a-success" id="add-success"></div>
+
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <button class="a-btn a-btn--primary" id="add-submit-btn" type="button" style="flex:1;">
+          ✉️ Save Registration
+        </button>
+        <button class="a-btn a-btn--ghost" id="add-cancel-btn" type="button" style="display:none;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #screen-app -->
+
+<!-- ── SETTINGS OVERLAY ── -->
+<div class="settings-overlay" id="settings-overlay"></div>
+<div class="settings-drawer" id="settings-drawer">
+  <div class="drawer-handle"></div>
+  <div class="settings-title">⚙️ Settings</div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">Change Password</div>
+    <input class="a-input" type="password" id="s-new-pw" placeholder="New password" autocomplete="new-password" />
+    <input class="a-input" type="password" id="s-new-pw2" placeholder="Confirm new password" autocomplete="new-password" />
+    <div class="a-error" id="s-pw-error"></div>
+    <button class="a-btn a-btn--sm" id="s-change-pw">Update Password</button>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">JSONBin Config</div>
+    <div class="a-field">
+      <label class="a-label">Master Key</label>
+      <input class="a-input" type="password" id="s-api-key" placeholder="$2a$10$…" autocomplete="off" />
+    </div>
+    <div class="a-field">
+      <label class="a-label">Bin ID (auto-generated)</label>
+      <input class="a-input" type="text" id="s-bin-id" readonly placeholder="Not yet created" style="font-family:monospace;font-size:0.875rem;" />
+    </div>
+    <div class="a-error" id="s-bin-error"></div>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <button class="a-btn a-btn--sm a-btn--green" id="s-save-config">Save Config</button>
+      <button class="a-btn a-btn--sm" id="s-create-bin">Create New Bin</button>
+    </div>
+  </div>
+
+  <div class="settings-section" id="s-snippet-section">
+    <div class="settings-section-title">Connect to Your Website</div>
+    <p style="font-size:0.875rem;color:#777;margin-bottom:0.75rem;">
+      Add this to your <code>index.html</code> &lt;head&gt; to show live availability on the public site:
+    </p>
+    <div class="code-snippet" id="s-snippet"></div>
+    <button class="a-btn a-btn--sm" id="s-copy-snippet">📋 Copy Snippet</button>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">Data</div>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <button class="a-btn a-btn--sm" id="s-export">⬇ Export JSON</button>
+      <button class="a-btn a-btn--sm a-btn--red" id="s-clear" style="margin-left:auto;">🗑 Reset All Data</button>
+    </div>
+  </div>
+
+  <button class="a-btn a-btn--ghost" id="s-close" style="width:100%;margin-top:0.5rem;">Close</button>
+</div>
+
+<!-- ── EDIT MODAL ── -->
+<div class="modal-overlay" id="edit-modal-overlay">
+  <div class="modal">
+    <div class="modal-title">✏️ Edit Registration</div>
+    <!-- same fields, populated by JS -->
+    <div id="edit-modal-body"></div>
+    <div class="modal-actions">
+      <button class="a-btn a-btn--primary" id="edit-save-btn">Save Changes</button>
+      <button class="a-btn a-btn--ghost" id="edit-cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

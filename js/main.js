@@ -2,27 +2,13 @@
   'use strict';
 
   // ─────────────────────────────────────────────────────────────────────────
-  // GOOGLE SHEET CONFIG
-  // Mia & Ashleigh manage everything here — no code needed.
-  //
-  // SHEET FORMAT — two types of rows (row 1 = any header you like):
-  //
-  //   "week" rows  — one per week, defines total spots available:
-  //     A        B     C              D
-  //     week  |  1  |  June 8–12  |  8
-  //
-  //   "kid" rows  — one per child registered:
-  //     A      B     C    D
-  //     kid  |  1  |  🦄  |  booked      ← confirmed & paid
-  //     kid  |  1  |  🐶  |  pending     ← awaiting payment
-  //
-  //   To change total spots for a week: edit column D on the "week" row
-  //   To add a booked kid: add a "kid" row with their emoji + "booked"
-  //   To mark pending: use "pending" in column D
-  //
-  // To publish: File → Share → Publish to web → your sheet → CSV → Publish
-  // Paste the URL below:
-  var SHEET_CSV_URL = 'YOUR_GOOGLE_SHEET_CSV_URL_HERE';
+  // LIVE DATA CONFIG
+  // Camp availability is managed via the /admin page.
+  // After admin setup, Mia & Ashleigh will copy a <meta> snippet into index.html.
+  // The Bin ID in that meta tag connects the public site to the live camp data.
+  // ─────────────────────────────────────────────────────────────────────────
+  var binIdMeta = document.querySelector('meta[name="camp-bin-id"]');
+  var JSONBIN_BIN_ID = binIdMeta ? binIdMeta.getAttribute('content') : '';
   // ─────────────────────────────────────────────────────────────────────────
 
   // ── Sticky nav shadow on scroll ──
@@ -219,37 +205,40 @@
     });
   }
 
-  // ── Google Sheet: parse new format ──
-  function parseSheetData(csv) {
-    var lines = csv.trim().split('\n');
+  // ── Parse JSONBin camp data → schedule-compatible format ──
+  function parseCampData(record) {
     var weeks = {};
-    var kids = {};
-
+    var kids  = {};
     for (var w = 1; w <= 7; w++) {
       weeks[w] = { totalSpots: 8 };
       kids[w]  = { booked: [], pending: [] };
     }
 
-    for (var i = 1; i < lines.length; i++) {
-      var cols = lines[i].split(',');
-      var type    = (cols[0] || '').trim().toLowerCase();
-      var weekNum = parseInt((cols[1] || '').trim(), 10);
+    if (!record) return { weeks: weeks, kids: kids };
 
-      if (type === 'week' && weekNum >= 1 && weekNum <= 7) {
-        var total = parseInt((cols[3] || '').trim(), 10);
-        if (!isNaN(total)) weeks[weekNum].totalSpots = total;
-
-      } else if (type === 'kid' && weekNum >= 1 && weekNum <= 7) {
-        var emoji  = (cols[2] || '').trim();
-        var status = (cols[3] || '').trim().toLowerCase();
-        if (emoji) {
-          if (status === 'booked') {
-            kids[weekNum].booked.push(emoji);
-          } else {
-            kids[weekNum].pending.push(emoji);
-          }
+    // Week spot totals
+    if (Array.isArray(record.weeks)) {
+      record.weeks.forEach(function (wk) {
+        if (wk.num >= 1 && wk.num <= 7) {
+          weeks[wk.num].totalSpots = wk.totalSpots || 8;
         }
-      }
+      });
+    }
+
+    // Kids → per-week emoji lists
+    if (Array.isArray(record.kids)) {
+      record.kids.forEach(function (kid) {
+        if (!kid.emoji) return;
+        (kid.weeks || []).forEach(function (wn) {
+          if (wn >= 1 && wn <= 7 && kids[wn]) {
+            if (kid.status === 'booked') {
+              kids[wn].booked.push(kid.emoji);
+            } else {
+              kids[wn].pending.push(kid.emoji);
+            }
+          }
+        });
+      });
     }
 
     return { weeks: weeks, kids: kids };
@@ -325,11 +314,11 @@
     markTakenEmojis(takenEmojis);
   }
 
-  if (SHEET_CSV_URL && SHEET_CSV_URL !== 'YOUR_GOOGLE_SHEET_CSV_URL_HERE') {
-    fetch(SHEET_CSV_URL)
-      .then(function (res) { return res.text(); })
-      .then(function (csv) { updateScheduleUI(parseSheetData(csv)); })
-      .catch(function () { /* silently fail */ });
+  if (JSONBIN_BIN_ID) {
+    fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
+      .then(function (res) { return res.json(); })
+      .then(function (json) { updateScheduleUI(parseCampData(json.record)); })
+      .catch(function () { /* silently fail — site works without live data */ });
   }
 
 }());
