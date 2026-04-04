@@ -540,7 +540,10 @@
   function updateSnippet() {
     var binId = getBinId();
     if (binId) {
-      $('s-snippet').textContent = '<meta name="camp-bin-id" content="' + binId + '" />';
+      var snippet = '<meta name="camp-bin-id" content="' + binId + '" />';
+      snippet += '\n  <!-- Add your JSONBin Access Key (NOT master key) below -->';
+      snippet += '\n  <meta name="camp-jsonbin-key" content="YOUR_ACCESS_KEY_HERE" />';
+      $('s-snippet').textContent = snippet;
       $('s-snippet-section').style.display = '';
     } else {
       $('s-snippet-section').style.display = 'none';
