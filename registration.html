@@ -259,6 +259,12 @@
           <input class="reg-input" type="text" id="parent-name" name="parent_name" required placeholder="Your name" />
         </div>
         <div class="reg-field">
+          <label class="reg-label" for="parent-phone">Phone Number</label>
+          <input class="reg-input" type="tel" id="parent-phone" name="parent_phone" required placeholder="(555) 555-5555" />
+        </div>
+      </div>
+      <div class="reg-row">
+        <div class="reg-field">
           <label class="reg-label" for="parent-email">Email</label>
           <input class="reg-input" type="email" id="parent-email" name="email" required placeholder="your@email.com" />
         </div>
@@ -454,20 +460,22 @@
       hideError();
 
       // Validate
-      var parentName = form.querySelector('[name="parent_name"]').value.trim();
-      var email      = form.querySelector('[name="email"]').value.trim();
-      var childName  = form.querySelector('[name="child_name"]').value.trim();
-      var childAge   = form.querySelector('[name="child_age"]').value.trim();
-      var weeks      = Array.from(weekCheckboxes).filter(function (cb) { return cb.checked; }).map(function (cb) { return parseInt(cb.value, 10); });
-      var emoji      = emojiValue.value;
-      var notes      = form.querySelector('[name="message"]').value.trim();
+      var parentName  = form.querySelector('[name="parent_name"]').value.trim();
+      var parentPhone = form.querySelector('[name="parent_phone"]').value.trim();
+      var email       = form.querySelector('[name="email"]').value.trim();
+      var childName   = form.querySelector('[name="child_name"]').value.trim();
+      var childAge    = form.querySelector('[name="child_age"]').value.trim();
+      var weeks       = Array.from(weekCheckboxes).filter(function (cb) { return cb.checked; }).map(function (cb) { return parseInt(cb.value, 10); });
+      var emoji       = emojiValue.value;
+      var notes       = form.querySelector('[name="message"]').value.trim();
 
-      if (!parentName) { showError('Please enter your name.'); return; }
-      if (!email)      { showError('Please enter your email.'); return; }
-      if (!childName)  { showError('Please enter your child\'s name.'); return; }
-      if (!childAge)   { showError('Please enter your child\'s age.'); return; }
-      if (!weeks.length) { showError('Please select at least one week.'); return; }
-      if (!emoji)      { showError('Please pick an emoji for your kid.'); return; }
+      if (!parentName)  { showError('Please enter your name.'); return; }
+      if (!parentPhone) { showError('Please enter your phone number.'); return; }
+      if (!email)       { showError('Please enter your email.'); return; }
+      if (!childName)   { showError('Please enter your child\'s name.'); return; }
+      if (!childAge)    { showError('Please enter your child\'s age.'); return; }
+      if (!weeks.length){ showError('Please select at least one week.'); return; }
+      if (!emoji)       { showError('Please pick an emoji for your kid.'); return; }
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
@@ -478,6 +486,7 @@
         childName:    childName,
         childAge:     childAge,
         parentName:   parentName,
+        parentPhone:  parentPhone,
         email:        email,
         notes:        notes,
         status:       'pending',
@@ -489,6 +498,7 @@
       // Build FormData for Formspree
       var fd = new FormData();
       fd.append('parent_name', parentName);
+      fd.append('parent_phone', parentPhone);
       fd.append('email', email);
       fd.append('child_name', childName);
       fd.append('child_age', childAge);

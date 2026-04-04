@@ -779,17 +779,142 @@
       }
     });
 
-    // Export
-    var sExport = $('s-export');
-    if (sExport) sExport.addEventListener('click', function () {
-      var data = JSON.stringify(state.campData, null, 2);
-      var blob = new Blob([data], { type: 'application/json' });
-      var url  = URL.createObjectURL(blob);
-      var a    = document.createElement('a');
-      a.href = url;
-      a.download = '90s-camp-data-' + new Date().toISOString().slice(0, 10) + '.json';
-      a.click();
-      URL.revokeObjectURL(url);
+    // ── Export Excel ──
+    var sExportExcel = $('s-export-excel');
+    if (sExportExcel) sExportExcel.addEventListener('click', function () {
+      if (!state.campData) return;
+      var kids = state.campData.kids || [];
+      var weeks = state.campData.weeks || [];
+      var date = new Date().toISOString().slice(0, 10);
+
+      function kidRow(k) {
+        return {
+          'Child Name':    k.childName   || '',
+          'Age':           k.childAge    || '',
+          'Parent Name':   k.parentName  || '',
+          'Phone':         k.parentPhone || '',
+          'Email':         k.email       || '',
+          'Weeks':         (k.weeks || []).join(', '),
+          'Emoji':         k.emoji       || '',
+          'Status':        k.status      || '',
+          'Registered':    k.registeredAt || '',
+          'Notes':         k.notes       || ''
+        };
+      }
+
+      var wb = XLSX.utils.book_new();
+
+      // Sheet 1: All registrations
+      var allRows = kids.map(kidRow);
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(allRows.length ? allRows : [{}]), 'All Registrations');
+
+      // Sheet 2: Confirmed (booked)
+      var bookedRows = kids.filter(function (k) { return k.status === 'booked'; }).map(kidRow);
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(bookedRows.length ? bookedRows : [{}]), 'Confirmed');
+
+      // Sheet 3: Pending
+      var pendingRows = kids.filter(function (k) { return k.status === 'pending'; }).map(kidRow);
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(pendingRows.length ? pendingRows : [{}]), 'Pending');
+
+      // Sheet 4: Weekly schedule — one row per kid per week
+      var schedRows = [];
+      weeks.forEach(function (wk) {
+        var wkKids = kids.filter(function (k) { return (k.weeks || []).indexOf(wk.num) !== -1; });
+        if (wkKids.length === 0) {
+          schedRows.push({ 'Week': 'Week ' + wk.num + ' (' + wk.dates + ')', 'Child Name': '', 'Status': '', 'Emoji': '', 'Parent': '', 'Email': '' });
+        } else {
+          wkKids.forEach(function (k) {
+            schedRows.push({
+              'Week':       'Week ' + wk.num + ' (' + wk.dates + ')',
+              'Child Name': k.childName  || '',
+              'Status':     k.status     || '',
+              'Emoji':      k.emoji      || '',
+              'Parent':     k.parentName || '',
+              'Email':      k.email      || ''
+            });
+          });
+        }
+      });
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(schedRows.length ? schedRows : [{}]), 'Weekly Schedule');
+
+      XLSX.writeFile(wb, '90s-camp-' + date + '.xlsx');
+      showToast('✅ Excel exported!');
+    });
+
+    // ── Export PDF (print view) ──
+    var sExportPdf = $('s-export-pdf');
+    if (sExportPdf) sExportPdf.addEventListener('click', function () {
+      if (!state.campData) return;
+      var kids = state.campData.kids || [];
+      var weeks = state.campData.weeks || [];
+      var date = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+      function statusLabel(s) { return s === 'booked' ? 'Confirmed' : 'Pending'; }
+
+      var html = '<html><head><title>90s Day Camp Report</title><style>'
+        + 'body{font-family:Arial,sans-serif;font-size:11pt;color:#111;padding:1.5rem;}'
+        + 'h1{font-size:18pt;margin-bottom:0.25rem;}'
+        + '.meta{color:#666;font-size:9pt;margin-bottom:1.5rem;}'
+        + 'h2{font-size:13pt;margin:1.5rem 0 0.5rem;border-bottom:2px solid #333;padding-bottom:4px;}'
+        + 'table{width:100%;border-collapse:collapse;margin-bottom:1rem;font-size:9.5pt;}'
+        + 'th{background:#333;color:#fff;padding:5px 8px;text-align:left;}'
+        + 'td{padding:5px 8px;border-bottom:1px solid #ddd;}'
+        + 'tr:nth-child(even) td{background:#f5f5f5;}'
+        + '.confirmed{color:#2a7a2a;font-weight:bold;}'
+        + '.pending{color:#b06000;}'
+        + '.week-block{page-break-inside:avoid;}'
+        + '@media print{body{padding:0;}}'
+        + '</style></head><body>'
+        + '<h1>90\'s Summer Day Camp</h1>'
+        + '<div class="meta">Report generated ' + date + ' &nbsp;|&nbsp; '
+        + kids.length + ' total registrations &nbsp;|&nbsp; '
+        + kids.filter(function(k){return k.status==='booked';}).length + ' confirmed &nbsp;|&nbsp; '
+        + kids.filter(function(k){return k.status==='pending';}).length + ' pending</div>';
+
+      // Section 1: Weekly schedule
+      html += '<h2>Weekly Schedule</h2>';
+      weeks.forEach(function (wk) {
+        var wkKids = kids.filter(function (k) { return (k.weeks || []).indexOf(wk.num) !== -1; });
+        html += '<div class="week-block"><h2 style="font-size:11pt;border-bottom:1px solid #999;">Week '
+          + wk.num + ' &mdash; ' + wk.dates
+          + ' &nbsp;<span style="font-weight:normal;color:#555;">(' + wkKids.length + '/' + (wk.totalSpots || 8) + ' spots)</span></h2>';
+        if (wkKids.length === 0) {
+          html += '<p style="color:#999;font-size:9pt;">No registrations yet.</p>';
+        } else {
+          html += '<table><tr><th>Emoji</th><th>Child</th><th>Age</th><th>Parent</th><th>Phone</th><th>Email</th><th>Status</th></tr>';
+          wkKids.forEach(function (k) {
+            html += '<tr><td>' + (k.emoji||'') + '</td><td>' + (k.childName||'') + '</td><td>' + (k.childAge||'')
+              + '</td><td>' + (k.parentName||'') + '</td><td>' + (k.parentPhone||'')
+              + '</td><td>' + (k.email||'')
+              + '</td><td class="' + (k.status==='booked'?'confirmed':'pending') + '">' + statusLabel(k.status) + '</td></tr>';
+          });
+          html += '</table>';
+        }
+        html += '</div>';
+      });
+
+      // Section 2: All registrations
+      html += '<h2>All Registrations</h2><table>'
+        + '<tr><th>Child</th><th>Age</th><th>Emoji</th><th>Parent</th><th>Phone</th><th>Email</th><th>Weeks</th><th>Status</th><th>Registered</th></tr>';
+      if (kids.length === 0) {
+        html += '<tr><td colspan="9" style="color:#999;">No registrations yet.</td></tr>';
+      } else {
+        kids.forEach(function (k) {
+          html += '<tr><td>' + (k.childName||'') + '</td><td>' + (k.childAge||'') + '</td><td>' + (k.emoji||'')
+            + '</td><td>' + (k.parentName||'') + '</td><td>' + (k.parentPhone||'')
+            + '</td><td>' + (k.email||'')
+            + '</td><td>' + (k.weeks||[]).map(function(w){return 'Wk '+w;}).join(', ')
+            + '</td><td class="' + (k.status==='booked'?'confirmed':'pending') + '">' + statusLabel(k.status)
+            + '</td><td>' + (k.registeredAt||'') + '</td></tr>';
+        });
+      }
+      html += '</table></body></html>';
+
+      var win = window.open('', '_blank');
+      win.document.write(html);
+      win.document.close();
+      win.focus();
+      setTimeout(function () { win.print(); }, 500);
     });
 
     // Reset data

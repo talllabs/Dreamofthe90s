@@ -325,11 +325,8 @@
         var emojisEl = scheduleRow.querySelector('.week-emojis');
         if (emojisEl) {
           var html = '';
-          weekKids.booked.forEach(function (e) {
-            html += '<span class="emoji-kid emoji-booked" title="Confirmed">' + e + '</span>';
-          });
-          weekKids.pending.forEach(function (e) {
-            html += '<span class="emoji-kid emoji-pending" title="Pending payment">' + e + '</span>';
+          weekKids.booked.concat(weekKids.pending).forEach(function (e) {
+            html += '<span class="emoji-kid">' + e + '</span>';
           });
           emojisEl.innerHTML = html;
         }
