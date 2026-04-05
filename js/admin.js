@@ -14,6 +14,7 @@
 
   // Default collection — pre-configured for the "90s" collection
   var DEFAULT_COLLECTION_ID = '69d094fbaaba882197c28576';
+  var SESSION_KEY = 'camp_admin_session';
 
   var WEEK_DEFS = [
     { num: 1, dates: 'June 8\u201312' },
@@ -205,6 +206,7 @@
   function renderAll() {
     renderRegistrations();
     renderWeeks();
+    renderDeleted();
     refreshEmojiPicker($('add-emoji-picker'), $('add-custom-emoji'), $('f-emoji'), null);
   }
 
@@ -479,10 +481,7 @@
     if (!kid) return;
 
     if (action === 'delete') {
-      if (!confirm('Remove ' + (kid.childName || 'this kid') + '?')) return;
-      state.campData.kids = state.campData.kids.filter(function (k) { return k.id !== id; });
-      persistData().then(renderAll);
-      showToast('🗑 Removed');
+      openDeleteModal(kid);
     }
     if (action === 'mark-booked') {
       kid.status = 'booked';
@@ -504,11 +503,110 @@
   }
 
   // ─────────────────────────────────────────────────────
+  // DELETE MODAL (type "delete" to confirm — soft delete)
+  // ─────────────────────────────────────────────────────
+  var deleteTargetId = null;
+
+  function openDeleteModal(kid) {
+    deleteTargetId = kid.id;
+    $('delete-modal-name').textContent = kid.childName || 'this registration';
+    $('delete-confirm-input').value = '';
+    $('delete-modal-confirm').disabled = true;
+    $('delete-overlay').style.display = 'flex';
+    setTimeout(function () { $('delete-confirm-input').focus(); }, 50);
+  }
+
+  function closeDeleteModal() {
+    $('delete-overlay').style.display = 'none';
+    deleteTargetId = null;
+  }
+
+  if ($('delete-confirm-input')) {
+    $('delete-confirm-input').addEventListener('input', function () {
+      $('delete-modal-confirm').disabled = this.value.trim().toLowerCase() !== 'delete';
+    });
+  }
+  if ($('delete-modal-cancel')) {
+    $('delete-modal-cancel').addEventListener('click', closeDeleteModal);
+  }
+  if ($('delete-overlay')) {
+    $('delete-overlay').addEventListener('click', function (e) {
+      if (e.target === $('delete-overlay')) closeDeleteModal();
+    });
+  }
+  if ($('delete-modal-confirm')) {
+    $('delete-modal-confirm').addEventListener('click', function () {
+      if (!deleteTargetId) return;
+      var idx = state.campData.kids.findIndex(function (k) { return k.id === deleteTargetId; });
+      if (idx === -1) { closeDeleteModal(); return; }
+      var removed = state.campData.kids.splice(idx, 1)[0];
+      removed.deletedAt = new Date().toISOString().slice(0, 10);
+      if (!Array.isArray(state.campData.deleted)) state.campData.deleted = [];
+      state.campData.deleted.push(removed);
+      persistData().then(renderAll);
+      closeDeleteModal();
+      showToast('🗑 Moved to Deleted');
+    });
+  }
+
+  // ─────────────────────────────────────────────────────
+  // DELETED TAB
+  // ─────────────────────────────────────────────────────
+  function renderDeleted() {
+    if (!state.campData) return;
+    var deleted = state.campData.deleted || [];
+    var countEl = $('deleted-count');
+    if (countEl) countEl.textContent = deleted.length;
+    var list = $('deleted-list');
+    if (!list) return;
+    if (deleted.length === 0) {
+      list.innerHTML = '<div class="reg-empty">No deleted records.</div>';
+      return;
+    }
+    list.innerHTML = deleted.map(function (kid) {
+      var weeks = (kid.weeks || []).map(function (wn) {
+        var def = getWeekDef(wn);
+        return '<span class="reg-week-chip">Week ' + wn + (def.dates ? ' · ' + def.dates : '') + '</span>';
+      }).join('');
+      return '<div class="reg-card" style="opacity:0.75;" data-id="' + kid.id + '">' +
+        '<div class="reg-card-top">' +
+          '<div class="reg-emoji">' + (kid.emoji || '?') + '</div>' +
+          '<div class="reg-info">' +
+            '<div class="reg-child-name">' + esc(kid.childName || 'Unnamed') + (kid.childAge ? ', age ' + kid.childAge : '') + '</div>' +
+            '<div class="reg-parent-name">' + esc(kid.parentName || '') + '</div>' +
+          '</div>' +
+          '<div class="reg-status"><span style="font-size:0.75rem;color:#999;">Deleted ' + (kid.deletedAt || '') + '</span></div>' +
+        '</div>' +
+        (weeks ? '<div class="reg-weeks">' + weeks + '</div>' : '') +
+        '<div class="reg-actions">' +
+          '<button class="a-btn a-btn--sm a-btn--green" data-action="reinstate" data-id="' + kid.id + '">↩ Reinstate</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // Reinstate action — delegated from deleted-list
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-action="reinstate"]');
+    if (!btn) return;
+    var id = btn.dataset.id;
+    if (!state.campData || !Array.isArray(state.campData.deleted)) return;
+    var idx = state.campData.deleted.findIndex(function (k) { return k.id === id; });
+    if (idx === -1) return;
+    var kid = state.campData.deleted.splice(idx, 1)[0];
+    delete kid.deletedAt;
+    kid.status = 'pending';
+    state.campData.kids.push(kid);
+    persistData().then(renderAll);
+    showToast('✅ ' + (kid.childName || 'Record') + ' reinstated!');
+  });
+
+  // ─────────────────────────────────────────────────────
   // TABS
   // ─────────────────────────────────────────────────────
   function showTab(tabName) {
     state.currentTab = tabName;
-    ['registrations', 'weeks', 'add'].forEach(function (t) {
+    ['registrations', 'weeks', 'add', 'deleted'].forEach(function (t) {
       var panel = $('tab-' + t);
       if (panel) panel.style.display = t === tabName ? '' : 'none';
     });
@@ -622,6 +720,12 @@
       return;
     }
 
+    // Skip login if already authenticated in this browser session
+    if (sessionStorage.getItem(SESSION_KEY)) {
+      bootApp();
+      return;
+    }
+
     showScreen('login');
 
     // Login
@@ -629,6 +733,7 @@
       e.preventDefault();
       var pw = $('login-password').value;
       if (verifyPw(pw)) {
+        sessionStorage.setItem(SESSION_KEY, '1');
         $('login-password').value = '';
         bootApp();
       } else {
@@ -687,6 +792,7 @@
 
     var btnLogout = $('btn-logout');
     if (btnLogout) btnLogout.addEventListener('click', function () {
+      sessionStorage.removeItem(SESSION_KEY);
       showScreen('login');
       showToast('Logged out');
     });

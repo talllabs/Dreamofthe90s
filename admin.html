@@ -83,6 +83,7 @@
     <button class="tab-btn active" data-tab="registrations">Registrations</button>
     <button class="tab-btn" data-tab="weeks">Weeks</button>
     <button class="tab-btn" data-tab="add">+ Add</button>
+    <button class="tab-btn" data-tab="deleted">🗑 Deleted</button>
   </div>
 
   <!-- ── REGISTRATIONS TAB ── -->
@@ -210,7 +211,30 @@
     </div>
   </div>
 
+  <!-- ── DELETED TAB ── -->
+  <div id="tab-deleted" class="tab-panel" style="display:none;">
+    <div class="panel-header">
+      <h2 class="panel-title">Deleted Records</h2>
+      <span class="a-badge" id="deleted-count">0</span>
+    </div>
+    <p style="font-size:0.875rem;color:#777;margin-bottom:1rem;">Registrations removed from the active list. Reinstate to restore them.</p>
+    <div id="deleted-list"></div>
+  </div>
+
 </div><!-- end #screen-app -->
+
+<!-- ── DELETE CONFIRM MODAL ── -->
+<div id="delete-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:none;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:2rem;max-width:360px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <h3 style="margin:0 0 0.5rem;font-family:var(--font-nunito);font-size:1.1rem;">Delete Registration</h3>
+    <p style="font-size:0.875rem;color:#555;margin-bottom:1rem;">Type <strong>delete</strong> below to confirm removing <strong id="delete-modal-name"></strong>.</p>
+    <input id="delete-confirm-input" class="a-input" type="text" placeholder="Type delete to confirm" autocomplete="off" />
+    <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+      <button id="delete-modal-cancel" class="a-btn a-btn--ghost" style="flex:1;">Cancel</button>
+      <button id="delete-modal-confirm" class="a-btn a-btn--red" style="flex:1;" disabled>Delete</button>
+    </div>
+  </div>
+</div>
 
 <!-- ── SETTINGS OVERLAY ── -->
 <div class="settings-overlay" id="settings-overlay"></div>
