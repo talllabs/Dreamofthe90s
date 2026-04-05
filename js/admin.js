@@ -188,6 +188,14 @@
            { num: num, totalSpots: 8 };
   }
 
+  function calcOwed(kid) {
+    var n = (kid.weeks || []).length;
+    if (n === 0) return 0;
+    return n === 7 ? 3000 : n * 500;
+  }
+
+  function fmtMoney(n) { return '$' + Number(n || 0).toLocaleString(); }
+
   function statusBadge(status) {
     var cls = status === 'booked' ? 'status-pill--booked' : 'status-pill--pending';
     var label = status === 'booked' ? '✓ Booked' : '⏳ Pending';
@@ -224,18 +232,34 @@
         var def = getWeekDef(wn);
         return '<span class="reg-week-chip">Week ' + wn + (def.dates ? ' · ' + def.dates : '') + '</span>';
       }).join('');
-      var meta = [kid.parentName, kid.email, kid.phone].filter(Boolean).join(' · ');
+      var meta = [kid.parentName, kid.email, kid.parentPhone].filter(Boolean).join(' · ');
+      var owed    = calcOwed(kid);
+      var paid    = kid.amountPaid || 0;
+      var balance = owed - paid;
+      var payHtml = '<div class="reg-payment">' +
+        '<span class="pay-item">Owes: <strong>' + fmtMoney(owed) + '</strong></span>' +
+        '<span class="pay-item">Paid: <strong>' + fmtMoney(paid) + '</strong></span>' +
+        '<span class="pay-item ' + (balance <= 0 ? 'pay-clear' : 'pay-due') + '">Balance: <strong>' +
+          fmtMoney(Math.abs(balance)) + (balance <= 0 ? ' ✓' : ' due') + '</strong></span>' +
+        (kid.paidAt ? '<span class="pay-date">Paid ' + kid.paidAt + '</span>' : '') +
+        '</div>';
       return '<div class="reg-card" data-id="' + kid.id + '">' +
         '<div class="reg-card-top">' +
           '<div class="reg-info">' +
-            '<div class="reg-child-name">' + esc(kid.childName || 'Unnamed') + (kid.childAge ? ', age ' + kid.childAge : '') + '</div>' +
-            '<div class="reg-parent-name">' + esc(kid.parentName || '') + '</div>' +
+            '<div class="reg-child-name">' + esc(kid.childName || 'Unnamed') + '</div>' +
           '</div>' +
           '<div class="reg-status">' + statusBadge(kid.status) + '</div>' +
         '</div>' +
+        '<div class="reg-details">' +
+          (kid.childAge    ? '<div class="reg-detail-row"><span class="reg-detail-label">Age</span><span>' + esc(String(kid.childAge)) + '</span></div>' : '') +
+          (kid.parentName  ? '<div class="reg-detail-row"><span class="reg-detail-label">Parent</span><span>' + esc(kid.parentName) + '</span></div>' : '') +
+          (kid.parentPhone ? '<div class="reg-detail-row"><span class="reg-detail-label">Phone</span><span>' + esc(kid.parentPhone) + '</span></div>' : '') +
+          (kid.email       ? '<div class="reg-detail-row"><span class="reg-detail-label">Email</span><span>' + esc(kid.email) + '</span></div>' : '') +
+          (kid.registeredAt? '<div class="reg-detail-row"><span class="reg-detail-label">Registered</span><span>' + esc(kid.registeredAt) + '</span></div>' : '') +
+          (kid.notes       ? '<div class="reg-detail-row"><span class="reg-detail-label">Notes</span><span>' + esc(kid.notes) + '</span></div>' : '') +
+        '</div>' +
         (weeks ? '<div class="reg-weeks">' + weeks + '</div>' : '') +
-        (meta ? '<div class="reg-meta">' + esc(meta) + '</div>' : '') +
-        (kid.notes ? '<div class="reg-notes">' + esc(kid.notes) + '</div>' : '') +
+        payHtml +
         '<div class="reg-actions">' +
           '<button class="a-btn a-btn--sm" data-action="edit" data-id="' + kid.id + '">✏️ Edit</button>' +
           (kid.status === 'pending'
@@ -321,7 +345,9 @@
       parentPhone:($('f-parent-phone') && $('f-parent-phone').value.trim()) || '',
       email:      ($('f-parent-email') && $('f-parent-email').value.trim()) || '',
       weeks:      weeks,
-      status:     $('f-status') ? $('f-status').value : 'pending',
+      status:      $('f-status') ? $('f-status').value : 'pending',
+      amountPaid:  $('f-amount-paid') && $('f-amount-paid').value !== '' ? parseFloat($('f-amount-paid').value) : 0,
+      paidAt:      ($('f-paid-at') && $('f-paid-at').value) || '',
       notes:      ($('f-notes') && $('f-notes').value.trim()) || ''
     };
   }
@@ -344,7 +370,9 @@
       var el = $(id); if (el) el.value = '';
     });
     document.querySelectorAll('input[name="f-weeks"]').forEach(function (cb) { cb.checked = false; });
-    if ($('f-status')) $('f-status').value = 'pending';
+    if ($('f-status'))       $('f-status').value       = 'pending';
+    if ($('f-amount-paid'))  $('f-amount-paid').value  = '';
+    if ($('f-paid-at'))      $('f-paid-at').value      = '';
     if ($('add-cancel-btn')) $('add-cancel-btn').style.display = 'none';
     if ($('add-form-title-text')) $('add-form-title-text').textContent = 'Add Registration';
     state.editingKidId = null;
@@ -357,7 +385,9 @@
     if ($('f-parent-phone')) $('f-parent-phone').value = kid.parentPhone || '';
     if ($('f-parent-email')) $('f-parent-email').value = kid.email  || '';
     if ($('f-notes'))      $('f-notes').value      = kid.notes     || '';
-    if ($('f-status'))     $('f-status').value      = kid.status   || 'pending';
+    if ($('f-status'))      $('f-status').value      = kid.status     || 'pending';
+    if ($('f-amount-paid')) $('f-amount-paid').value = kid.amountPaid != null ? kid.amountPaid : '';
+    if ($('f-paid-at'))     $('f-paid-at').value     = kid.paidAt     || '';
     document.querySelectorAll('input[name="f-weeks"]').forEach(function (cb) {
       cb.checked = (kid.weeks || []).indexOf(parseInt(cb.value, 10)) !== -1;
     });
@@ -816,10 +846,14 @@
           'Parent Name':   k.parentName  || '',
           'Phone':         k.parentPhone || '',
           'Email':         k.email       || '',
-          'Weeks':         (k.weeks || []).join(', '),
-          'Status':        k.status      || '',
-          'Registered':    k.registeredAt || '',
-          'Notes':         k.notes       || ''
+          'Weeks':          (k.weeks || []).join(', '),
+          'Status':         k.status       || '',
+          'Total Owed':     fmtMoney(calcOwed(k)),
+          'Amount Paid':    fmtMoney(k.amountPaid || 0),
+          'Balance':        fmtMoney(calcOwed(k) - (k.amountPaid || 0)),
+          'Payment Date':   k.paidAt       || '',
+          'Registered':     k.registeredAt || '',
+          'Notes':          k.notes        || ''
         };
       }
 
@@ -882,6 +916,8 @@
         + 'tr:nth-child(even) td{background:#f5f5f5;}'
         + '.confirmed{color:#2a7a2a;font-weight:bold;}'
         + '.pending{color:#b06000;}'
+        + '.due{color:#c00;font-weight:bold;}'
+        + '.clear{color:#2a7a2a;}'
         + '.week-block{page-break-inside:avoid;}'
         + '@media print{body{padding:0;}}'
         + '</style></head><body>'
@@ -914,6 +950,33 @@
       });
 
       // Section 2: All registrations
+      // Section 2: Payment summary (invoice-ready)
+      var totalOwed = kids.reduce(function(s,k){return s+calcOwed(k);},0);
+      var totalPaid = kids.reduce(function(s,k){return s+(k.amountPaid||0);},0);
+      html += '<h2>Payment Summary</h2><table>'
+        + '<tr><th>Child</th><th>Parent</th><th>Phone</th><th>Weeks</th><th>Total Owed</th><th>Paid</th><th>Balance</th><th>Payment Date</th></tr>';
+      if (kids.length === 0) {
+        html += '<tr><td colspan="8" style="color:#999;">No registrations yet.</td></tr>';
+      } else {
+        kids.forEach(function (k) {
+          var owed = calcOwed(k);
+          var paid = k.amountPaid || 0;
+          var bal  = owed - paid;
+          html += '<tr><td>' + (k.childName||'') + '</td><td>' + (k.parentName||'')
+            + '</td><td>' + (k.parentPhone||'')
+            + '</td><td>' + (k.weeks||[]).map(function(w){return 'Wk '+w;}).join(', ')
+            + '</td><td>' + fmtMoney(owed)
+            + '</td><td>' + fmtMoney(paid)
+            + '</td><td class="' + (bal<=0?'clear':'due') + '">' + fmtMoney(bal) + (bal<=0?' ✓':' due')
+            + '</td><td>' + (k.paidAt||'—') + '</td></tr>';
+        });
+        html += '<tr style="font-weight:bold;background:#eee;"><td colspan="4">TOTAL</td>'
+          + '<td>' + fmtMoney(totalOwed) + '</td><td>' + fmtMoney(totalPaid) + '</td>'
+          + '<td class="' + (totalOwed-totalPaid<=0?'clear':'due') + '">' + fmtMoney(totalOwed-totalPaid) + '</td><td></td></tr>';
+      }
+      html += '</table>';
+
+      // Section 3: All registrations
       html += '<h2>All Registrations</h2><table>'
         + '<tr><th>Child</th><th>Age</th><th>Parent</th><th>Phone</th><th>Email</th><th>Weeks</th><th>Status</th><th>Registered</th></tr>';
       if (kids.length === 0) {

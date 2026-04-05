@@ -127,7 +127,8 @@
     font-size: 0.95rem;
   }
 
-  .week-schedule-row .week-dates {
+  .week-schedule-row .week-dates,
+  .week-check-date {
     white-space: nowrap;
     font-size: 0.85rem;
     min-width: 0;

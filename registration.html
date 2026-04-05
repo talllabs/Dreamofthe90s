@@ -57,59 +57,6 @@
     /* Payment panel overrides for the green page */
     .reg-page .payment-panel-title { font-size: 1.8rem; }
 
-    /* ── Mobile week grid redesign ── */
-    @media (max-width: 600px) {
-      .reg-page .form-weeks-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
-      }
-
-      .reg-page .week-check {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0.65rem 0.7rem 0.6rem;
-        border-radius: 14px;
-        gap: 0.2rem;
-        position: relative;
-        min-height: 72px;
-      }
-
-      .reg-page .week-check input[type="checkbox"] {
-        position: absolute;
-        top: 0.55rem;
-        right: 0.6rem;
-        width: 18px;
-        height: 18px;
-        margin: 0;
-      }
-
-      .reg-page .week-check-body {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.1rem;
-        padding-right: 1.6rem;
-      }
-
-      .reg-page .week-check-num {
-        font-size: 1rem;
-        line-height: 1.1;
-      }
-
-      .reg-page .week-check-date {
-        font-size: 0.78rem;
-        color: #444;
-        white-space: nowrap;
-      }
-
-      .reg-page .week-check-spots {
-        font-size: 0.65rem;
-        padding: 0.15rem 0.45rem;
-        letter-spacing: 0.02em;
-        margin-left: 0;
-        margin-top: 0.3rem;
-      }
-    }
   </style>
 </head>
 <body>
@@ -122,7 +69,6 @@
   </nav>
 
   <main class="reg-page">
-    <a href="/" class="reg-back">&#8592; Back to main site</a>
 
     <h2 class="section-banner" style="background: var(--white); margin-bottom: 1.5rem;">
       <span class="banner-icon" style="background: var(--yellow);">✉️</span>
@@ -214,7 +160,7 @@
           <canvas id="venmo-qr"></canvas>
         </div>
       </div>
-      <p class="payment-panel-note">Once your Venmo payment goes through, you'll receive an email confirmation from Mia &amp; Ashleigh and you'll see your kid's emoji on the Weekly Schedule.</p>
+      <p class="payment-panel-note">Once your Venmo payment goes through, Mia &amp; Ashleigh will confirm your spot. You can check your registration status anytime at the <a href="/portal.html" style="color:var(--white);font-weight:800;">Parent Portal</a>.</p>
     </div>
 
   </main>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parent Portal — 90's Summer Day Camp</title>
+  <meta name="description" content="Check your registration details for 90's Summer Day Camp." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Boogaloo&family=Titan+One&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/typography.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+
+  <style>
+    body {
+      background: var(--green);
+      min-height: 100vh;
+    }
+
+    .portal-page {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 2rem) 1.25rem 4rem;
+    }
+
+    /* Lookup form */
+    .lookup-card {
+      background: var(--white);
+      border: 3px solid var(--black);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .lookup-hint {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .lookup-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .lookup-input {
+      flex: 1;
+      min-width: 200px;
+      font-family: var(--font-nunito);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.65rem 1rem;
+      border: 2.5px solid var(--black);
+      border-radius: var(--radius-md);
+      background: var(--white);
+      transition: box-shadow 0.15s;
+    }
+    .lookup-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--yellow);
+    }
+
+    /* Error / not found */
+    .lookup-error {
+      display: none;
+      margin-top: 0.75rem;
+      background: #fff0f0;
+      border: 2px solid #f5a0a0;
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: #c00;
+    }
+
+    /* Results */
+    .results-wrap { display: none; }
+
+    .results-greeting {
+      font-family: var(--font-fredoka);
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.02em;
+    }
+
+    .reg-result-card {
+      background: var(--white);
+      border: 3px solid var(--black);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .result-child {
+      font-family: var(--font-fredoka);
+      font-size: 1.4rem;
+      color: var(--purple);
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .result-section-title {
+      font-family: var(--font-nunito);
+      font-weight: 800;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #888;
+      margin: 1rem 0 0.5rem;
+    }
+
+    /* Week chips */
+    .result-weeks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .result-week-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.85rem;
+      border: 2px solid var(--black);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-nunito);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .result-week-row.week-1 { background: #AAE4FF; }
+    .result-week-row.week-2 { background: #FFB08A; }
+    .result-week-row.week-3 { background: #FFB8D8; }
+    .result-week-row.week-4 { background: #D4B8F0; }
+    .result-week-row.week-5 { background: #A8E878; }
+    .result-week-row.week-6 { background: #FFE57A; }
+    .result-week-row.week-7 { background: #AAE4FF; }
+
+    .result-week-num {
+      font-family: var(--font-fredoka);
+      font-size: 1rem;
+      min-width: 60px;
+      letter-spacing: 0.02em;
+    }
+    .result-week-dates { flex: 1; color: #333; }
+
+    /* Payment */
+    .payment-summary {
+      background: #f8f8f8;
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .pay-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-nunito);
+      font-size: 0.95rem;
+    }
+
+    .pay-row-label { color: #666; font-weight: 600; }
+    .pay-row-value { font-weight: 800; }
+    .pay-row--total .pay-row-value { color: var(--purple); font-size: 1.1rem; }
+    .pay-row--paid  .pay-row-value { color: #2a7a2a; }
+    .pay-row--balance .pay-row-value { color: var(--black); }
+    .pay-row--balance.is-due .pay-row-value { color: #c00; }
+    .pay-row--balance.is-clear .pay-row-value { color: #2a7a2a; }
+
+    .pay-divider {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 0.25rem 0;
+    }
+
+    /* Status badge */
+    .status-tag {
+      display: inline-block;
+      font-family: var(--font-nunito);
+      font-weight: 800;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--black);
+    }
+    .status-tag--confirmed { background: #d4f0c0; color: #2a6a10; }
+    .status-tag--pending   { background: #fff3cc; color: #7a5a00; }
+
+    /* Info rows */
+    .info-row {
+      display: flex;
+      gap: 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 0.2rem 0;
+    }
+    .info-label { font-weight: 700; color: #888; min-width: 100px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    .try-again-btn {
+      margin-top: 1.5rem;
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+    .try-again-btn:hover { color: var(--white); }
+
+    @media (max-width: 480px) {
+      .lookup-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">90's Summer &#9733; Day Camp</a>
+    </div>
+  </nav>
+
+  <main class="portal-page">
+
+    <h2 class="section-banner" style="background:var(--white); margin-bottom:1.5rem;">
+      <span class="banner-icon" style="background:var(--lavender);">🏠</span>
+      <span class="banner-text">Parent Portal</span>
+    </h2>
+
+    <!-- Lookup form -->
+    <div class="lookup-card" id="lookup-card">
+      <p class="lookup-hint">
+        <strong>Already registered?</strong> This portal is for parents who have already submitted a registration form. Enter the email address you used when you signed up to check your booked dates, registration details, and payment status.
+      </p>
+      <div class="lookup-row">
+        <input class="lookup-input" type="email" id="lookup-email" placeholder="your@email.com" autocomplete="email" />
+        <button class="btn btn--press" id="lookup-btn" style="white-space:nowrap;">Look Up</button>
+      </div>
+      <div class="lookup-error" id="lookup-error"></div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-wrap" id="results-wrap">
+      <div class="results-greeting" id="results-greeting"></div>
+      <div id="results-list"></div>
+      <button class="try-again-btn" id="try-again-btn">&#8592; Look up a different email</button>
+    </div>
+
+  </main>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var JSONBIN_BIN_ID = '69d0a3d6856a682189fa7ef5';
+
+    var WEEK_DATES = {
+      1: 'June 8–12',
+      2: 'June 15–19',
+      3: 'June 22–26',
+      4: 'June 29–July 3',
+      5: 'July 6–10',
+      6: 'July 13–17',
+      7: 'July 20–24'
+    };
+
+    var emailInput  = document.getElementById('lookup-email');
+    var lookupBtn   = document.getElementById('lookup-btn');
+    var errorBox    = document.getElementById('lookup-error');
+    var lookupCard  = document.getElementById('lookup-card');
+    var resultsWrap = document.getElementById('results-wrap');
+    var resultsList = document.getElementById('results-list');
+    var greeting    = document.getElementById('results-greeting');
+    var tryAgainBtn = document.getElementById('try-again-btn');
+
+    function calcOwed(kid) {
+      var n = (kid.weeks || []).length;
+      if (n === 0) return 0;
+      return n === 7 ? 3000 : n * 500;
+    }
+
+    function fmtMoney(n) { return '$' + Number(n || 0).toLocaleString(); }
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+    }
+    function hideError() { errorBox.style.display = 'none'; }
+
+    function doLookup() {
+      var email = emailInput.value.trim().toLowerCase();
+      if (!email) { showError('Please enter your email address.'); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
+      hideError();
+
+      lookupBtn.disabled = true;
+      lookupBtn.textContent = 'Looking up…';
+
+      fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
+        .then(function (r) { return r.json(); })
+        .then(function (json) {
+          var record = json.record || {};
+          var kids = (record.kids || []).filter(function (k) {
+            return (k.email || '').toLowerCase().trim() === email;
+          });
+
+          lookupBtn.disabled = false;
+          lookupBtn.textContent = 'Look Up';
+
+          if (kids.length === 0) {
+            showError('No registration found for that email address. Please check the address and try again, or submit a new registration.');
+            return;
+          }
+
+          renderResults(kids);
+        })
+        .catch(function () {
+          lookupBtn.disabled = false;
+          lookupBtn.textContent = 'Look Up';
+          showError('Something went wrong — please try again in a moment.');
+        });
+    }
+
+    function renderResults(kids) {
+      var parentName = kids[0].parentName || 'there';
+      greeting.textContent = 'Hi ' + parentName + '! Here\'s your registration info:';
+
+      resultsList.innerHTML = kids.map(function (kid) {
+        var owed    = calcOwed(kid);
+        var paid    = kid.amountPaid || 0;
+        var balance = owed - paid;
+        var isConfirmed = kid.status === 'booked';
+
+        var weeksHtml = (kid.weeks || []).sort(function(a,b){return a-b;}).map(function (wn) {
+          return '<div class="result-week-row week-' + wn + '">' +
+            '<span class="result-week-num">Week ' + wn + '</span>' +
+            '<span class="result-week-dates">' + (WEEK_DATES[wn] || '') + '</span>' +
+          '</div>';
+        }).join('');
+
+        var statusTag = '<span class="status-tag ' + (isConfirmed ? 'status-tag--confirmed' : 'status-tag--pending') + '">' +
+          (isConfirmed ? '✓ Confirmed' : '⏳ Awaiting Payment') + '</span>';
+
+        var payHtml = '<div class="payment-summary">' +
+          '<div class="pay-row pay-row--total"><span class="pay-row-label">Total</span><span class="pay-row-value">' + fmtMoney(owed) + '</span></div>' +
+          '<div class="pay-row pay-row--paid"><span class="pay-row-label">Paid</span><span class="pay-row-value">' + fmtMoney(paid) + '</span></div>' +
+          '<hr class="pay-divider">' +
+          '<div class="pay-row pay-row--balance ' + (balance <= 0 ? 'is-clear' : 'is-due') + '">' +
+            '<span class="pay-row-label">Balance</span>' +
+            '<span class="pay-row-value">' + (balance <= 0 ? 'Paid in full ✓' : fmtMoney(balance) + ' due') + '</span>' +
+          '</div>' +
+          (kid.paidAt ? '<div class="pay-row"><span class="pay-row-label">Payment date</span><span class="pay-row-value" style="font-weight:600;color:#555;">' + kid.paidAt + '</span></div>' : '') +
+          '</div>';
+
+        return '<div class="reg-result-card">' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.25rem;">' +
+            '<div class="result-child">' + esc(kid.childName || 'Your child') + (kid.childAge ? ', age ' + kid.childAge : '') + '</div>' +
+            statusTag +
+          '</div>' +
+
+          '<div class="result-section-title">Weeks Booked</div>' +
+          '<div class="result-weeks">' + (weeksHtml || '<p style="color:#999;font-size:0.9rem;">No weeks selected.</p>') + '</div>' +
+
+          '<div class="result-section-title">Payment</div>' +
+          payHtml +
+
+          (kid.notes ? '<div class="result-section-title">Your Notes</div><div style="font-family:var(--font-body);font-size:0.9rem;color:#555;">' + esc(kid.notes) + '</div>' : '') +
+
+          '<div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #eee;font-family:var(--font-body);font-size:0.82rem;color:#999;">' +
+            'Registered ' + (kid.registeredAt || '') + ' &nbsp;·&nbsp; Questions? Email Mia &amp; Ashleigh.' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      lookupCard.style.display = 'none';
+      resultsWrap.style.display = 'block';
+    }
+
+    function esc(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    lookupBtn.addEventListener('click', doLookup);
+    emailInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') doLookup();
+    });
+
+    tryAgainBtn.addEventListener('click', function () {
+      resultsWrap.style.display = 'none';
+      lookupCard.style.display = '';
+      emailInput.value = '';
+      hideError();
+      emailInput.focus();
+    });
+
+    // Sticky nav
+    var nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+  }());
+  </script>
+</body>
+</html>
