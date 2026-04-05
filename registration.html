@@ -112,7 +112,10 @@
       <!-- Weeks -->
       <div class="form-weeks-section">
         <div class="form-weeks-title">Pick Your Week(s) &#9733; $500 / week</div>
-        <div class="form-weeks-grid">
+        <div class="spin-wrap" id="avail-spinner" style="color:rgba(255,255,255,0.85);">
+          <div class="spinner"></div>Loading availability…
+        </div>
+        <div class="form-weeks-grid" id="weeks-grid" style="display:none;">
           <label class="week-check week-check--1"><input type="checkbox" name="weeks" value="1" /><div class="week-check-body"><span class="week-check-num">Week 1</span><span class="week-check-date">June 8–12</span></div></label>
           <label class="week-check week-check--2"><input type="checkbox" name="weeks" value="2" /><div class="week-check-body"><span class="week-check-num">Week 2</span><span class="week-check-date">June 15–19</span></div></label>
           <label class="week-check week-check--3"><input type="checkbox" name="weeks" value="3" /><div class="week-check-body"><span class="week-check-num">Week 3</span><span class="week-check-date">June 22–26</span></div></label>
@@ -252,6 +255,13 @@
       return { text: n + ' spots open', cls: 'spots-open' };
     }
 
+    function showWeeksGrid() {
+      var sp = document.getElementById('avail-spinner');
+      var grid = document.getElementById('weeks-grid');
+      if (sp) sp.style.display = 'none';
+      if (grid) grid.style.display = '';
+    }
+
     function loadAvailability() {
       fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
         .then(function (r) { return r.json(); })
@@ -298,8 +308,9 @@
               checkLabel.classList.add('week-check--full');
             }
           });
+          showWeeksGrid();
         })
-        .catch(function () { /* silently ignore — form still works without live data */ });
+        .catch(function () { showWeeksGrid(); });
     }
 
     loadAvailability();

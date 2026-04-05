@@ -256,7 +256,10 @@
       </p>
       <div class="lookup-row">
         <input class="lookup-input" type="email" id="lookup-email" placeholder="your@email.com" autocomplete="email" />
-        <button class="btn btn--press" id="lookup-btn" style="white-space:nowrap;">Look Up</button>
+        <button class="btn btn--press" id="lookup-btn" style="white-space:nowrap;display:flex;align-items:center;gap:0.5rem;">
+          <span id="lookup-btn-spinner" class="spinner spinner--dark" style="display:none;width:18px;height:18px;border-width:2px;"></span>
+          <span id="lookup-btn-text">Look Up</span>
+        </button>
       </div>
       <div class="lookup-error" id="lookup-error"></div>
     </div>
@@ -316,7 +319,8 @@
       hideError();
 
       lookupBtn.disabled = true;
-      lookupBtn.textContent = 'Looking up…';
+      document.getElementById('lookup-btn-spinner').style.display = '';
+      document.getElementById('lookup-btn-text').textContent = 'Looking up…';
 
       fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
         .then(function (r) { return r.json(); })
@@ -327,7 +331,8 @@
           });
 
           lookupBtn.disabled = false;
-          lookupBtn.textContent = 'Look Up';
+          document.getElementById('lookup-btn-spinner').style.display = 'none';
+          document.getElementById('lookup-btn-text').textContent = 'Look Up';
 
           if (kids.length === 0) {
             showError('No registration found for that email address. Please check the address and try again, or submit a new registration.');
@@ -338,7 +343,8 @@
         })
         .catch(function () {
           lookupBtn.disabled = false;
-          lookupBtn.textContent = 'Look Up';
+          document.getElementById('lookup-btn-spinner').style.display = 'none';
+          document.getElementById('lookup-btn-text').textContent = 'Look Up';
           showError('Something went wrong — please try again in a moment.');
         });
     }
