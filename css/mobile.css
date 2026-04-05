@@ -113,6 +113,36 @@
 
   .week-dates {
     font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  /* Week schedule rows — prevent date wrapping, shrink spots badge */
+  .week-schedule-row {
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .week-schedule-row .week-label {
+    min-width: 54px;
+    font-size: 0.95rem;
+  }
+
+  .week-schedule-row .week-dates {
+    white-space: nowrap;
+    font-size: 0.85rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .week-spots {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Prevent horizontal overflow */
+  body {
+    overflow-x: hidden;
   }
 
   /* Pricing */
