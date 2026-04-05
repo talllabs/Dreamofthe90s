@@ -29,7 +29,7 @@
     .reg-page {
       max-width: 680px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 4rem;
+      padding: calc(var(--nav-h) + 2rem) 1.25rem 4rem;
     }
 
     .reg-back {
@@ -47,7 +47,6 @@
     .reg-page .form-label { color: var(--white); }
     .reg-page .form-weeks-title { color: var(--white); }
     .reg-page .form-label-hint { color: rgba(255,255,255,0.8); }
-    .reg-page .emoji-selected-display { color: var(--white); }
 
     /* Submit button full width */
     .reg-page .form-submit {
@@ -133,32 +132,6 @@
         <span class="price-calc-savings" id="calc-savings">🎉 Full summer — $500 discount applied!</span>
       </div>
 
-      <!-- Emoji picker -->
-      <div class="form-field">
-        <label class="form-label">Pick an emoji for your kid &#9733;
-          <span class="form-label-hint">Your kid's unique camp identity — shows on the schedule once registered.</span>
-        </label>
-        <div class="emoji-picker" id="emoji-grid">
-          <button type="button" class="emoji-btn" data-emoji="🦄">🦄</button>
-          <button type="button" class="emoji-btn" data-emoji="🐶">🐶</button>
-          <button type="button" class="emoji-btn" data-emoji="🐱">🐱</button>
-          <button type="button" class="emoji-btn" data-emoji="🐸">🐸</button>
-          <button type="button" class="emoji-btn" data-emoji="🦊">🦊</button>
-          <button type="button" class="emoji-btn" data-emoji="🐰">🐰</button>
-          <button type="button" class="emoji-btn" data-emoji="🦋">🦋</button>
-          <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
-          <button type="button" class="emoji-btn" data-emoji="🌈">🌈</button>
-          <button type="button" class="emoji-btn" data-emoji="⭐">⭐</button>
-          <button type="button" class="emoji-btn" data-emoji="🎸">🎸</button>
-          <button type="button" class="emoji-btn" data-emoji="🦕">🦕</button>
-          <button type="button" class="emoji-btn" data-emoji="🐙">🐙</button>
-          <button type="button" class="emoji-btn" data-emoji="🎯">🎯</button>
-          <button type="button" class="emoji-btn" data-emoji="🍦">🍦</button>
-          <button type="button" class="emoji-btn" data-emoji="🌻">🌻</button>
-        </div>
-        <div class="emoji-selected-display" id="emoji-selected"></div>
-        <input type="hidden" id="emoji-value" name="kid_emoji" />
-      </div>
 
       <div class="form-field">
         <label class="form-label" for="reg-message">Anything else we should know?</label>
@@ -210,9 +183,6 @@
     var submitBtn    = document.getElementById('reg-submit');
     var errorBox     = document.getElementById('reg-error');
     var paymentPanel = document.getElementById('payment-panel');
-    var emojiGrid    = document.getElementById('emoji-grid');
-    var emojiValue   = document.getElementById('emoji-value');
-    var emojiDisplay = document.getElementById('emoji-selected');
     var calcBox      = document.getElementById('price-calc');
     var calcAmount   = document.getElementById('calc-amount');
     var calcSavings  = document.getElementById('calc-savings');
@@ -234,19 +204,6 @@
       }
       calcAmount.textContent = '$' + total.toLocaleString();
     }
-
-    // ── Emoji picker ──
-    var selectedEmoji = '';
-    emojiGrid.querySelectorAll('.emoji-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        if (btn.disabled) return;
-        selectedEmoji = btn.getAttribute('data-emoji');
-        emojiValue.value = selectedEmoji;
-        emojiDisplay.textContent = 'Your kid\'s emoji: ' + selectedEmoji;
-        emojiGrid.querySelectorAll('.emoji-btn').forEach(function (b) { b.classList.remove('selected'); });
-        btn.classList.add('selected');
-      });
-    });
 
     // ── Show error ──
     function showError(msg) {
@@ -317,19 +274,6 @@
             });
           }
 
-          // Mark taken emojis
-          var takenEmojis = {};
-          if (Array.isArray(record.kids)) {
-            record.kids.forEach(function (kid) { if (kid.emoji) takenEmojis[kid.emoji] = true; });
-          }
-          emojiGrid.querySelectorAll('.emoji-btn').forEach(function (btn) {
-            if (takenEmojis[btn.getAttribute('data-emoji')]) {
-              btn.disabled = true;
-              btn.classList.add('emoji-taken');
-              btn.title = 'Already taken';
-            }
-          });
-
           // Update each week checkbox with spots badge
           weekCheckboxes.forEach(function (cb) {
             var wn = parseInt(cb.value, 10);
@@ -371,7 +315,6 @@
       var childName   = form.querySelector('[name="child_name"]').value.trim();
       var childAge    = form.querySelector('[name="child_age"]').value.trim();
       var weeks       = Array.from(weekCheckboxes).filter(function (cb) { return cb.checked; }).map(function (cb) { return parseInt(cb.value, 10); });
-      var emoji       = emojiValue.value;
       var notes       = form.querySelector('[name="message"]').value.trim();
 
       if (!parentName)  { showError('Please enter your name.'); return; }
@@ -380,7 +323,6 @@
       if (!childName)   { showError('Please enter your child\'s name.'); return; }
       if (!childAge)    { showError('Please enter your child\'s age.'); return; }
       if (!weeks.length){ showError('Please select at least one week.'); return; }
-      if (!emoji)       { showError('Please pick an emoji for your kid.'); return; }
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
@@ -395,7 +337,7 @@
         notes:        notes,
         status:       'pending',
         weeks:        weeks,
-        emoji:        emoji,
+        emoji:        '',
         registeredAt: new Date().toISOString().slice(0, 10)
       };
 
@@ -406,7 +348,6 @@
       fd.append('child_name', childName);
       fd.append('child_age', childAge);
       weeks.forEach(function (w) { fd.append('weeks', 'Week ' + w); });
-      fd.append('kid_emoji', emoji);
       fd.append('message', notes);
       fd.append('estimated_total', calcAmount.textContent);
 

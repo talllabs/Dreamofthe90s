@@ -72,6 +72,8 @@
     <div class="admin-header-inner">
       <div class="admin-logo">☀️ Camp Admin</div>
       <div class="admin-header-actions">
+        <button class="a-btn a-btn--sm" id="s-export-excel">⬇ Excel</button>
+        <button class="a-btn a-btn--sm" id="s-export-pdf">🖨 PDF</button>
         <button class="a-btn a-btn--sm a-btn--ghost" id="btn-settings" title="Settings">⚙️</button>
         <button class="a-btn a-btn--sm a-btn--ghost" id="btn-logout" title="Log out">Log out</button>
       </div>
@@ -250,45 +252,15 @@
     <button class="a-btn a-btn--sm" id="s-change-pw">Update Password</button>
   </div>
 
-  <div class="settings-section">
-    <div class="settings-section-title">JSONBin Config</div>
-    <div class="a-field">
-      <label class="a-label">Master Key</label>
-      <input class="a-input" type="password" id="s-api-key" placeholder="$2a$10$…" autocomplete="off" />
-    </div>
-    <div class="a-field">
-      <label class="a-label">Collection ID</label>
-      <input class="a-input" type="text" id="s-collection-id" placeholder="69d094fbaaba882197c28576" style="font-family:monospace;font-size:0.875rem;" />
-      <p style="font-size:0.8rem;color:#999;margin-top:0.25rem;">Bins created here will be stored in the "90s" collection.</p>
-    </div>
-    <div class="a-field">
-      <label class="a-label">Bin ID (auto-generated)</label>
-      <input class="a-input" type="text" id="s-bin-id" readonly placeholder="Not yet created" style="font-family:monospace;font-size:0.875rem;" />
-    </div>
-    <div class="a-error" id="s-bin-error"></div>
-    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-      <button class="a-btn a-btn--sm a-btn--green" id="s-save-config">Save Config</button>
-      <button class="a-btn a-btn--sm" id="s-create-bin">Create New Bin</button>
-    </div>
-  </div>
+  <!-- JSONBin already configured — inputs kept hidden so JS still reads them -->
+  <input type="hidden" id="s-api-key" />
+  <input type="hidden" id="s-collection-id" />
+  <input type="hidden" id="s-bin-id" />
+  <div id="s-bin-error" style="display:none;"></div>
+  <div id="s-snippet-section" style="display:none;"><div id="s-snippet"></div></div>
 
-  <div class="settings-section" id="s-snippet-section">
-    <div class="settings-section-title">Connect to Your Website</div>
-    <p style="font-size:0.875rem;color:#777;margin-bottom:0.75rem;">
-      Add this to your <code>index.html</code> &lt;head&gt; to show live availability on the public site:
-    </p>
-    <div class="code-snippet" id="s-snippet"></div>
-    <button class="a-btn a-btn--sm" id="s-copy-snippet">📋 Copy Snippet</button>
-  </div>
-
-  <div class="settings-section">
-    <div class="settings-section-title">Data</div>
-    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-      <button class="a-btn a-btn--sm" id="s-export-excel">⬇ Export Excel</button>
-      <button class="a-btn a-btn--sm" id="s-export-pdf">🖨 Export PDF</button>
-      <button class="a-btn a-btn--sm a-btn--red" id="s-clear" style="margin-left:auto;">🗑 Reset All Data</button>
-    </div>
-  </div>
+  <!-- s-clear kept hidden so JS doesn't break if it references it -->
+  <button id="s-clear" style="display:none;"></button>
 
   <button class="a-btn a-btn--ghost" id="s-close" style="width:100%;margin-top:0.5rem;">Close</button>
 </div>
