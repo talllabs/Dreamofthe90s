@@ -476,20 +476,17 @@ textarea.a-input { resize: vertical; min-height: 80px; }
   flex-wrap: wrap;
   gap: 0.4rem;
 }
-.week-kid-emoji {
-  font-size: 1.4rem;
-  line-height: 1;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
+.week-kid-pill {
+  font-family: var(--font-nunito, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  border: 1.5px solid rgba(0,0,0,0.15);
+  white-space: nowrap;
 }
-.week-kid-emoji .kid-label {
-  font-size: 0.6rem;
-  color: var(--a-muted);
-}
-.week-kid-emoji.status-booked { opacity: 1; }
-.week-kid-emoji.status-pending { opacity: 0.5; }
+.week-kid-pill.status-booked { background: #d4f0c0; color: #2a6a10; }
+.week-kid-pill.status-pending { background: #fff3cc; color: #7a5a00; }
 
 /* ── ADD FORM ── */
 .add-form {

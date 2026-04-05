@@ -188,15 +188,6 @@
            { num: num, totalSpots: 8 };
   }
 
-  function getTakenEmojis(excludeId) {
-    if (!state.campData) return {};
-    var taken = {};
-    state.campData.kids.forEach(function (k) {
-      if (k.id !== excludeId) taken[k.emoji] = true;
-    });
-    return taken;
-  }
-
   function statusBadge(status) {
     var cls = status === 'booked' ? 'status-pill--booked' : 'status-pill--pending';
     var label = status === 'booked' ? '✓ Booked' : '⏳ Pending';
@@ -207,7 +198,6 @@
     renderRegistrations();
     renderWeeks();
     renderDeleted();
-    refreshEmojiPicker($('add-emoji-picker'), $('add-custom-emoji'), $('f-emoji'), null);
   }
 
   // ─────────────────────────────────────────────────────
@@ -237,7 +227,6 @@
       var meta = [kid.parentName, kid.email, kid.phone].filter(Boolean).join(' · ');
       return '<div class="reg-card" data-id="' + kid.id + '">' +
         '<div class="reg-card-top">' +
-          '<div class="reg-emoji">' + (kid.emoji || '?') + '</div>' +
           '<div class="reg-info">' +
             '<div class="reg-child-name">' + esc(kid.childName || 'Unnamed') + (kid.childAge ? ', age ' + kid.childAge : '') + '</div>' +
             '<div class="reg-parent-name">' + esc(kid.parentName || '') + '</div>' +
@@ -274,8 +263,8 @@
 
       var kidsHtml = kidsThisWeek.length
         ? kidsThisWeek.map(function (k) {
-            return '<span class="week-kid-emoji status-' + k.status + '" title="' + esc(k.childName || '') + ' (' + k.status + ')">' +
-              (k.emoji || '?') + '<span class="kid-label">' + (k.status === 'booked' ? '✓' : '…') + '</span></span>';
+            return '<span class="week-kid-pill status-' + k.status + '">' +
+              esc(k.childName || 'Unnamed') + (k.status === 'booked' ? ' ✓' : ' …') + '</span>';
           }).join('')
         : '<span style="font-size:0.8rem;color:#aaa;">No kids yet</span>';
 
@@ -317,51 +306,6 @@
   }
 
   // ─────────────────────────────────────────────────────
-  // EMOJI PICKER
-  // ─────────────────────────────────────────────────────
-  function refreshEmojiPicker(pickerEl, customInput, hiddenInput, excludeId) {
-    if (!pickerEl) return;
-    var taken = getTakenEmojis(excludeId);
-    pickerEl.querySelectorAll('.emoji-opt-btn').forEach(function (btn) {
-      var e = btn.dataset.emoji;
-      btn.classList.toggle('taken', !!taken[e]);
-      btn.disabled = !!taken[e];
-    });
-    // If current selection is now taken, clear it
-    if (hiddenInput && taken[hiddenInput.value]) {
-      hiddenInput.value = '';
-      var disp = hiddenInput.nextElementSibling;
-      if (disp) disp.textContent = '';
-    }
-  }
-
-  function bindEmojiPicker(pickerEl, customInput, hiddenInput, displayEl) {
-    pickerEl.querySelectorAll('.emoji-opt-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        if (btn.disabled) return;
-        pickerEl.querySelectorAll('.emoji-opt-btn').forEach(function (b) { b.classList.remove('selected'); });
-        btn.classList.add('selected');
-        hiddenInput.value = btn.dataset.emoji;
-        if (customInput) customInput.value = '';
-        if (displayEl) displayEl.textContent = 'Selected: ' + btn.dataset.emoji;
-      });
-    });
-
-    if (customInput) {
-      customInput.addEventListener('input', function () {
-        var val = customInput.value.trim();
-        var match = val.match(/(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/u);
-        var emoji = match ? match[0] : '';
-        if (emoji) {
-          hiddenInput.value = emoji;
-          pickerEl.querySelectorAll('.emoji-opt-btn').forEach(function (b) { b.classList.remove('selected'); });
-          if (displayEl) displayEl.textContent = 'Selected: ' + emoji;
-        }
-      });
-    }
-  }
-
-  // ─────────────────────────────────────────────────────
   // ADD / EDIT REGISTRATION
   // ─────────────────────────────────────────────────────
   function getFormValues(prefix) {
@@ -378,7 +322,6 @@
       email:      ($('f-parent-email') && $('f-parent-email').value.trim()) || '',
       weeks:      weeks,
       status:     $('f-status') ? $('f-status').value : 'pending',
-      emoji:      $('f-emoji') ? $('f-emoji').value : '',
       notes:      ($('f-notes') && $('f-notes').value.trim()) || ''
     };
   }
@@ -386,9 +329,6 @@
   function validateKid(data, errorEl, excludeId) {
     if (!data.childName) { showErr(errorEl, 'Please enter the child\'s name.'); return false; }
     if (!data.weeks.length) { showErr(errorEl, 'Please select at least one week.'); return false; }
-    if (!data.emoji) { showErr(errorEl, 'Please pick an emoji for this kid.'); return false; }
-    var taken = getTakenEmojis(excludeId);
-    if (taken[data.emoji]) { showErr(errorEl, 'That emoji is already taken — please pick another.'); return false; }
     return true;
   }
 
@@ -405,11 +345,6 @@
     });
     document.querySelectorAll('input[name="f-weeks"]').forEach(function (cb) { cb.checked = false; });
     if ($('f-status')) $('f-status').value = 'pending';
-    if ($('f-emoji')) $('f-emoji').value = '';
-    if ($('f-emoji-display')) $('f-emoji-display').textContent = '';
-    if ($('add-custom-emoji')) $('add-custom-emoji').value = '';
-    var picker = $('add-emoji-picker');
-    if (picker) picker.querySelectorAll('.emoji-opt-btn').forEach(function (b) { b.classList.remove('selected'); });
     if ($('add-cancel-btn')) $('add-cancel-btn').style.display = 'none';
     if ($('add-form-title-text')) $('add-form-title-text').textContent = 'Add Registration';
     state.editingKidId = null;
@@ -426,14 +361,6 @@
     document.querySelectorAll('input[name="f-weeks"]').forEach(function (cb) {
       cb.checked = (kid.weeks || []).indexOf(parseInt(cb.value, 10)) !== -1;
     });
-    if ($('f-emoji')) $('f-emoji').value = kid.emoji || '';
-    if ($('f-emoji-display') && kid.emoji) $('f-emoji-display').textContent = 'Selected: ' + kid.emoji;
-    var picker = $('add-emoji-picker');
-    if (picker) {
-      picker.querySelectorAll('.emoji-opt-btn').forEach(function (b) {
-        b.classList.toggle('selected', b.dataset.emoji === kid.emoji);
-      });
-    }
     if ($('add-form-title-text')) $('add-form-title-text').textContent = 'Edit Registration';
     if ($('add-cancel-btn')) $('add-cancel-btn').style.display = '';
   }
@@ -496,7 +423,6 @@
     if (action === 'edit') {
       state.editingKidId = id;
       fillAddForm(kid);
-      refreshEmojiPicker($('add-emoji-picker'), $('add-custom-emoji'), $('f-emoji'), id);
       showTab('add');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -570,7 +496,6 @@
       }).join('');
       return '<div class="reg-card" style="opacity:0.75;" data-id="' + kid.id + '">' +
         '<div class="reg-card-top">' +
-          '<div class="reg-emoji">' + (kid.emoji || '?') + '</div>' +
           '<div class="reg-info">' +
             '<div class="reg-child-name">' + esc(kid.childName || 'Unnamed') + (kid.childAge ? ', age ' + kid.childAge : '') + '</div>' +
             '<div class="reg-parent-name">' + esc(kid.parentName || '') + '</div>' +
@@ -613,9 +538,6 @@
     document.querySelectorAll('.tab-btn').forEach(function (btn) {
       btn.classList.toggle('active', btn.dataset.tab === tabName);
     });
-    if (tabName === 'add') {
-      refreshEmojiPicker($('add-emoji-picker'), $('add-custom-emoji'), $('f-emoji'), state.editingKidId);
-    }
   }
 
   // ─────────────────────────────────────────────────────
@@ -779,12 +701,6 @@
       showTab('registrations');
     });
 
-    // Emoji picker
-    var picker = $('add-emoji-picker');
-    var customEmoji = $('add-custom-emoji');
-    var hiddenEmoji = $('f-emoji');
-    var emojiDisplay = $('f-emoji-display');
-    if (picker) bindEmojiPicker(picker, customEmoji, hiddenEmoji, emojiDisplay);
 
     // Header buttons
     var btnSettings = $('btn-settings');
@@ -901,7 +817,6 @@
           'Phone':         k.parentPhone || '',
           'Email':         k.email       || '',
           'Weeks':         (k.weeks || []).join(', '),
-          'Emoji':         k.emoji       || '',
           'Status':        k.status      || '',
           'Registered':    k.registeredAt || '',
           'Notes':         k.notes       || ''
@@ -927,14 +842,13 @@
       weeks.forEach(function (wk) {
         var wkKids = kids.filter(function (k) { return (k.weeks || []).indexOf(wk.num) !== -1; });
         if (wkKids.length === 0) {
-          schedRows.push({ 'Week': 'Week ' + wk.num + ' (' + wk.dates + ')', 'Child Name': '', 'Status': '', 'Emoji': '', 'Parent': '', 'Email': '' });
+          schedRows.push({ 'Week': 'Week ' + wk.num + ' (' + wk.dates + ')', 'Child Name': '', 'Status': '', 'Parent': '', 'Email': '' });
         } else {
           wkKids.forEach(function (k) {
             schedRows.push({
               'Week':       'Week ' + wk.num + ' (' + wk.dates + ')',
               'Child Name': k.childName  || '',
               'Status':     k.status     || '',
-              'Emoji':      k.emoji      || '',
               'Parent':     k.parentName || '',
               'Email':      k.email      || ''
             });
@@ -987,9 +901,9 @@
         if (wkKids.length === 0) {
           html += '<p style="color:#999;font-size:9pt;">No registrations yet.</p>';
         } else {
-          html += '<table><tr><th>Emoji</th><th>Child</th><th>Age</th><th>Parent</th><th>Phone</th><th>Email</th><th>Status</th></tr>';
+          html += '<table><tr><th>Child</th><th>Age</th><th>Parent</th><th>Phone</th><th>Email</th><th>Status</th></tr>';
           wkKids.forEach(function (k) {
-            html += '<tr><td>' + (k.emoji||'') + '</td><td>' + (k.childName||'') + '</td><td>' + (k.childAge||'')
+            html += '<tr><td>' + (k.childName||'') + '</td><td>' + (k.childAge||'')
               + '</td><td>' + (k.parentName||'') + '</td><td>' + (k.parentPhone||'')
               + '</td><td>' + (k.email||'')
               + '</td><td class="' + (k.status==='booked'?'confirmed':'pending') + '">' + statusLabel(k.status) + '</td></tr>';
@@ -1001,12 +915,12 @@
 
       // Section 2: All registrations
       html += '<h2>All Registrations</h2><table>'
-        + '<tr><th>Child</th><th>Age</th><th>Emoji</th><th>Parent</th><th>Phone</th><th>Email</th><th>Weeks</th><th>Status</th><th>Registered</th></tr>';
+        + '<tr><th>Child</th><th>Age</th><th>Parent</th><th>Phone</th><th>Email</th><th>Weeks</th><th>Status</th><th>Registered</th></tr>';
       if (kids.length === 0) {
-        html += '<tr><td colspan="9" style="color:#999;">No registrations yet.</td></tr>';
+        html += '<tr><td colspan="8" style="color:#999;">No registrations yet.</td></tr>';
       } else {
         kids.forEach(function (k) {
-          html += '<tr><td>' + (k.childName||'') + '</td><td>' + (k.childAge||'') + '</td><td>' + (k.emoji||'')
+          html += '<tr><td>' + (k.childName||'') + '</td><td>' + (k.childAge||'')
             + '</td><td>' + (k.parentName||'') + '</td><td>' + (k.parentPhone||'')
             + '</td><td>' + (k.email||'')
             + '</td><td>' + (k.weeks||[]).map(function(w){return 'Wk '+w;}).join(', ')
