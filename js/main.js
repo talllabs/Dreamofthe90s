@@ -94,82 +94,15 @@
     cb.addEventListener('change', updateCalculator);
   });
 
-  // ── Emoji picker ──
-  var emojiInput   = document.getElementById('kid-emoji');
-  var emojiDisplay = document.getElementById('emoji-selected-display');
-  var emojiOwnInput = document.getElementById('emoji-own');
-  var emojiButtons = document.querySelectorAll('.emoji-btn');
-
-  function setEmoji(value, sourceBtn) {
-    emojiInput.value = value;
-    emojiDisplay.textContent = value ? 'Your kid\'s emoji: ' + value : '';
-    // Clear preset selection unless a button triggered this
-    emojiButtons.forEach(function (b) { b.classList.remove('selected'); });
-    if (sourceBtn) sourceBtn.classList.add('selected');
-    if (!sourceBtn && emojiOwnInput) emojiOwnInput.value = value;
-  }
-
-  function bindEmojiButtons() {
-    emojiButtons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        if (btn.disabled) return;
-        if (emojiOwnInput) emojiOwnInput.value = '';
-        setEmoji(btn.getAttribute('data-emoji'), btn);
-      });
-    });
-  }
-  bindEmojiButtons();
-
-  // "Type your own" input — grab first emoji character typed
-  if (emojiOwnInput) {
-    emojiOwnInput.addEventListener('input', function () {
-      var val = emojiOwnInput.value.trim();
-      // Extract first emoji (handles multi-codepoint sequences)
-      var match = val.match(/(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/u);
-      var emoji = match ? match[0] : '';
-      setEmoji(emoji, null);
-    });
-  }
-
-  // Grey out emojis already taken (called after sheet loads)
-  function markTakenEmojis(takenSet) {
-    emojiButtons.forEach(function (btn) {
-      var e = btn.getAttribute('data-emoji');
-      if (takenSet[e]) {
-        btn.disabled = true;
-        btn.classList.add('emoji-taken');
-        btn.title = 'Already taken';
-      }
-    });
-  }
-
   // ── Form AJAX submit → show payment panel ──
   var form = document.getElementById('signup-form');
   var paymentPanel = document.getElementById('payment-panel');
   var submitBtn = document.getElementById('form-submit-btn');
   var formError = document.getElementById('form-error');
 
-  // Populated after sheet loads — used to block duplicate emoji at submit time
-  var takenEmojisGlobal = {};
-
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-
-      if (!emojiInput.value) {
-        formError.textContent = 'Please pick an emoji for your kid before submitting!';
-        formError.style.display = 'block';
-        document.getElementById('emoji-picker').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-
-      if (takenEmojisGlobal[emojiInput.value]) {
-        formError.textContent = 'That emoji is already taken by another kid — please pick a different one!';
-        formError.style.display = 'block';
-        document.getElementById('emoji-picker').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-
       formError.style.display = 'none';
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
@@ -269,16 +202,15 @@
       });
     }
 
-    // Kids → per-week emoji lists
+    // Kids → per-week counts
     if (Array.isArray(record.kids)) {
       record.kids.forEach(function (kid) {
-        if (!kid.emoji) return;
         (kid.weeks || []).forEach(function (wn) {
           if (wn >= 1 && wn <= 7 && kids[wn]) {
             if (kid.status === 'booked') {
-              kids[wn].booked.push(kid.emoji);
+              kids[wn].booked.push(kid.id || '');
             } else {
-              kids[wn].pending.push(kid.emoji);
+              kids[wn].pending.push(kid.id || '');
             }
           }
         });
@@ -296,63 +228,24 @@
   }
 
   function updateScheduleUI(data) {
-    var takenEmojis = {};
-
     for (var weekNum = 1; weekNum <= 7; weekNum++) {
       var week      = data.weeks[weekNum];
       var weekKids  = data.kids[weekNum];
       var booked    = weekKids.booked.length;
       var pending   = weekKids.pending.length;
       var available = week.totalSpots - booked - pending;
-
-      // Track all assigned emojis (across all weeks) for the picker
-      weekKids.booked.concat(weekKids.pending).forEach(function (e) {
-        takenEmojis[e] = true;
-      });
+      var label     = spotsLabel(available);
 
       var scheduleRow = document.querySelector('.week-schedule-row[data-week="' + weekNum + '"]');
-      var formCheck   = document.querySelector('.week-check input[value^="Week ' + weekNum + ':"]');
-      var label       = spotsLabel(available);
-
-      // ── Update schedule row ──
       if (scheduleRow) {
         var spotsEl = scheduleRow.querySelector('.week-spots');
         if (spotsEl) {
           spotsEl.textContent = label.text;
           spotsEl.className = 'week-spots ' + label.cls;
         }
-
-        var emojisEl = scheduleRow.querySelector('.week-emojis');
-        if (emojisEl) {
-          var html = '';
-          weekKids.booked.concat(weekKids.pending).forEach(function (e) {
-            html += '<span class="emoji-kid">' + e + '</span>';
-          });
-          emojisEl.innerHTML = html;
-        }
-
         if (available <= 0) scheduleRow.classList.add('week-full');
       }
-
-      // ── Update form checkbox ──
-      if (formCheck) {
-        var checkLabel = formCheck.closest('.week-check');
-        if (available <= 0) {
-          formCheck.disabled = true;
-          if (checkLabel) checkLabel.classList.add('week-check--full');
-        } else if (checkLabel && !checkLabel.querySelector('.week-check-spots')) {
-          var badge = document.createElement('span');
-          badge.className = 'week-check-spots ' + label.cls;
-          badge.textContent = label.text;
-          var body = checkLabel.querySelector('.week-check-body');
-          if (body) body.appendChild(badge);
-        }
-      }
     }
-
-    // Grey out taken emojis in the picker and store for submit-time check
-    takenEmojisGlobal = takenEmojis;
-    markTakenEmojis(takenEmojis);
   }
 
   if (JSONBIN_BIN_ID) {
