@@ -50,12 +50,13 @@
     }
 
     .portal-hero-title {
-      font-family: var(--font-marker);
-      font-size: clamp(2.4rem, 8vw, 3.6rem);
+      font-family: var(--font-fredoka);
+      font-size: clamp(2.6rem, 9vw, 4rem);
       color: var(--white);
       line-height: 1.05;
-      text-shadow: 4px 4px 0 var(--black);
+      text-shadow: 3px 3px 0 var(--black);
       margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
     }
 
     .portal-hero-sub {
@@ -287,6 +288,66 @@
     .status-tag--confirmed { background: #d4f0c0; color: #2a6a10; }
     .status-tag--pending   { background: #fff3cc; color: #7a5a00; }
 
+    /* Venmo pay nudge */
+    .venmo-nudge {
+      margin-top: 1rem;
+      background: #fff8e1;
+      border: 2.5px solid var(--black);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .venmo-nudge-title {
+      font-family: var(--font-fredoka);
+      font-size: 1.05rem;
+      color: var(--black);
+    }
+
+    .venmo-nudge-msg {
+      font-family: var(--font-nunito);
+      font-size: 0.875rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .venmo-nudge-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .venmo-nudge-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #008cff;
+      color: #fff;
+      font-family: var(--font-nunito);
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 0.55rem 1.1rem;
+      border: 2.5px solid var(--black);
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      box-shadow: 3px 3px 0 var(--black);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .venmo-nudge-btn:hover {
+      transform: translate(2px,2px);
+      box-shadow: 1px 1px 0 var(--black);
+    }
+
+    .venmo-handle {
+      font-family: var(--font-nunito);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #666;
+    }
+
     /* Card footer */
     .card-footer {
       padding: 0.75rem 1.5rem;
@@ -487,7 +548,17 @@
             '<span class="pay-row-value">' + (balance <= 0 ? 'Paid in full \u2713' : fmtMoney(balance) + ' due') + '</span>' +
           '</div>' +
           (kid.paidAt ? '<div class="pay-row"><span class="pay-row-label">Payment date</span><span class="pay-row-value" style="font-weight:600;color:#555;">' + kid.paidAt + '</span></div>' : '') +
-          '</div>';
+          '</div>' +
+          (balance > 0 ?
+            '<div class="venmo-nudge">' +
+              '<div class="venmo-nudge-title">&#x1F4B8; Pay your balance to confirm your spot!</div>' +
+              '<p class="venmo-nudge-msg">Send <strong>' + fmtMoney(balance) + '</strong> via Venmo to lock in your weeks. Once Mia &amp; Ashleigh receive your payment, your status will update from <strong>\u23F3 Awaiting Confirmation</strong> to <strong>\u2713 Confirmed</strong>.</p>' +
+              '<div class="venmo-nudge-actions">' +
+                '<a href="https://account.venmo.com/u/Mia-Cowell" target="_blank" rel="noopener" class="venmo-nudge-btn">&#x1F4B3;&nbsp; Pay on Venmo</a>' +
+                '<span class="venmo-handle">@Mia-Cowell &nbsp;&bull;&nbsp; last 4: <strong>6286</strong></span>' +
+              '</div>' +
+            '</div>'
+          : '');
 
         return '<div class="reg-result-card">' +
           '<div class="card-header ' + headerCls + '">' +
