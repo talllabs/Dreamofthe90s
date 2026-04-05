@@ -72,6 +72,8 @@
     <div class="admin-header-inner">
       <div class="admin-logo">☀️ Camp Admin</div>
       <div class="admin-header-actions">
+        <button class="a-btn a-btn--sm" id="s-export-excel">⬇ Excel</button>
+        <button class="a-btn a-btn--sm" id="s-export-pdf">🖨 PDF</button>
         <button class="a-btn a-btn--sm a-btn--ghost" id="btn-settings" title="Settings">⚙️</button>
         <button class="a-btn a-btn--sm a-btn--ghost" id="btn-logout" title="Log out">Log out</button>
       </div>
@@ -257,14 +259,8 @@
   <div id="s-bin-error" style="display:none;"></div>
   <div id="s-snippet-section" style="display:none;"><div id="s-snippet"></div></div>
 
-  <div class="settings-section">
-    <div class="settings-section-title">Data</div>
-    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-      <button class="a-btn a-btn--sm" id="s-export-excel">⬇ Export Excel</button>
-      <button class="a-btn a-btn--sm" id="s-export-pdf">🖨 Export PDF</button>
-      <button class="a-btn a-btn--sm a-btn--red" id="s-clear" style="margin-left:auto;">🗑 Reset All Data</button>
-    </div>
-  </div>
+  <!-- s-clear kept hidden so JS doesn't break if it references it -->
+  <button id="s-clear" style="display:none;"></button>
 
   <button class="a-btn a-btn--ghost" id="s-close" style="width:100%;margin-top:0.5rem;">Close</button>
 </div>
