@@ -711,3 +711,44 @@ textarea.a-input { resize: vertical; min-height: 80px; }
     box-shadow: 4px 4px 0 var(--a-text);
   }
 }
+
+/* ── Registration card detail rows ── */
+.reg-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.875rem;
+}
+.reg-detail-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+.reg-detail-label {
+  font-weight: 700;
+  color: var(--a-muted);
+  min-width: 72px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* ── Payment summary strip ── */
+.reg-payment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0;
+  font-size: 0.82rem;
+  font-family: var(--font-nunito, sans-serif);
+}
+.pay-item { color: #555; }
+.pay-item strong { color: var(--a-text); }
+.pay-due strong { color: #c00; }
+.pay-clear strong { color: #2a7a2a; }
+.pay-date { font-size: 0.78rem; color: var(--a-muted); width: 100%; }
