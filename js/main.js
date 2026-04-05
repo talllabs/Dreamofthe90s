@@ -248,11 +248,18 @@
     }
   }
 
+  function hideScheduleSpinner() {
+    var sp = document.getElementById('schedule-spinner');
+    if (sp) sp.style.display = 'none';
+  }
+
   if (JSONBIN_BIN_ID) {
     fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
       .then(function (res) { return res.json(); })
-      .then(function (json) { updateScheduleUI(parseCampData(json.record)); })
-      .catch(function () { /* silently fail — site works without live data */ });
+      .then(function (json) { updateScheduleUI(parseCampData(json.record)); hideScheduleSpinner(); })
+      .catch(function () { hideScheduleSpinner(); });
+  } else {
+    hideScheduleSpinner();
   }
 
 }());

@@ -81,6 +81,13 @@ body {
   background: var(--orange) !important;
 }
 
+.nav-cta--portal {
+  background: var(--purple) !important;
+}
+.nav-cta--portal:hover {
+  background: var(--purple) !important;
+}
+
 .nav-burger {
   display: none;
   color: var(--black);
@@ -116,10 +123,50 @@ body {
 .site-footer {
   background: var(--black);
   color: var(--cream);
-  text-align: center;
-  padding: 1.5rem;
+  padding: 2.5rem 1.5rem;
   font-family: var(--font-nunito);
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.03em;
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: var(--font-fredoka);
+  font-size: 1.3rem;
+  color: var(--yellow);
+  letter-spacing: 0.03em;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.5rem;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.15s;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.footer-copy {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
 }

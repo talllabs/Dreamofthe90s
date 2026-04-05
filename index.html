@@ -37,7 +37,7 @@
         <li><a href="#dates">Dates</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#join" class="nav-cta">Join Us!</a></li>
-        <li><a href="/portal.html">Parent Portal</a></li>
+        <li><a href="/portal.html" class="nav-cta nav-cta--portal">Parent Portal</a></li>
       </ul>
       <button class="nav-burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
     </div>
@@ -217,9 +217,12 @@
         </table>
         <p class="dates-note">Drop-off 8am &#9733; Pick-up 4pm &#9733; Small group adventures daily</p>
 
-        <!-- Weekly schedule with live spot counts from Google Sheet -->
+        <!-- Weekly schedule with live spot counts -->
         <div class="week-schedule" id="week-schedule">
           <div class="week-schedule-title">Weekly Schedule</div>
+          <div class="spin-wrap" id="schedule-spinner" style="color:#777;">
+            <div class="spinner spinner--dark"></div>Loading availability…
+          </div>
           <div class="week-schedule-row week-row--1" data-week="1">
             <span class="week-label">Week 1</span>
             <span class="week-dates">June 8–12</span>
@@ -317,6 +320,15 @@
 
   <!-- FOOTER -->
   <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">90's Summer &#9733; Day Camp</div>
+      <div class="footer-links">
+        <a href="/registration.html">Sign Up</a>
+        <a href="/portal.html">Parent Portal</a>
+        <a href="/contact.html">Contact Mia &amp; Ashleigh</a>
+      </div>
+      <div class="footer-copy">Hosted by Mia &amp; Ashleigh &nbsp;&#8226;&nbsp; Summer 2025</div>
+    </div>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>

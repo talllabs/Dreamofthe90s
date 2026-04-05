@@ -21,31 +21,89 @@
   <link rel="stylesheet" href="css/mobile.css" />
 
   <style>
+    /* ── Portal page base ── */
     body {
-      background: var(--green);
+      background: var(--purple);
       min-height: 100vh;
     }
 
     .portal-page {
-      max-width: 640px;
+      max-width: 660px;
       margin: 0 auto;
-      padding: calc(var(--nav-h) + 2rem) 1.25rem 4rem;
+      padding: calc(var(--nav-h) + 2rem) 1.25rem 5rem;
     }
 
-    /* Lookup form */
+    /* ── Fun header ── */
+    .portal-hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .portal-hero-tag {
+      display: inline-block;
+      font-family: var(--font-vt323);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--yellow);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .portal-hero-title {
+      font-family: var(--font-marker);
+      font-size: clamp(2.4rem, 8vw, 3.6rem);
+      color: var(--white);
+      line-height: 1.05;
+      text-shadow: 4px 4px 0 var(--black);
+      margin-bottom: 0.5rem;
+    }
+
+    .portal-hero-sub {
+      font-family: var(--font-nunito);
+      font-size: 1rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 600;
+    }
+
+    .portal-decorations {
+      font-size: 2rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 0.25rem;
+      line-height: 1;
+    }
+
+    /* ── Lookup card ── */
     .lookup-card {
-      background: var(--white);
-      border: 3px solid var(--black);
+      background: var(--yellow);
+      border: 4px solid var(--black);
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-md);
+      box-shadow: 6px 6px 0 var(--black);
       padding: 2rem;
       margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .lookup-card::before {
+      content: '🔍';
+      position: absolute;
+      top: -1.1rem;
+      left: 1.5rem;
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+
+    .lookup-title {
+      font-family: var(--font-fredoka);
+      font-size: 1.35rem;
+      color: var(--black);
+      margin-bottom: 0.4rem;
+      margin-top: 0.25rem;
     }
 
     .lookup-hint {
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      color: #555;
+      font-family: var(--font-nunito);
+      font-size: 0.9rem;
+      color: #444;
       margin-bottom: 1.25rem;
       line-height: 1.5;
     }
@@ -63,14 +121,14 @@
       font-size: 1rem;
       font-weight: 600;
       padding: 0.65rem 1rem;
-      border: 2.5px solid var(--black);
+      border: 3px solid var(--black);
       border-radius: var(--radius-md);
       background: var(--white);
       transition: box-shadow 0.15s;
     }
     .lookup-input:focus {
       outline: none;
-      box-shadow: 0 0 0 3px var(--yellow);
+      box-shadow: 0 0 0 3px var(--purple);
     }
 
     /* Error / not found */
@@ -86,43 +144,66 @@
       color: #c00;
     }
 
-    /* Results */
+    /* ── Results ── */
     .results-wrap { display: none; }
 
     .results-greeting {
-      font-family: var(--font-fredoka);
-      font-size: 1.6rem;
-      color: var(--white);
-      margin-bottom: 1.25rem;
-      letter-spacing: 0.02em;
+      font-family: var(--font-marker);
+      font-size: 1.7rem;
+      color: var(--yellow);
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
     }
 
+    /* Kid card */
     .reg-result-card {
       background: var(--white);
-      border: 3px solid var(--black);
+      border: 4px solid var(--black);
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-md);
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 0;
+      margin-bottom: 1.75rem;
+      overflow: hidden;
     }
+
+    .card-header {
+      padding: 1.1rem 1.5rem 0.9rem;
+      border-bottom: 3px solid var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .card-header--1 { background: #AAE4FF; }
+    .card-header--2 { background: #FFB8D8; }
+    .card-header--3 { background: #A8E878; }
+    .card-header--4 { background: #D4B8F0; }
+    .card-header--5 { background: #FFE57A; }
+    .card-header--6 { background: #FFB08A; }
 
     .result-child {
       font-family: var(--font-fredoka);
-      font-size: 1.4rem;
-      color: var(--purple);
-      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: var(--black);
       letter-spacing: 0.02em;
+    }
+
+    .card-body {
+      padding: 1.25rem 1.5rem;
     }
 
     .result-section-title {
       font-family: var(--font-nunito);
       font-weight: 800;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #888;
+      letter-spacing: 0.1em;
+      color: #999;
       margin: 1rem 0 0.5rem;
     }
+    .result-section-title:first-child { margin-top: 0; }
 
     /* Week chips */
     .result-weeks {
@@ -135,8 +216,8 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.5rem 0.85rem;
-      border: 2px solid var(--black);
+      padding: 0.5rem 0.9rem;
+      border: 2.5px solid var(--black);
       border-radius: var(--radius-pill);
       font-family: var(--font-nunito);
       font-size: 0.9rem;
@@ -158,14 +239,15 @@
     }
     .result-week-dates { flex: 1; color: #333; }
 
-    /* Payment */
+    /* Payment strip */
     .payment-summary {
-      background: #f8f8f8;
+      background: #f4f0ff;
+      border: 2.5px solid var(--black);
       border-radius: var(--radius-sm);
-      padding: 0.9rem 1rem;
+      padding: 1rem 1.1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
 
     .pay-row {
@@ -186,8 +268,8 @@
 
     .pay-divider {
       border: none;
-      border-top: 1px solid #ddd;
-      margin: 0.25rem 0;
+      border-top: 1.5px solid #d4c8ff;
+      margin: 0.15rem 0;
     }
 
     /* Status badge */
@@ -200,36 +282,55 @@
       letter-spacing: 0.05em;
       padding: 0.25rem 0.75rem;
       border-radius: var(--radius-pill);
-      border: 2px solid var(--black);
+      border: 2.5px solid var(--black);
     }
     .status-tag--confirmed { background: #d4f0c0; color: #2a6a10; }
     .status-tag--pending   { background: #fff3cc; color: #7a5a00; }
 
-    /* Info rows */
-    .info-row {
+    /* Card footer */
+    .card-footer {
+      padding: 0.75rem 1.5rem;
+      border-top: 2px solid #eee;
+      font-family: var(--font-nunito);
+      font-size: 0.82rem;
+      color: #aaa;
       display: flex;
-      gap: 0.5rem;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      padding: 0.2rem 0;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
     }
-    .info-label { font-weight: 700; color: #888; min-width: 100px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    .card-footer a {
+      color: var(--purple);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .card-footer a:hover { text-decoration: underline; }
 
     .try-again-btn {
-      margin-top: 1.5rem;
-      background: none;
-      border: none;
-      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-nunito);
+      font-weight: 700;
       font-size: 0.9rem;
-      color: rgba(255,255,255,0.8);
+      color: var(--white);
       cursor: pointer;
-      text-decoration: underline;
-      padding: 0;
+      padding: 0.5rem 1.1rem;
+      transition: background 0.15s;
     }
-    .try-again-btn:hover { color: var(--white); }
+    .try-again-btn:hover {
+      background: rgba(255,255,255,0.25);
+    }
 
     @media (max-width: 480px) {
       .lookup-row { flex-direction: column; }
+      .portal-hero-title { font-size: 2.2rem; }
     }
   </style>
 </head>
@@ -244,19 +345,26 @@
 
   <main class="portal-page">
 
-    <h2 class="section-banner" style="background:var(--white); margin-bottom:1.5rem;">
-      <span class="banner-icon" style="background:var(--lavender);">🏠</span>
-      <span class="banner-text">Parent Portal</span>
-    </h2>
+    <!-- Hero header -->
+    <div class="portal-hero">
+      <div class="portal-decorations">&#11088; &#127774; &#11088;</div>
+      <div class="portal-hero-tag">&#x1F3D5; Summer 2025</div>
+      <h1 class="portal-hero-title">Parent Portal</h1>
+      <p class="portal-hero-sub">Look up your registration, booked weeks &amp; payment status</p>
+    </div>
 
     <!-- Lookup form -->
     <div class="lookup-card" id="lookup-card">
+      <div class="lookup-title">Find your registration</div>
       <p class="lookup-hint">
-        <strong>Already registered?</strong> This portal is for parents who have already submitted a registration form. Enter the email address you used when you signed up to check your booked dates, registration details, and payment status.
+        Enter the email address you used when you signed up to see your booked dates and payment status.
       </p>
       <div class="lookup-row">
         <input class="lookup-input" type="email" id="lookup-email" placeholder="your@email.com" autocomplete="email" />
-        <button class="btn btn--press" id="lookup-btn" style="white-space:nowrap;">Look Up</button>
+        <button class="btn btn--press" id="lookup-btn" style="white-space:nowrap;display:flex;align-items:center;gap:0.5rem;">
+          <span id="lookup-btn-spinner" class="spinner spinner--dark" style="display:none;width:18px;height:18px;border-width:2px;"></span>
+          <span id="lookup-btn-text">Look Up</span>
+        </button>
       </div>
       <div class="lookup-error" id="lookup-error"></div>
     </div>
@@ -277,14 +385,17 @@
     var JSONBIN_BIN_ID = '69d0a3d6856a682189fa7ef5';
 
     var WEEK_DATES = {
-      1: 'June 8–12',
-      2: 'June 15–19',
-      3: 'June 22–26',
-      4: 'June 29–July 3',
-      5: 'July 6–10',
-      6: 'July 13–17',
-      7: 'July 20–24'
+      1: 'June 8\u201312',
+      2: 'June 15\u201319',
+      3: 'June 22\u201326',
+      4: 'June 29\u2013July 3',
+      5: 'July 6\u201310',
+      6: 'July 13\u201317',
+      7: 'July 20\u201324'
     };
+
+    // Card header colors cycle
+    var HEADER_COLORS = ['--1','--2','--3','--4','--5','--6'];
 
     var emailInput  = document.getElementById('lookup-email');
     var lookupBtn   = document.getElementById('lookup-btn');
@@ -316,21 +427,23 @@
       hideError();
 
       lookupBtn.disabled = true;
-      lookupBtn.textContent = 'Looking up…';
+      document.getElementById('lookup-btn-spinner').style.display = '';
+      document.getElementById('lookup-btn-text').textContent = 'Looking up\u2026';
 
       fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest')
         .then(function (r) { return r.json(); })
         .then(function (json) {
           var record = json.record || {};
           var kids = (record.kids || []).filter(function (k) {
-            return (k.email || '').toLowerCase().trim() === email;
+            return (k.email || '').toLowerCase().trim() === email && k.status !== 'deleted';
           });
 
           lookupBtn.disabled = false;
-          lookupBtn.textContent = 'Look Up';
+          document.getElementById('lookup-btn-spinner').style.display = 'none';
+          document.getElementById('lookup-btn-text').textContent = 'Look Up';
 
           if (kids.length === 0) {
-            showError('No registration found for that email address. Please check the address and try again, or submit a new registration.');
+            showError('No registration found for that email. Please double-check the address or submit a new registration.');
             return;
           }
 
@@ -338,16 +451,18 @@
         })
         .catch(function () {
           lookupBtn.disabled = false;
-          lookupBtn.textContent = 'Look Up';
-          showError('Something went wrong — please try again in a moment.');
+          document.getElementById('lookup-btn-spinner').style.display = 'none';
+          document.getElementById('lookup-btn-text').textContent = 'Look Up';
+          showError('Something went wrong \u2014 please try again in a moment.');
         });
     }
 
     function renderResults(kids) {
       var parentName = kids[0].parentName || 'there';
-      greeting.textContent = 'Hi ' + parentName + '! Here\'s your registration info:';
+      greeting.textContent = 'Hey ' + parentName + '! \uD83C\uDF89';
 
-      resultsList.innerHTML = kids.map(function (kid) {
+      resultsList.innerHTML = kids.map(function (kid, idx) {
+        var headerCls = 'card-header' + HEADER_COLORS[idx % HEADER_COLORS.length];
         var owed    = calcOwed(kid);
         var paid    = kid.amountPaid || 0;
         var balance = owed - paid;
@@ -361,7 +476,7 @@
         }).join('');
 
         var statusTag = '<span class="status-tag ' + (isConfirmed ? 'status-tag--confirmed' : 'status-tag--pending') + '">' +
-          (isConfirmed ? '✓ Confirmed' : '⏳ Awaiting Payment') + '</span>';
+          (isConfirmed ? '\u2713 Confirmed' : '\u23F3 Awaiting Confirmation') + '</span>';
 
         var payHtml = '<div class="payment-summary">' +
           '<div class="pay-row pay-row--total"><span class="pay-row-label">Total</span><span class="pay-row-value">' + fmtMoney(owed) + '</span></div>' +
@@ -369,27 +484,26 @@
           '<hr class="pay-divider">' +
           '<div class="pay-row pay-row--balance ' + (balance <= 0 ? 'is-clear' : 'is-due') + '">' +
             '<span class="pay-row-label">Balance</span>' +
-            '<span class="pay-row-value">' + (balance <= 0 ? 'Paid in full ✓' : fmtMoney(balance) + ' due') + '</span>' +
+            '<span class="pay-row-value">' + (balance <= 0 ? 'Paid in full \u2713' : fmtMoney(balance) + ' due') + '</span>' +
           '</div>' +
           (kid.paidAt ? '<div class="pay-row"><span class="pay-row-label">Payment date</span><span class="pay-row-value" style="font-weight:600;color:#555;">' + kid.paidAt + '</span></div>' : '') +
           '</div>';
 
         return '<div class="reg-result-card">' +
-          '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.25rem;">' +
-            '<div class="result-child">' + esc(kid.childName || 'Your child') + (kid.childAge ? ', age ' + kid.childAge : '') + '</div>' +
+          '<div class="card-header ' + headerCls + '">' +
+            '<div class="result-child">' + esc(kid.childName || 'Your child') + (kid.childAge ? ', age ' + esc(kid.childAge) : '') + '</div>' +
             statusTag +
           '</div>' +
-
-          '<div class="result-section-title">Weeks Booked</div>' +
-          '<div class="result-weeks">' + (weeksHtml || '<p style="color:#999;font-size:0.9rem;">No weeks selected.</p>') + '</div>' +
-
-          '<div class="result-section-title">Payment</div>' +
-          payHtml +
-
-          (kid.notes ? '<div class="result-section-title">Your Notes</div><div style="font-family:var(--font-body);font-size:0.9rem;color:#555;">' + esc(kid.notes) + '</div>' : '') +
-
-          '<div style="margin-top:1.25rem;padding-top:0.75rem;border-top:1px solid #eee;font-family:var(--font-body);font-size:0.82rem;color:#999;">' +
-            'Registered ' + (kid.registeredAt || '') + ' &nbsp;·&nbsp; Questions? Email Mia &amp; Ashleigh.' +
+          '<div class="card-body">' +
+            '<div class="result-section-title">Weeks Booked</div>' +
+            '<div class="result-weeks">' + (weeksHtml || '<p style="color:#999;font-size:0.9rem;">No weeks selected.</p>') + '</div>' +
+            '<div class="result-section-title">Payment</div>' +
+            payHtml +
+            (kid.notes ? '<div class="result-section-title">Your Notes</div><div style="font-family:var(--font-body);font-size:0.9rem;color:#555;">' + esc(kid.notes) + '</div>' : '') +
+          '</div>' +
+          '<div class="card-footer">' +
+            '<span>Registered ' + esc(kid.registeredAt || '') + '</span>' +
+            '<a href="/contact.html">Questions? Email Mia &amp; Ashleigh \u2192</a>' +
           '</div>' +
         '</div>';
       }).join('');

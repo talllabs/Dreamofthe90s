@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — 90's Summer Day Camp</title>
+  <meta name="description" content="Questions about 90's Summer Day Camp? Send Mia & Ashleigh a message!" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Boogaloo&family=Titan+One&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/typography.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+
+  <style>
+    body {
+      background: var(--green);
+      min-height: 100vh;
+    }
+
+    .contact-page {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 2rem) 1.25rem 4rem;
+    }
+
+    /* Override label color for green bg */
+    .contact-page .form-label { color: var(--white); }
+    .contact-page .form-label-hint { color: rgba(255,255,255,0.8); }
+
+    .contact-page .form-submit {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Success state */
+    .contact-success {
+      display: none;
+      background: var(--white);
+      border: 3px solid var(--black);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .contact-success-emoji {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-success-title {
+      font-family: var(--font-fredoka);
+      font-size: 1.8rem;
+      color: var(--purple);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-success-msg {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-error {
+      display: none;
+      margin-top: 0.75rem;
+      background: #fff0f0;
+      border: 2px solid #f5a0a0;
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: #c00;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">90's Summer &#9733; Day Camp</a>
+    </div>
+  </nav>
+
+  <main class="contact-page">
+
+    <h2 class="section-banner" style="background: var(--white); margin-bottom: 1.5rem;">
+      <span class="banner-icon" style="background: var(--coral);">&#x2709;&#xFE0E;</span>
+      <span class="banner-text">Ask Us Anything!</span>
+    </h2>
+
+    <p style="font-family: var(--font-body); color: var(--white); margin-bottom: 2rem; font-size: 1.05rem; font-weight: 600;">
+      Got questions about camp? We'd love to hear from you! Send us a message and we'll get back to you soon &#x2600;&#xFE0F;
+    </p>
+
+    <!-- FORM -->
+    <form class="signup-form" id="contact-form" novalidate>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label" for="contact-name">Your Name</label>
+          <input class="form-input" type="text" id="contact-name" name="name" required placeholder="Your name" />
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="contact-email">Email</label>
+          <input class="form-input" type="email" id="contact-email" name="email" required placeholder="your@email.com" />
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="contact-message">Your Question or Message</label>
+        <textarea class="form-input form-textarea" id="contact-message" name="message" required placeholder="What's on your mind?" rows="5"></textarea>
+      </div>
+
+      <div class="contact-error" id="contact-error"></div>
+
+      <button type="submit" class="btn btn--big btn--press form-submit" id="contact-submit">
+        &#x2709;&#xFE0E;&nbsp; Send Message
+      </button>
+
+    </form>
+
+    <!-- SUCCESS STATE -->
+    <div class="contact-success" id="contact-success">
+      <div class="contact-success-emoji">&#x1F4EC;</div>
+      <div class="contact-success-title">Message sent!</div>
+      <p class="contact-success-msg">Thanks for reaching out — Mia &amp; Ashleigh will get back to you soon!</p>
+      <a href="/" class="btn btn--press">&#8592; Back to Camp</a>
+    </div>
+
+  </main>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var FORMSPREE = 'https://formspree.io/f/CONTACT_FORM_ID';
+
+    var form       = document.getElementById('contact-form');
+    var submitBtn  = document.getElementById('contact-submit');
+    var errorBox   = document.getElementById('contact-error');
+    var successBox = document.getElementById('contact-success');
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function hideError() { errorBox.style.display = 'none'; }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      hideError();
+
+      var name    = form.querySelector('[name="name"]').value.trim();
+      var email   = form.querySelector('[name="email"]').value.trim();
+      var message = form.querySelector('[name="message"]').value.trim();
+
+      if (!name)    { showError('Please enter your name.'); return; }
+      if (!email)   { showError('Please enter your email.'); return; }
+      if (!message) { showError('Please write a message.'); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending\u2026';
+
+      var fd = new FormData();
+      fd.append('name', name);
+      fd.append('email', email);
+      fd.append('message', message);
+
+      fetch(FORMSPREE, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Error ' + res.status);
+          return res.json();
+        })
+        .then(function () {
+          form.style.display = 'none';
+          successBox.style.display = 'block';
+          successBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        })
+        .catch(function (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '\u2709\uFE0E\u00A0 Send Message';
+          showError('Something went wrong — please try again. (' + err.message + ')');
+        });
+    });
+
+    // Sticky nav
+    var nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+  }());
+  </script>
+</body>
+</html>

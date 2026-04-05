@@ -139,15 +139,27 @@
   // ─────────────────────────────────────────────────────
   // DATA SYNC
   // ─────────────────────────────────────────────────────
+  function showLoading(msg) {
+    var ol = $('loading-overlay');
+    if (!ol) return;
+    ol.querySelector('span').textContent = msg || 'Loading camp data…';
+    ol.style.display = 'flex';
+  }
+
+  function hideLoading() {
+    var ol = $('loading-overlay');
+    if (ol) ol.style.display = 'none';
+  }
+
   function fetchData() {
     var binId = getBinId();
     if (!binId) {
-      // No JSONBin configured — use local only
       state.campData = loadLocal() || JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
       renderAll();
       return Promise.resolve();
     }
 
+    showLoading('Loading camp data…');
     return readBin(binId)
       .then(function (res) {
         state.campData = res.record;
@@ -155,10 +167,12 @@
         renderAll();
       })
       .catch(function () {
-        // Fall back to local cache
         state.campData = loadLocal() || JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
         renderAll();
         showToast('⚠️ Offline — showing cached data');
+      })
+      .then(function () {
+        hideLoading();
       });
   }
 
@@ -170,9 +184,10 @@
     if (!binId) return Promise.resolve();
 
     state.saving = true;
+    showLoading('Saving…');
     return updateBin(binId, state.campData)
-      .then(function () { state.saving = false; showToast('✅ Saved!'); })
-      .catch(function () { state.saving = false; showToast('⚠️ Saved locally — sync failed'); });
+      .then(function () { state.saving = false; hideLoading(); showToast('✅ Saved!'); })
+      .catch(function () { state.saving = false; hideLoading(); showToast('⚠️ Saved locally — sync failed'); });
   }
 
   // ─────────────────────────────────────────────────────
