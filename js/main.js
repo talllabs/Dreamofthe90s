@@ -118,14 +118,6 @@
             paymentPanel.classList.add('visible');
             paymentPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            var canvas = document.getElementById('venmo-qr');
-            if (canvas && typeof QRCode !== 'undefined') {
-              QRCode.toCanvas(canvas, 'https://account.venmo.com/u/Mia-Cowell', {
-                width: 180,
-                margin: 2,
-                color: { dark: '#111111', light: '#ffffff' }
-              });
-            }
 
             // Append registration to the main camp data bin so it shows in the admin page
             console.log('[Camp] BIN_ID:', JSONBIN_BIN_ID, 'KEY set:', !!JSONBIN_KEY);
@@ -222,9 +214,8 @@
 
   function spotsLabel(n) {
     if (isNaN(n) || n <= 0) return { text: 'FULL', cls: 'spots-full' };
-    if (n <= 2) return { text: n + ' spot' + (n === 1 ? '' : 's') + ' left!', cls: 'spots-low' };
-    if (n <= 5) return { text: n + ' spots left', cls: 'spots-some' };
-    return { text: n + ' spots open', cls: 'spots-open' };
+    var label = n === 1 ? '1 spot left!' : n + ' spots ' + (n <= 4 ? 'left' : 'open');
+    return { text: label, cls: 'spots-' + Math.min(n, 8) };
   }
 
   function updateScheduleUI(data) {

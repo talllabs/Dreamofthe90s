@@ -602,9 +602,14 @@
   white-space: nowrap;
 }
 
-.spots-open { background: #A8E878; color: #222; }
-.spots-some { background: #FFE57A; color: #222; }
-.spots-low  { background: var(--coral); color: var(--white); }
+.spots-8    { background: #4caf50; color: #fff; }   /* green */
+.spots-7    { background: #8bc34a; color: #fff; }   /* light green */
+.spots-6    { background: #cddc39; color: #333; }   /* lime */
+.spots-5    { background: #ffeb3b; color: #333; }   /* yellow */
+.spots-4    { background: #ffc107; color: #333; }   /* amber */
+.spots-3    { background: #ff9800; color: #fff; }   /* orange */
+.spots-2    { background: #f44336; color: #fff; }   /* red */
+.spots-1    { background: #b71c1c; color: #fff; }   /* deep red */
 .spots-full { background: #ccc; color: #555; text-decoration: line-through; }
 
 .week-emojis {
