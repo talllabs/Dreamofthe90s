@@ -602,14 +602,15 @@
   white-space: nowrap;
 }
 
-.spots-8    { background: #4caf50; color: #fff; }   /* green */
-.spots-7    { background: #8bc34a; color: #fff; }   /* light green */
-.spots-6    { background: #cddc39; color: #333; }   /* lime */
-.spots-5    { background: #ffeb3b; color: #333; }   /* yellow */
-.spots-4    { background: #ffc107; color: #333; }   /* amber */
-.spots-3    { background: #ff9800; color: #fff; }   /* orange */
-.spots-2    { background: #f44336; color: #fff; }   /* red */
-.spots-1    { background: #b71c1c; color: #fff; }   /* deep red */
+/* Bold, saturated colors — clearly distinct from the pastel week bar backgrounds */
+.spots-8    { background: #16a34a; color: #fff; }   /* vivid green */
+.spots-7    { background: #4ade80; color: #14532d; } /* bright green */
+.spots-6    { background: #a3e635; color: #365314; } /* lime */
+.spots-5    { background: #facc15; color: #713f12; } /* vivid yellow */
+.spots-4    { background: #fb923c; color: #fff; }    /* orange */
+.spots-3    { background: #f97316; color: #fff; }    /* deep orange */
+.spots-2    { background: #ef4444; color: #fff; }    /* red */
+.spots-1    { background: #991b1b; color: #fff; }    /* dark red */
 .spots-full { background: #ccc; color: #555; text-decoration: line-through; }
 
 .week-emojis {
