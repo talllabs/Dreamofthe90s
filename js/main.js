@@ -118,14 +118,6 @@
             paymentPanel.classList.add('visible');
             paymentPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            var canvas = document.getElementById('venmo-qr');
-            if (canvas && typeof QRCode !== 'undefined') {
-              QRCode.toCanvas(canvas, 'https://account.venmo.com/u/Mia-Cowell', {
-                width: 180,
-                margin: 2,
-                color: { dark: '#111111', light: '#ffffff' }
-              });
-            }
 
             // Append registration to the main camp data bin so it shows in the admin page
             console.log('[Camp] BIN_ID:', JSONBIN_BIN_ID, 'KEY set:', !!JSONBIN_KEY);

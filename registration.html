@@ -160,7 +160,7 @@
         <a href="https://account.venmo.com/u/Mia-Cowell" class="btn venmo-link" target="_blank" rel="noopener" style="background:var(--purple);color:#fff;border-color:var(--black);">Pay on Venmo &#x2192;</a>
         <div class="venmo-qr-wrap">
           <div class="venmo-qr-label">Or scan to pay:</div>
-          <canvas id="venmo-qr"></canvas>
+          <img src="/images/venmo-qr.png" alt="Venmo QR code for @Mia-Cowell" width="160" height="160" style="display:block;border-radius:8px;border:2px solid var(--black);" />
         </div>
       </div>
       <p class="payment-panel-note">Once your Venmo payment goes through, Mia &amp; Ashleigh will confirm your spot. You can check your registration status anytime at the <a href="/portal.html" style="color:var(--white);font-weight:800;">Parent Portal</a>.</p>
@@ -168,7 +168,6 @@
 
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
   (function () {
     'use strict';
@@ -375,11 +374,6 @@
           paymentPanel.classList.add('visible');
           paymentPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-          if (typeof QRCode !== 'undefined') {
-            QRCode.toCanvas(document.getElementById('venmo-qr'), 'https://account.venmo.com/u/Mia-Cowell', {
-              width: 160, margin: 2, color: { dark: '#111', light: '#fff' }
-            });
-          }
         })
         .catch(function (err) {
           submitBtn.disabled = false;
