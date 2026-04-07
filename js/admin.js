@@ -688,7 +688,7 @@
     }
 
     // Skip login if already authenticated in this browser session
-    if (sessionStorage.getItem(SESSION_KEY)) {
+    if (localStorage.getItem(SESSION_KEY)) {
       bootApp();
       return;
     }
@@ -700,7 +700,7 @@
       e.preventDefault();
       var pw = $('login-password').value;
       if (verifyPw(pw)) {
-        sessionStorage.setItem(SESSION_KEY, '1');
+        localStorage.setItem(SESSION_KEY, '1');
         $('login-password').value = '';
         bootApp();
       } else {
@@ -753,7 +753,7 @@
 
     var btnLogout = $('btn-logout');
     if (btnLogout) btnLogout.addEventListener('click', function () {
-      sessionStorage.removeItem(SESSION_KEY);
+      localStorage.removeItem(SESSION_KEY);
       showScreen('login');
       showToast('Logged out');
     });
