@@ -791,10 +791,17 @@
 
 .payment-panel-sub {
   font-family: var(--font-nunito);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--white);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--black);
+  background: var(--yellow);
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1.1rem;
   margin: 0;
+  width: 100%;
+  text-align: center;
+  box-shadow: 3px 3px 0 var(--black);
 }
 
 .venmo-card {
@@ -855,11 +862,16 @@
 .payment-panel-note {
   font-family: var(--font-nunito);
   font-weight: 600;
-  font-size: 1rem;
-  color: var(--white);
+  font-size: 0.95rem;
+  color: var(--black);
+  background: rgba(255,255,255,0.85);
+  border: 2px solid var(--black);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.1rem;
   max-width: 420px;
   line-height: 1.6;
   margin: 0;
+  text-align: center;
 }
 
 /* ── Entrance animations ── */
