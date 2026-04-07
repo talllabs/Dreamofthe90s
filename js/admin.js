@@ -14,6 +14,11 @@
 
   // Default collection — pre-configured for the "90s" collection
   var DEFAULT_COLLECTION_ID = '69d094fbaaba882197c28576';
+
+  // Hardcoded bin config — same values used by the public site
+  var DEFAULT_BIN_ID     = '69d0a3d6856a682189fa7ef5';
+  var DEFAULT_ACCESS_KEY = '$2a$10$X6s.Q4j9Kp0GneoQ5o5ya.vvOw.jIzRJ5BoRgBD1ADGvx.qs7HqnG';
+
   var SESSION_KEY = 'camp_admin_session';
 
   var WEEK_DEFS = [
@@ -48,7 +53,8 @@
     currentTab: 'registrations',
     currentFilter: 'all',
     editingKidId: null,
-    saving: false
+    saving: false,
+    remotePwHash: null  // password hash loaded from JSONBin (syncs across devices)
   };
 
   // ─────────────────────────────────────────────────────
@@ -84,23 +90,30 @@
   }
 
   function verifyPw(pw) {
-    return hashPw(pw) === localStorage.getItem(KEYS.PW);
+    var hash = hashPw(pw);
+    // Check against JSONBin-synced hash first, then local cache fallback
+    if (state.remotePwHash) return hash === state.remotePwHash;
+    return hash === localStorage.getItem(KEYS.PW);
   }
 
   // ─────────────────────────────────────────────────────
   // JSONBIN API
   // ─────────────────────────────────────────────────────
   function getApiKey()      { return localStorage.getItem(KEYS.APIKEY) || ''; }
-  function getBinId()       { return localStorage.getItem(KEYS.BIN) || ''; }
+  function getBinId()       { return localStorage.getItem(KEYS.BIN) || DEFAULT_BIN_ID; }
   function getCollectionId(){ return localStorage.getItem(KEYS.COLLECTION) || DEFAULT_COLLECTION_ID; }
+
+  // Use master key (stored by original setup) or access key fallback for new devices
+  function getAuthHeaders() {
+    var storedKey = localStorage.getItem(KEYS.APIKEY);
+    if (storedKey) return { 'X-Master-Key': storedKey };
+    return { 'X-Access-Key': DEFAULT_ACCESS_KEY };
+  }
 
   function jsonbinFetch(method, path, body) {
     var opts = {
       method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': getApiKey()
-      }
+      headers: Object.assign({ 'Content-Type': 'application/json' }, getAuthHeaders())
     };
     if (body) opts.body = JSON.stringify(body);
     return fetch('https://api.jsonbin.io/v3' + path, opts)
@@ -621,86 +634,63 @@
   function doSetup() {
     var pw  = $('setup-password').value;
     var pw2 = $('setup-password2').value;
-    var key = $('setup-apikey').value.trim();
     var err = $('setup-error');
     err.classList.remove('visible');
 
     if (pw.length < 6) { showErr(err, 'Password must be at least 6 characters.'); return; }
     if (pw !== pw2)    { showErr(err, 'Passwords don\'t match.'); return; }
 
-    // Save password
-    localStorage.setItem(KEYS.PW, hashPw(pw));
+    var hash = hashPw(pw);
+    localStorage.setItem(KEYS.PW, hash);
+    localStorage.setItem(SESSION_KEY, '1');
+    state.remotePwHash = hash;
 
-    if (key) {
-      localStorage.setItem(KEYS.APIKEY, key);
-      // Try to create a bin
-      $('setup-submit').disabled = true;
-      $('setup-submit').textContent = 'Creating your data bin…';
+    $('setup-submit').disabled = true;
+    $('setup-submit').textContent = 'Setting up\u2026';
 
-      var initData = JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
-      var collId = getCollectionId();
-      var headers = { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': '90s-day-camp', 'X-Bin-Private': 'false' };
-      if (collId) headers['X-Collection-Id'] = collId;
-      fetch('https://api.jsonbin.io/v3/b', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(initData)
+    // Load existing bin data, stamp the password hash, and save back
+    readBin(getBinId())
+      .then(function (res) {
+        state.campData = res.record || JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
       })
-        .then(function (r) { return r.json(); })
-        .then(function (res) {
-          if (res.metadata && res.metadata.id) {
-            localStorage.setItem(KEYS.BIN, res.metadata.id);
-            saveLocal(initData);
-            state.campData = initData;
-          }
-          bootApp();
-        })
-        .catch(function () {
-          // JSONBin failed — continue without it
-          saveLocal(JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA)));
-          state.campData = JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
-          bootApp();
-          showToast('⚠️ Couldn\'t connect to JSONBin — saved locally only');
-        });
-    } else {
-      // No JSONBin — local only
-      saveLocal(JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA)));
-      state.campData = JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
-      bootApp();
-    }
+      .catch(function () {
+        state.campData = JSON.parse(JSON.stringify(DEFAULT_CAMP_DATA));
+      })
+      .then(function () {
+        state.campData.adminPwHash = hash;
+        return persistData();
+      })
+      .catch(function () {})
+      .then(function () { bootApp(); });
   }
 
   function bootApp() {
     showScreen('app');
-    fetchData().then(renderAll);
+    fetchData().then(function () {
+      // If password hash isn't in JSONBin yet, push it now so other devices can log in
+      if (state.campData && !state.campData.adminPwHash) {
+        var localHash = localStorage.getItem(KEYS.PW) || state.remotePwHash;
+        if (localHash) {
+          state.campData.adminPwHash = localHash;
+          persistData();
+        }
+      }
+      renderAll();
+    });
   }
 
   // ─────────────────────────────────────────────────────
   // INIT
   // ─────────────────────────────────────────────────────
   function init() {
-    var hasPw = !!localStorage.getItem(KEYS.PW);
-
-    if (!hasPw) {
-      showScreen('setup');
-      $('setup-submit').addEventListener('click', doSetup);
-      return;
-    }
-
-    // Skip login if already authenticated in this browser session
-    if (localStorage.getItem(SESSION_KEY)) {
-      bootApp();
-      return;
-    }
-
-    showScreen('login');
-
-    // Login
+    // Bind setup and login handlers once upfront
+    $('setup-submit').addEventListener('click', doSetup);
     $('login-form').addEventListener('submit', function (e) {
       e.preventDefault();
       var pw = $('login-password').value;
       if (verifyPw(pw)) {
         localStorage.setItem(SESSION_KEY, '1');
+        localStorage.setItem(KEYS.PW, hashPw(pw)); // cache locally for offline fallback
         $('login-password').value = '';
         bootApp();
       } else {
@@ -711,6 +701,36 @@
         setTimeout(function () { $('login-error').classList.remove('visible'); }, 3000);
       }
     });
+
+    // Already authenticated on this device — skip login
+    if (localStorage.getItem(SESSION_KEY)) {
+      bootApp();
+      return;
+    }
+
+    // Fetch the bin (public read, no auth) to get the synced password hash
+    // This lets any device log in with just the password — no setup needed
+    showScreen('login');
+    var loginBtn = $('login-form').querySelector('button[type="submit"]');
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Loading\u2026';
+
+    fetch('https://api.jsonbin.io/v3/b/' + getBinId() + '/latest')
+      .then(function (r) { return r.json(); })
+      .then(function (json) {
+        state.remotePwHash = (json.record || {}).adminPwHash || null;
+      })
+      .catch(function () {}) // offline — will fall back to localStorage hash
+      .then(function () {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Log In';
+
+        var hasPw = state.remotePwHash || localStorage.getItem(KEYS.PW);
+        if (!hasPw) {
+          showScreen('setup'); // first-ever setup on this camp site
+        }
+        // else: login screen already showing — ready for password entry
+      });
   }
 
   // ─────────────────────────────────────────────────────
@@ -772,7 +792,14 @@
       var err = $('s-pw-error');
       if (newPw.length < 6) { showErr(err, 'Password must be at least 6 characters.'); return; }
       if (newPw !== newPw2)  { showErr(err, 'Passwords don\'t match.'); return; }
-      localStorage.setItem(KEYS.PW, hashPw(newPw));
+      var hash = hashPw(newPw);
+      localStorage.setItem(KEYS.PW, hash);
+      state.remotePwHash = hash;
+      // Sync new hash to JSONBin so all devices get the updated password
+      if (state.campData) {
+        state.campData.adminPwHash = hash;
+        persistData();
+      }
       $('s-new-pw').value = '';
       $('s-new-pw2').value = '';
       showToast('🔒 Password updated!');
